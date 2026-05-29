@@ -1,0 +1,46 @@
+{
+  "name": "react-web",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.3.0",
+    "antd": "^6.4.2",
+    "axios": "^1.16.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-router-dom": "^7.15.1",
+    "reflect-metadata": "^0.2.2",
+    "tailwindcss": "^4.3.0",
+    "zustand": "^5.0.13"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.29.0",
+    "@babel/plugin-syntax-decorators": "^7.28.6",
+    "@rolldown/plugin-babel": "^0.2.2",
+    "@types/babel__core": "^7.20.5",
+    "@types/node": "^24.12.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.60.0",
+    "@typescript-eslint/parser": "^8.60.0",
+    "@vitejs/plugin-react": "^6.0.1",
+    "babel-plugin-react-compiler": "^1.0.0",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.6",
+    "globals": "^17.6.0",
+    "prettier": "^3.8.3",
+    "sass": "^1.99.0",
+    "typescript": "~6.0.2",
+    "vite": "^8.0.4"
+  }
+}

@@ -1,0 +1,33 @@
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #9878f7 0%, #9878f7 50%, #a487fa 100%);
+  .centerBox{
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    .formContainer{
+      :global(.ant-input-outlined){
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.08);
+        color: #fff;
+        padding: 10px 15px;
+        border-color: transparent;
+        &::placeholder{
+          color: #b7b4b4;
+        }
+      }
+      :global(.ant-input){
+        &::placeholder{
+          color: #b7b4b4;
+        }
+      }
+    }
+  }
+}
