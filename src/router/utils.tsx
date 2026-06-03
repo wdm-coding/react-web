@@ -1,8 +1,9 @@
 import { lazy } from 'react'
 import { Navigate } from 'react-router-dom'
 import { componentMap } from './componentMap'
-export const formatRoutes = (routes: any[]) => {
-  return routes.map((item) => {
+import { MenuItem } from './types'
+export const formatRoutes = (menuItems: MenuItem[]) => {
+  return menuItems.map((item) => {
     const route: any = {}
     route.path = item.path
     if (item.children?.length) {

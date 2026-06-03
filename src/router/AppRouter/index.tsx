@@ -1,73 +1,52 @@
 import { useRoutes, Navigate } from 'react-router-dom'
-import { lazy, Suspense } from 'react'
+import { Suspense, useMemo } from 'react'
 import { formatRoutes } from '@/router/utils'
 import { useUserStore } from '@/store/userStore'
-import NotFound from '@/pages/NotFound'
-import ClientLayout from '@/layouts/ClientLayout'
-import ManageLayout from '@/layouts/ManageLayout'
-import LoginGuard from '@/router/LoginGuard'
+import { staticRoutes } from '@/router'
 import AuthGuard from '@/router/AuthGuard'
-
-const ClientHome = lazy(() => import(`@/pages/Client/Home/index.tsx`))
-const ClientAbout = lazy(() => import(`@/pages/Client/About/index.tsx`))
-const Login = lazy(() => import(`@/pages/Login/index.tsx`))
+import NotFound from '@/pages/NotFound'
+import ManageLayout from '@/layouts/ManageLayout'
+import { Spin } from 'antd'
 const AppRouter = () => {
   const menuTree = useUserStore((s) => s.menuTree)
-  const staticRoutes = [
-    {
-      index: true,
-      element: <Navigate to='/client' replace />
-    },
-    {
-      path: '/client',
-      element: <ClientLayout />,
-      children: [
-        {
-          index: true,
-          element: <Navigate to='/client/home' replace />
-        },
-        {
-          path: 'home',
-          element: <ClientHome />
-        },
-        {
-          path: 'about',
-          element: <ClientAbout />
-        }
-      ]
-    },
-    {
-      path: '/login',
-      element: (
-        <LoginGuard>
-          <Login />
-        </LoginGuard>
-      )
+  const routes = useMemo(() => {
+    const dynamicRoutes = []
+    if (menuTree && menuTree.length > 0) {
+      const formattedRoutes = formatRoutes(menuTree)
+      if (formattedRoutes.length > 0) {
+        dynamicRoutes.push({
+          path: 'manage',
+          element: <ManageLayout />,
+          children: [
+            {
+              index: true,
+              element: <Navigate to={menuTree[0].path} replace />
+            },
+            ...formattedRoutes
+          ]
+        })
+      }
     }
-  ]
-  if (menuTree?.length) {
-    staticRoutes.push({
-      path: 'manage',
-      element: <ManageLayout />,
-      children: [
-        {
-          index: true,
-          element: <Navigate to={menuTree[0].path} replace />
-        },
-        ...formatRoutes(menuTree)
-      ]
-    })
-  }
-  const routes = useRoutes([
-    ...staticRoutes,
-    { path: '/404', element: <NotFound /> },
-    { path: '*', element: <Navigate to='/404' replace /> }
-  ])
+    return [
+      ...staticRoutes,
+      ...dynamicRoutes,
+      { path: '/404', element: <NotFound /> },
+      { path: '*', element: <Navigate to='/404' replace /> }
+    ]
+  }, [menuTree])
+  const element = useRoutes(routes)
 
   return (
-    <Suspense fallback='加载中...'>
-      <AuthGuard>{routes}</AuthGuard>
+    <Suspense fallback={<Fallback />}>
+      <AuthGuard>{element}</AuthGuard>
     </Suspense>
+  )
+}
+const Fallback = () => {
+  return (
+    <div className='w-full h-[100vh] flex items-center justify-center'>
+      <Spin size='large' />
+    </div>
   )
 }
 export default AppRouter
