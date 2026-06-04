@@ -1,30 +1,30 @@
-import styles from './index.module.scss';
-import { Button, Form, Input } from 'antd';
-import type { FormProps } from 'antd';
-import { useUserStore } from '@/store/userStore';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import styles from './index.module.scss'
+import { Button, Form, Input } from 'antd'
+import type { FormProps } from 'antd'
+import { useUserStore } from '@/store/userStore'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 type FieldType = {
-  username: string;
-  password: string;
-};
+  username: string
+  password: string
+}
 const stylesObject: FormProps['styles'] = {
   label: {
-    color: '#fff',
-  },
-};
+    color: '#fff'
+  }
+}
 const LoginPage: React.FC = () => {
-  const [searchParams] = useSearchParams();
-  const redirect = searchParams.get('redirect');
-  const navigate = useNavigate();
-  const userLogin = useUserStore((s) => s.userLogin);
+  const [searchParams] = useSearchParams()
+  const redirect = searchParams.get('redirect')
+  const navigate = useNavigate()
+  const userLogin = useUserStore((s) => s.userLogin)
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
     try {
-      const loginAfter = await userLogin(values);
-      navigate(redirect || loginAfter, { replace: true });
+      const loginAfter = await userLogin(values)
+      navigate(redirect || loginAfter, { replace: true })
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
   return (
     <div>
       <Form
@@ -34,7 +34,7 @@ const LoginPage: React.FC = () => {
         styles={stylesObject}
         initialValues={{
           username: 'admin',
-          password: '123456',
+          password: '123456'
         }}
         onFinish={onFinish}
         autoComplete='off'
@@ -53,7 +53,10 @@ const LoginPage: React.FC = () => {
           name='password'
           rules={[{ required: true, message: '请输入密码！' }]}
         >
-          <Input.Password placeholder='请输入密码' autoComplete='new-password' />
+          <Input.Password
+            placeholder='请输入密码'
+            autoComplete='new-password'
+          />
         </Form.Item>
 
         <Form.Item label={null}>
@@ -67,6 +70,6 @@ const LoginPage: React.FC = () => {
         </Form.Item>
       </Form>
     </div>
-  );
-};
-export default LoginPage;
+  )
+}
+export default LoginPage

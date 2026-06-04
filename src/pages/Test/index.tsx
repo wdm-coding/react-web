@@ -12,6 +12,6 @@ const Test: React.FC = () => {
       <h1>Test</h1>
       <h1>Test</h1>
     </div>
-  );
-};
-export default Test;
+  )
+}
+export default Test

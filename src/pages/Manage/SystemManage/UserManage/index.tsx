@@ -3,6 +3,6 @@ const UserManage: React.FC = () => {
     <div>
       <h1>UserManage</h1>
     </div>
-  );
-};
-export default UserManage;
+  )
+}
+export default UserManage

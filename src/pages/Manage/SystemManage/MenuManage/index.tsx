@@ -3,6 +3,6 @@ const MenuManage: React.FC = () => {
     <div>
       <h1>MenuManage</h1>
     </div>
-  );
-};
-export default MenuManage;
+  )
+}
+export default MenuManage

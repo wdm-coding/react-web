@@ -1,20 +1,20 @@
-import styles from './index.module.scss';
-import { Button, Form, Input } from 'antd';
-import type { FormProps } from 'antd';
+import styles from './index.module.scss'
+import { Button, Form, Input } from 'antd'
+import type { FormProps } from 'antd'
 type FieldType = {
-  username: string;
-  password: string;
-  confirmPassword?: string;
-};
+  username: string
+  password: string
+  confirmPassword?: string
+}
 const stylesObject: FormProps['styles'] = {
   label: {
-    color: '#fff',
-  },
-};
+    color: '#fff'
+  }
+}
 const RegisterPage: React.FC = () => {
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
-    console.log(values);
-  };
+    console.log(values)
+  }
   return (
     <div>
       <Form
@@ -24,7 +24,7 @@ const RegisterPage: React.FC = () => {
         styles={stylesObject}
         initialValues={{
           username: 'admin',
-          password: '123456',
+          password: '123456'
         }}
         onFinish={onFinish}
         autoComplete='off'
@@ -65,6 +65,6 @@ const RegisterPage: React.FC = () => {
         </Form.Item>
       </Form>
     </div>
-  );
-};
-export default RegisterPage;
+  )
+}
+export default RegisterPage

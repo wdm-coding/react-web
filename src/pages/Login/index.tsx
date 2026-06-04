@@ -1,15 +1,15 @@
-import styles from './index.module.scss';
-import logo from '@/assets/images/common/logo.jpeg';
-import LoginPage from './modules/LoginPage';
-import RegisterPage from './modules/RegisterPage';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import styles from './index.module.scss'
+import logo from '@/assets/images/common/logo.jpeg'
+import LoginPage from './modules/LoginPage'
+import RegisterPage from './modules/RegisterPage'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 const Login: React.FC = () => {
-  const navigate = useNavigate();
-  const [isLoginPage, setIsLoginPage] = useState(true);
+  const navigate = useNavigate()
+  const [isLoginPage, setIsLoginPage] = useState(true)
   const toggleLoginPage = () => {
-    setIsLoginPage(!isLoginPage);
-  };
+    setIsLoginPage(!isLoginPage)
+  }
   return (
     <div className={styles.container}>
       <div></div>
@@ -25,7 +25,11 @@ const Login: React.FC = () => {
           </span>
         </div>
         <div className={styles.formContainer}>
-          {isLoginPage ? <LoginPage></LoginPage> : <RegisterPage></RegisterPage>}
+          {isLoginPage ? (
+            <LoginPage></LoginPage>
+          ) : (
+            <RegisterPage></RegisterPage>
+          )}
         </div>
         <div className='flex flex-col justify-between items-center'>
           <div
@@ -45,6 +49,6 @@ const Login: React.FC = () => {
         </div>
       </div>
     </div>
-  );
-};
-export default Login;
+  )
+}
+export default Login

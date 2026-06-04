@@ -63,7 +63,7 @@ export default [
           trailingComma: 'none'
         }
       ],
-      '@typescript-eslint/no-unused-vars': 'warn',
+      '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
       'no-case-declarations': 'off',
       'no-useless-catch': 'off'
