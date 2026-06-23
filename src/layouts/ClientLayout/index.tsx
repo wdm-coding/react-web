@@ -1,30 +1,43 @@
-import { Outlet, Link } from 'react-router-dom';
-import { Space, Button } from 'antd';
-import { useUserStore } from '@/store/userStore';
+import { Outlet } from 'react-router-dom'
+import styles from './index.module.scss'
+import Header from './components/Header'
+import SimpleBar from 'simplebar-react'
+import 'simplebar-react/dist/simplebar.min.css'
+import { useEffect, useRef } from 'react'
 const ClientLayout = () => {
-  const userStore = useUserStore();
-  const onLogout = async () => {
-    const isLogout = await userStore.userLogout();
-    if (isLogout) {
-      window.location.href = '/';
+  const scrollableNodeRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const node = scrollableNodeRef.current
+    if (node) {
+      // 定义滚动处理函数
+      const handleScroll = () => {}
+      // 绑定滚动事件
+      node.addEventListener('scroll', handleScroll)
+      // 清理函数：组件卸载时移除监听，避免内存泄漏
+      return () => {
+        node.removeEventListener('scroll', handleScroll)
+      }
     }
-  };
+  }, [])
   return (
-    <div>
-      <div className='header'>
-        {userStore.userInfo && (
-          <Button type='primary' onClick={onLogout}>
-            退出登录
-          </Button>
-        )}
-      </div>
-      <Space>
-        <Link to='/client/home'>首页</Link>
-        <Link to='/client/about'>关于我</Link>
-        <Link to='/manage'>管理端</Link>
-      </Space>
-      <Outlet />
+    <div className={styles.clientLayout}>
+      <Header />
+      <SimpleBar
+        style={{ maxHeight: 'calc(100vh - 75px)' }}
+        scrollableNodeProps={{ ref: scrollableNodeRef }}
+      >
+        <div className={styles.contentContainer}>
+          <Outlet />
+        </div>
+        <div className={styles.footerContainer}>
+          <div>ICP备案/许可证号：陇ICP备19000165号</div>
+          <div>
+            建议使用Edge浏览器 (79以上版本)，Chrome浏览器
+            (73.0以上版本)，1440*900以上分辨率浏览本站
+          </div>
+        </div>
+      </SimpleBar>
     </div>
-  );
-};
-export default ClientLayout;
+  )
+}
+export default ClientLayout
