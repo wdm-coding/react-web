@@ -1,10 +1,13 @@
 import styles from './index.module.scss'
 import { useUserStore } from '@/store/userStore'
 import logo from '@/assets/images/common/logo.jpeg'
+import NavMenus from './NavMenus'
+import { useNavigate } from 'react-router-dom'
 const Header = () => {
-  const userStore = useUserStore()
+  const { userInfo, userLogout } = useUserStore()
+  const navigate = useNavigate()
   const onLogout = async () => {
-    const isLogout = await userStore.userLogout()
+    const isLogout = await userLogout()
     if (isLogout) {
       window.location.href = '/'
     }
@@ -15,8 +18,23 @@ const Header = () => {
         <img src={logo} alt='logo' />
         <span>AINative</span>
       </div>
-      <div className={styles.navMenuContainer}>navMenu</div>
-      <div className={styles.rightAction}>rightAction</div>
+      <div className={styles.navMenuContainer}>
+        <NavMenus />
+      </div>
+      <div className={styles.rightAction}>
+        {userInfo ? (
+          <>
+            <div className={styles.username}>{userInfo.username}</div>
+            <div className={styles.logoutBtn} onClick={onLogout}>
+              退出登录
+            </div>
+          </>
+        ) : (
+          <div onClick={() => navigate('/login')} className={styles.loginBtn}>
+            登录
+          </div>
+        )}
+      </div>
     </div>
   )
 }

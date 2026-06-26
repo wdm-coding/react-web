@@ -6,6 +6,7 @@ import { staticRoutes } from '@/router'
 import AuthGuard from '@/router/AuthGuard'
 import NotFound from '@/pages/NotFound'
 import ManageLayout from '@/layouts/ManageLayout'
+import ReactPage from '@/pages/Client/ReactPage'
 import { Spin } from 'antd'
 const AppRouter = () => {
   const menuTree = useUserStore((s) => s.menuTree)
@@ -27,8 +28,21 @@ const AppRouter = () => {
         })
       }
     }
+    const navList = staticRoutes.map((item) => {
+      if (item.path === '/client') {
+        return {
+          ...item,
+          children: [
+            ...item.children,
+            { path: 'reactPage', element: <ReactPage /> }
+          ]
+        }
+      } else {
+        return item
+      }
+    })
     return [
-      ...staticRoutes,
+      ...navList,
       ...dynamicRoutes,
       { path: '/404', element: <NotFound /> },
       { path: '*', element: <Navigate to='/404' replace /> }

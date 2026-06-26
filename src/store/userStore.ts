@@ -38,6 +38,7 @@ export const useUserStore = create<UserState>()(
           set({ menuTree: data })
         }
       },
+      // 登录 + 获取用户信息 + 获取菜单树
       userLogin: async (loginParams: Record<string, any>) => {
         try {
           await get().fetchLogin(loginParams)
@@ -48,7 +49,8 @@ export const useUserStore = create<UserState>()(
           clearCache()
           throw error
         }
-      }, // 登录 + 获取用户信息
+      },
+      // 退出登录
       userLogout: async () => {
         try {
           const { code } = await AuthApi.logout()

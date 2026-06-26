@@ -15,8 +15,8 @@ export const staticRoutes: any[] = [
     element: <ClientLayout />,
     children: [
       { index: true, element: <Navigate to='/client/home' replace /> },
-      { path: 'home', element: <ClientHome /> },
-      { path: 'about', element: <ClientAbout /> }
+      { path: 'home', element: <ClientHome />, name: '首页' },
+      { path: 'about', element: <ClientAbout />, name: '关于我们' }
     ]
   },
   {
