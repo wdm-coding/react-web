@@ -34,10 +34,6 @@ const Header = () => {
       <div className={styles.rightAction}>
         {userInfo ? (
           <>
-            {/* 
-            <div className={styles.logoutBtn} onClick={onLogout}>
-              退出登录
-            </div> */}
             <div className={styles.username}>{userInfo.username}</div>
             <Dropdown
               menu={{
