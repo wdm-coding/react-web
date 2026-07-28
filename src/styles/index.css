@@ -1,2 +1,23 @@
-@import "tailwindcss";
+/* 字体 */
+@font-face {
+  font-family: 'almmsht';
+  src: url('@/assets/font/AlimamaShuHeiTi.ttf');
+}
+@font-face {
+  font-family: 'nscjkblack';
+  src: url('@/assets/font/NotoSansCJKBlack.otf');
+}
+@font-face {
+  font-family: 'ybtth';
+  src: url('@/assets/font/YousheBiaoTiHei.ttf');
+}
+@font-face {
+  font-family: 'shsn';
+  src: url('@/assets/font/SHS-n.TTF');
+}
+@font-face {
+  font-family: 'shsm';
+  src: url('@/assets/font/SHS-M.TTF');
+}
+@import 'tailwindcss';
 @import './index.scss';

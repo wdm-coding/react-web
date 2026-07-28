@@ -16,15 +16,18 @@
     }
     span {
       font-size: 20px;
-      font-weight: bold;
+      font-family: 'shsm';
+      white-space: nowrap;
     }
   }
   .navMenuContainer {
     min-width: 0;
     flex: 1;
     .navMenuWrapper {
-      border: 1px solid #e61e1e;
       padding: 0 20px;
+      :global(.ant-menu-horizontal) {
+        border: none;
+      }
     }
   }
   .rightAction {

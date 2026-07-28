@@ -4,16 +4,20 @@ type MenuItem = {
   name: string
   [key: string]: any
 }
-export const formattedMenus = (menus: MenuItem[]) => {
+export const formattedMenus = (menus: MenuItem[], prefixPath = '/client') => {
   return menus
     .filter((item) => !item.index)
     .map((item) => {
       const menuItem: any = {
         label: item.name,
-        key: item.path
+        key: `${prefixPath}/${item.path}`,
+        path: `${prefixPath}/${item.path}`
       }
       if (item.children && item.children.length > 0) {
-        menuItem.children = formattedMenus(item.children)
+        menuItem.children = formattedMenus(
+          item.children,
+          `${prefixPath}/${item.path}`
+        )
       }
       return menuItem
     })
