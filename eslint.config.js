@@ -60,7 +60,9 @@ export default [
           printWidth: 80,
           semi: false,
           singleQuote: true,
-          trailingComma: 'none'
+          trailingComma: 'none',
+          useTabs: false,
+          tabWidth: 2
         }
       ],
       '@typescript-eslint/no-unused-vars': 'off',

@@ -1,4 +1,4 @@
-import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { matchRoutes, Outlet, useLocation, useNavigate } from 'react-router'
 import { Button, Dropdown, Layout, Menu } from 'antd'
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons'
 import SimpleBar from 'simplebar-react'
@@ -8,7 +8,7 @@ import 'simplebar-react/dist/simplebar.min.css'
 import styles from './index.module.scss'
 import { useUserStore } from '@/store/userStore'
 import type { MenuProps } from 'antd'
-import { formattedMenus } from '@/utils/menu'
+import { formattedBreadcrumbs, formattedMenus } from '@/utils/menu'
 type MenuItem = Required<MenuProps>['items'][number]
 const { Sider } = Layout
 const ManageLayout = () => {
@@ -19,6 +19,12 @@ const ManageLayout = () => {
     () => formattedMenus(menuTree, '/manage'),
     [menuTree]
   )
+  const breadcrumbItems: any[] = useMemo(
+    () => formattedBreadcrumbs(menuTree),
+    [menuTree]
+  )
+  const matchedRoutes = matchRoutes(breadcrumbItems, '/systemManage/menuManage')
+  console.log(breadcrumbItems, matchedRoutes)
   const [collapsed, setCollapsed] = useState(false)
   const scrollableNodeRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
@@ -57,7 +63,7 @@ const ManageLayout = () => {
           </div>
           <Menu
             mode='inline'
-            defaultSelectedKeys={[current]}
+            selectedKeys={[current]}
             items={sideItems}
             onClick={onClick}
           />
