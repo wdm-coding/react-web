@@ -7,7 +7,7 @@ import { Dropdown } from 'antd'
 const Header = () => {
   const { userInfo, userLogout } = useUserStore()
   const navigate = useNavigate()
-  const onLogout = async ({ key }: { key: string }) => {
+  const onDropdownClick = async ({ key }: { key: string }) => {
     switch (key) {
       case 'logout':
         const isLogout = await userLogout()
@@ -38,10 +38,10 @@ const Header = () => {
             <Dropdown
               menu={{
                 items: [
-                  { label: '退出登录', key: 'logout' },
-                  { label: '后台管理', key: 'admin' }
+                  { label: '后台管理', key: 'admin' },
+                  { label: '退出登录', key: 'logout' }
                 ],
-                onClick: onLogout
+                onClick: onDropdownClick
               }}
             >
               <img

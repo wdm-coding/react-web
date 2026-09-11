@@ -5,11 +5,16 @@ import {
   ProTable
 } from '@ant-design/pro-components'
 import { Button, Space } from 'antd'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { PlusOutlined } from '@ant-design/icons'
 import UserApi from '@/api/user.api'
+import dayjs from 'dayjs'
+import UserForm from './modules/UserForm'
+import RDrawer from '@/components/RDrawer'
+
 const UserManage: React.FC = () => {
+  const [open, setOpen] = useState(false)
   const actionRef = useRef<ActionType>(null)
   const navigate = useNavigate()
   const columns = [
@@ -49,7 +54,10 @@ const UserManage: React.FC = () => {
     {
       title: '创建时间',
       dataIndex: 'createdAt',
-      key: 'createdAt'
+      key: 'createdAt',
+      render: (text) => {
+        return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : ''
+      }
     },
     {
       title: '操作',
@@ -67,6 +75,9 @@ const UserManage: React.FC = () => {
       }
     }
   ]
+  const onClose = () => {
+    setOpen(false)
+  }
   return (
     <div>
       <PageContainer
@@ -100,7 +111,7 @@ const UserManage: React.FC = () => {
                 key='button'
                 icon={<PlusOutlined />}
                 onClick={() => {
-                  actionRef.current?.reload()
+                  setOpen(true)
                 }}
                 type='primary'
               >
@@ -135,6 +146,9 @@ const UserManage: React.FC = () => {
           />
         </ProCard>
       </PageContainer>
+      <RDrawer title='用户表单' open={open} onClose={onClose}>
+        <UserForm />
+      </RDrawer>
     </div>
   )
 }

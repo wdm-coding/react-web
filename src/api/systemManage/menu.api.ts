@@ -1,6 +1,8 @@
-import { Get } from '@/services/http.decorator';
+import { Get } from '@/services/http.decorator'
 class MenuApi {
   @Get('/menu/tree')
-  static async getMenuTree(_params?: Record<string, any>): Promise<any> {}
+  static async getMenuTree(_params?: Record<string, any>): Promise<any> {
+    return undefined as any
+  }
 }
-export default MenuApi;
+export default MenuApi
