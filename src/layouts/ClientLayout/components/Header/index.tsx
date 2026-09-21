@@ -26,7 +26,7 @@ const Header = () => {
     <div className={styles.headerContainer}>
       <div className={styles.logo}>
         <img src={logo} alt='logo' />
-        <span>AI 问答系统</span>
+        <span>React 门户平台</span>
       </div>
       <div className={styles.navMenuContainer}>
         <NavMenus />

@@ -3,7 +3,7 @@ import { lazy } from 'react'
 import ClientLayout from '@/layouts/ClientLayout'
 import LoginGuard from './LoginGuard'
 const ClientHome = lazy(() => import('@/pages/Client/Home/index.tsx'))
-const ClientAbout = lazy(() => import('@/pages/Client/About/index.tsx'))
+const RegisterHome = lazy(() => import('@/pages/Client/RegisterHome/index.tsx'))
 const Login = lazy(() => import('@/pages/Login/index.tsx'))
 export const staticRoutes: any[] = [
   {
@@ -16,7 +16,7 @@ export const staticRoutes: any[] = [
     children: [
       { index: true, element: <Navigate to='/client/home' replace /> },
       { path: 'home', element: <ClientHome />, name: '首页' },
-      { path: 'about', element: <ClientAbout />, name: '关于我们' }
+      { path: 'registerHome', element: <RegisterHome />, name: '登记首页' }
     ]
   },
   {
@@ -29,4 +29,10 @@ export const staticRoutes: any[] = [
   }
 ]
 
-export const whitePaths = ['/', '/login', '/client', '/client/home']
+export const whitePaths = [
+  '/',
+  '/login',
+  '/client',
+  '/client/home',
+  '/client/registerHome'
+]
