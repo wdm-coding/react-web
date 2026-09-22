@@ -15,7 +15,9 @@ interface RegisterPublicItem {
   canObjectionApply: boolean
 }
 
-const RegisterPublic: React.FC<{ dataSource: RegisterPublicItem[] }> = ({ dataSource }) => {
+const RegisterPublic: React.FC<{ dataSource: RegisterPublicItem[] }> = ({
+  dataSource
+}) => {
   return (
     <div className={styles.registerPublicWrapper}>
       <div className={styles.registerPublicTitle}>登记公示</div>
@@ -32,7 +34,10 @@ const RegisterPublic: React.FC<{ dataSource: RegisterPublicItem[] }> = ({ dataSo
             <div className={styles.registerPublicItem}>
               <div className={styles.titleWrapper}>
                 <img
-                  src={new URL('@/assets/images/common/logo.jpeg', import.meta.url).href}
+                  src={
+                    new URL('@/assets/images/common/logo.jpeg', import.meta.url)
+                      .href
+                  }
                   alt=''
                   style={{ width: 32, height: 32, marginRight: 10 }}
                 />
@@ -41,7 +46,9 @@ const RegisterPublic: React.FC<{ dataSource: RegisterPublicItem[] }> = ({ dataSo
               <div className={styles.fieldWrapper}>
                 <div className={styles.fieldLabel}>登记类型</div>
                 <div className={styles.fieldValue}>
-                  {item?.dataRegistType === '1' ? '公共数据资源' : '公共数据产品和服务'}
+                  {item?.dataRegistType === '1'
+                    ? '公共数据资源'
+                    : '公共数据产品和服务'}
                 </div>
               </div>
               <div className={styles.fieldWrapper}>

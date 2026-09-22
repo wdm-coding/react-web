@@ -1,30 +1,18 @@
-import { matchRoutes, Outlet, useLocation, useNavigate } from 'react-router'
-import { Button, Dropdown, Layout, Menu } from 'antd'
+import { useNavigate } from 'react-router-dom'
+import OutletPage from '@/layouts/components/OutletPage'
+import { Button, Dropdown, Layout } from 'antd'
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons'
 import SimpleBar from 'simplebar-react'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import logo from '@/assets/images/common/logo.jpeg'
 import 'simplebar-react/dist/simplebar.min.css'
 import styles from './index.module.scss'
 import { useUserStore } from '@/store/userStore'
-import type { MenuProps } from 'antd'
-import { formattedBreadcrumbs, formattedMenus } from '@/utils/menu'
-type MenuItem = Required<MenuProps>['items'][number]
+import Menus from '@/layouts/components/Menus'
 const { Sider } = Layout
 const ManageLayout = () => {
-  const location = useLocation()
   const navigate = useNavigate()
-  const { userInfo, userLogout, menuTree } = useUserStore()
-  const sideItems: MenuItem[] = useMemo(
-    () => formattedMenus(menuTree, '/manage'),
-    [menuTree]
-  )
-  const breadcrumbItems: any[] = useMemo(
-    () => formattedBreadcrumbs(menuTree),
-    [menuTree]
-  )
-  const matchedRoutes = matchRoutes(breadcrumbItems, '/systemManage/menuManage')
-  console.log(breadcrumbItems, matchedRoutes)
+  const { userInfo, userLogout } = useUserStore()
   const [collapsed, setCollapsed] = useState(false)
   const scrollableNodeRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
@@ -40,13 +28,6 @@ const ManageLayout = () => {
       }
     }
   }, [])
-  const current = useMemo(
-    () => location.pathname.split('?').pop() || '/manage/dashboard',
-    [location.pathname]
-  )
-  const onClick: MenuProps['onClick'] = (item) => {
-    navigate(item.key)
-  }
   const onLogout = async () => {
     const isLogout = await userLogout()
     if (isLogout) {
@@ -61,11 +42,28 @@ const ManageLayout = () => {
             <img src={logo} alt='logo' />
             {!collapsed && <span>AI 问答后台管理系统</span>}
           </div>
-          <Menu
+          <Menus
             mode='inline'
-            selectedKeys={[current]}
-            items={sideItems}
-            onClick={onClick}
+            list={[
+              {
+                label: '数据看板',
+                key: '/manage/dashboard'
+              },
+              {
+                label: '系统管理',
+                key: '/manage/systemManage',
+                children: [
+                  {
+                    label: '用户管理',
+                    key: '/manage/systemManage/userManage'
+                  },
+                  {
+                    label: '菜单管理',
+                    key: '/manage/systemManage/menuManage'
+                  }
+                ]
+              }
+            ]}
           />
         </Sider>
         <Layout className={styles.rightWrapper}>
@@ -88,7 +86,7 @@ const ManageLayout = () => {
               >
                 返回客户端
               </Button>
-              <div className={styles.username}>{userInfo.username}</div>
+              <div className={styles.username}>{userInfo?.username}</div>
               <Dropdown
                 menu={{
                   items: [{ label: '退出登录', key: 'logout' }],
@@ -108,7 +106,7 @@ const ManageLayout = () => {
             scrollableNodeProps={{ ref: scrollableNodeRef }}
           >
             <div className={styles.contentContainer}>
-              <Outlet />
+              <OutletPage />
             </div>
           </SimpleBar>
         </Layout>

@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom'
+import OutletPage from '@/layouts/components/OutletPage'
 import styles from './index.module.scss'
 import Header from './components/Header'
 import SimpleBar from 'simplebar-react'
@@ -27,7 +27,7 @@ const ClientLayout = () => {
         scrollableNodeProps={{ ref: scrollableNodeRef }}
       >
         <div className={styles.contentContainer}>
-          <Outlet />
+          <OutletPage />
         </div>
         <div className={styles.footerContainer}>
           <div>ICP备案/许可证号：陇ICP备19000165号</div>

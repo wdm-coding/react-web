@@ -16,7 +16,10 @@ export const formattedMenus = (menus: MenuItem[], prefixPath = '/client') => {
         path: `${prefixPath}/${item.path}`
       }
       if (item.children && item.children.length > 0) {
-        menuItem.children = formattedMenus(item.children, `${prefixPath}/${item.path}`)
+        menuItem.children = formattedMenus(
+          item.children,
+          `${prefixPath}/${item.path}`
+        )
       }
       return menuItem
     })

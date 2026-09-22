@@ -1,13 +1,11 @@
 import { useRoutes, Navigate } from 'react-router-dom'
 import { Suspense, useMemo } from 'react'
-import { formatRoutes } from '@/router/utils'
+import { transformRoutes } from '@/router/utils'
 import { useUserStore } from '@/store/userStore'
-import { staticRoutes } from '@/router'
-import AuthGuard from '@/router/AuthGuard'
-import NotFound from '@/pages/NotFound'
-import ManageLayout from '@/layouts/ManageLayout'
+import AuthGuard from '@/router/Guard/AuthGuard'
 import { Spin } from 'antd'
 import { App } from 'antd'
+import { list } from '@/router'
 const AppRouter = () => {
   const staticFunction = App.useApp()
   window.$message = staticFunction.message
@@ -15,37 +13,14 @@ const AppRouter = () => {
   window.$modal = staticFunction.modal
   const menuTree = useUserStore((s) => s.menuTree)
   const routes = useMemo(() => {
-    const dynamicRoutes = []
-    if (menuTree && menuTree.length > 0) {
-      const formattedRoutes = formatRoutes(menuTree)
-      if (formattedRoutes.length > 0) {
-        dynamicRoutes.push({
-          path: 'manage',
-          element: <ManageLayout />,
-          children: [
-            {
-              index: true,
-              element: <Navigate to={menuTree[0].path} replace />
-            },
-            ...formattedRoutes
-          ]
-        })
-      }
-    }
-    const navList = staticRoutes.map((item) => {
-      if (item.path === '/client') {
-        return {
-          ...item,
-          children: [...item.children]
-        }
-      } else {
-        return item
-      }
-    })
+    const appRoutes = transformRoutes(list)
+    console.log('appRoutes', appRoutes)
     return [
-      ...navList,
-      ...dynamicRoutes,
-      { path: '/404', element: <NotFound /> },
+      {
+        index: true,
+        element: <Navigate to='/client' replace />
+      },
+      ...appRoutes,
       { path: '*', element: <Navigate to='/404' replace /> }
     ]
   }, [menuTree])
