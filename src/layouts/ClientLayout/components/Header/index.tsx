@@ -44,11 +44,7 @@ const Header = () => {
                 onClick: onDropdownClick
               }}
             >
-              <img
-                src={logo}
-                alt='logo'
-                style={{ width: 40, height: 40, borderRadius: 50 }}
-              />
+              <img src={logo} alt='logo' style={{ width: 40, height: 40, borderRadius: 50 }} />
             </Dropdown>
           </>
         ) : (

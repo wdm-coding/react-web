@@ -10,26 +10,16 @@ const NavMenus = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const items: MenuItem[] = useMemo(() => {
-    const staticNav = staticRoutes.find(
-      (item) => item.path === '/client'
-    ).children
+    const staticNav = staticRoutes.find((item) => item.path === '/client').children
     return formattedMenus(staticNav)
   }, [staticRoutes])
-  const current = useMemo(
-    () => location.pathname.split('?').pop() || '/client/home',
-    [location.pathname]
-  )
+  const current = useMemo(() => location.pathname.split('?').pop() || '/client/home', [location.pathname])
   const onClick: MenuProps['onClick'] = (item) => {
     navigate(item.key)
   }
   return (
     <div className={styles.navMenuWrapper}>
-      <Menu
-        mode='horizontal'
-        items={items}
-        onClick={onClick}
-        selectedKeys={[current]}
-      />
+      <Menu mode='horizontal' items={items} onClick={onClick} selectedKeys={[current]} />
     </div>
   )
 }
