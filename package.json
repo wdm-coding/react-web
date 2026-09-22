@@ -12,15 +12,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@ant-design/pro-components": "^3.0.0-beta.1",
+    "@ant-design/pro-components": "^2.8.10",
     "@tailwindcss/vite": "^4.3.0",
     "@tanstack/react-query": "^5.101.4",
-    "antd": "^6.6.3",
+    "antd": "^5.29.3",
     "antd-img-crop": "^4.30.0",
     "axios": "^1.16.1",
     "dayjs": "^1.11.23",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "react-fast-marquee": "^1.6.5",
     "react-router-dom": "^7.15.1",
     "reflect-metadata": "^0.2.2",
     "simplebar-react": "^3.3.2",

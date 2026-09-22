@@ -1,0 +1,29 @@
+.marqueeWrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+
+  .marqueeTrack {
+    display: flex;
+    width: max-content;
+    will-change: transform; // 提示浏览器提升为合成层
+    animation: marquee-scroll var(--marquee-duration) linear infinite;
+
+    // 针对包含大量图片的场景，开启内容可见性优化
+    content-visibility: auto;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: translate3d(0, 0, 0); // 强制开启 GPU 加速
+    transition: all 2s ease-in-out;
+  }
+}
+
+@keyframes marquee-scroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    // 向左移动自身宽度的 50%（因为我们复制了一份，刚好移动一半）
+    transform: translate3d(-50%, 0, 0);
+  }
+}

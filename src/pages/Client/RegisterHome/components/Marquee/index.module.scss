@@ -1,0 +1,10 @@
+.marqueeWrapper {
+  width: 100%;
+  overflow: hidden;
+  .marqueeTrack {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+}
