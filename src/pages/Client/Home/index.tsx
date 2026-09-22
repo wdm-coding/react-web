@@ -1,8 +1,8 @@
 import { Card } from 'antd'
 import { useUserStore } from '@/store/userStore'
-import ScrollList from '@/pages/Client/RegisterHome/components/ScrollList'
 import styles from './index.module.scss'
 import { registerPublicDataSource } from '@/pages/Client/RegisterHome/db/registerPublic'
+import HorizontalVirtualLoop from '@/components/HorizontalVirtualLoop'
 const Home: React.FC = () => {
   const username = useUserStore((state) => state.userInfo?.username)
   return (
@@ -11,13 +11,19 @@ const Home: React.FC = () => {
         <div>欢迎来到首页1，{username}</div>
       </Card>
       <div className={styles.scrollListWrapper}>
-        <ScrollList>
-          {registerPublicDataSource.map((item) => (
-            <div className={styles.listItem} key={item.dataRegistId}>
-              {item.dataRegistName}
+        <HorizontalVirtualLoop
+          items={registerPublicDataSource}
+          itemWidth={434}
+          itemGap={20}
+          speed={55}
+          width={1342}
+          height={338}
+          renderItem={(item) => (
+            <div className={styles.registerPublicItem}>
+              {item?.dataRegistName}
             </div>
-          ))}
-        </ScrollList>
+          )}
+        />
       </div>
     </div>
   )

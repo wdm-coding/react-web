@@ -2,12 +2,11 @@
   padding: 20px 0;
   .scrollListWrapper {
     width: 1342px;
-    margin: 0 auto;
-    .listItem {
-      flex-shrink: 0;
-      width: 434px;
-      height: 338px;
-      margin-right: 20px;
+    margin: 20px auto;
+    border: 1px solid #e97f05;
+    .registerPublicItem {
+      width: 100%;
+      height: 100%;
       border: 1px solid #e97f05;
       contain: layout style paint;
     }
