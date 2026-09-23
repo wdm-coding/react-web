@@ -104,7 +104,6 @@ http.interceptors.response.use(
         errorMsg = '网络异常'
         break
     }
-    console.log('错误信息:', errorMsg)
     return Promise.reject(err)
   }
 )

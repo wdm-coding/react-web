@@ -1,8 +1,6 @@
-import { Get } from '@/services/http.decorator'
+import { Get, type RequestFn } from '@/services/http.decorator'
 class MenuApi {
   @Get('/menu/tree')
-  static async getMenuTree(_params?: Record<string, any>): Promise<any> {
-    return undefined as any
-  }
+  static getMenuTree: RequestFn<any, any>
 }
 export default MenuApi

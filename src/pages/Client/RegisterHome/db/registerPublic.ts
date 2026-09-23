@@ -42,7 +42,8 @@ export const registerPublicDataSource = [
     canObjectionApply: true
   },
   {
-    dataRegistName: '甘肃省张掖市山丹县-国家机构-山丹县土地利用现状分类面积汇总情况',
+    dataRegistName:
+      '甘肃省张掖市山丹县-国家机构-山丹县土地利用现状分类面积汇总情况',
     dataRegistType: '1',
     institutionName: '山丹县自然资源局',
     endDate: '2026-10-10T09:33:51.573+0000',
@@ -61,7 +62,8 @@ export const registerPublicDataSource = [
     endDate: '2026-10-10T07:01:32.969+0000',
     serialNumber: '20260920000146',
     startDate: '2026-09-20T07:01:32.969+0000',
-    dataContentIntroduction: '该数据资源为焉支山景区、山丹县马场旅游景区提供运营过程中产生，包含游客人数和收入',
+    dataContentIntroduction:
+      '该数据资源为焉支山景区、山丹县马场旅游景区提供运营过程中产生，包含游客人数和收入',
     publicityStatus: '001',
     dataRegistId: '2097490535869603840',
     publicityInfoId: '2101567420609150976',
@@ -96,7 +98,8 @@ export const registerPublicDataSource = [
     canObjectionApply: true
   },
   {
-    dataRegistName: '甘肃省张掖市肃南自治县-国家机构-智慧“猛屹”融合通信指挥调度平台',
+    dataRegistName:
+      '甘肃省张掖市肃南自治县-国家机构-智慧“猛屹”融合通信指挥调度平台',
     dataRegistType: '1',
     institutionName: '肃南县公安局',
     endDate: '2026-10-08T08:28:31.731+0000',
@@ -110,7 +113,8 @@ export const registerPublicDataSource = [
     canObjectionApply: true
   },
   {
-    dataRegistName: '甘肃省张掖市山丹县-社会保障-社会保险参保缴费企业信息（信用评价）',
+    dataRegistName:
+      '甘肃省张掖市山丹县-社会保障-社会保险参保缴费企业信息（信用评价）',
     dataRegistType: '1',
     institutionName: '山丹县人力资源和社会保障局',
     endDate: '2026-10-08T06:49:14.499+0000',
@@ -158,7 +162,8 @@ export const registerPublicDataSource = [
     endDate: '2026-10-08T02:47:59.218+0000',
     serialNumber: '20260917000128',
     startDate: '2026-09-17T02:47:59.218+0000',
-    dataContentIntroduction: '该数据资源为张掖市全市“甘味”品牌信息，包含企业名称、主要产品等具体信息',
+    dataContentIntroduction:
+      '该数据资源为张掖市全市“甘味”品牌信息，包含企业名称、主要产品等具体信息',
     publicityStatus: '001',
     dataRegistId: '2100416011446001664',
     publicityInfoId: '2100416445915676672',

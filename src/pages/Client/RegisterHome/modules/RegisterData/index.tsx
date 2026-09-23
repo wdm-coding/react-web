@@ -45,6 +45,7 @@ const RegisterData: React.FC<{ dataSource: RegisterDataItem[] }> = ({
           scroll={{ y: 55 * 5 }}
           pagination={false}
           rowClassName='registerDataRow'
+          rowKey={(record) => record.dataRegistId}
         />
       </div>
     </div>
