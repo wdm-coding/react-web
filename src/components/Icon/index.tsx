@@ -10,7 +10,7 @@ interface IconProps {
 const Icon: React.FC<IconProps> = ({ name, rotate, spin = false, style }) => {
   const componentNode = useMemo(() => {
     if (name.startsWith('svg-')) {
-      return getSvgIcon(name)
+      return getSvgIcon(name as SvgIconName)
     } else {
       return getAntdIcon(name as AntdIconName)
     }

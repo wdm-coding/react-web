@@ -7,7 +7,7 @@ import logo from '@/assets/images/common/logo.jpeg'
 import styles from './index.module.scss'
 import { useUserStore } from '@/store/userStore'
 import Menus from '@/layouts/components/Menus'
-import { siderMenus } from './db'
+import { siderMenusItems } from './db.tsx'
 const { Sider } = Layout
 const ManageLayout = () => {
   const navigate = useNavigate()
@@ -27,7 +27,7 @@ const ManageLayout = () => {
             <img src={logo} alt='logo' />
             {!collapsed && <span>AI 问答后台管理系统</span>}
           </div>
-          <Menus className='siderMenu' mode='inline' list={siderMenus} />
+          <Menus className='siderMenu' mode='inline' list={siderMenusItems} />
         </Sider>
         <Layout className={styles.rightWrapper}>
           <div className={styles.headerWrapper}>
