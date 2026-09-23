@@ -9,9 +9,7 @@ npm install axios # 安装axios
 npm install reflect-metadata # 安装reflect-metadata 用于装饰器元数据
 ```
 
-2. 配置axios核心实例+拦截器
-3. 配置核心装饰器工厂 + 各种请求装饰器
-4. 下载对应babel插件
+2. 下载对应babel插件
 
 ```bash
 npm install -D @babel/plugin-syntax-decorators
@@ -20,13 +18,6 @@ npm install -D @babel/plugin-syntax-decorators
 ## 集成Tailwind CSS
 
 npm install tailwindcss @tailwindcss/vite
-
-```js
-import tailwindcss from '@tailwindcss/vite'
-export default defineConfig({
-  plugins: [tailwindcss()]
-})
-```
 
 ## 集成react-router
 
