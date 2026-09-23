@@ -3,11 +3,17 @@ import { useUserStore } from '@/store/userStore'
 import styles from './index.module.scss'
 import { registerPublicDataSource } from '@/pages/Client/RegisterHome/db/registerPublic'
 import HorizontalVirtualLoop from '@/components/HorizontalVirtualLoop'
+import Icon from '@/components/Icon'
 const Home: React.FC = () => {
   const username = useUserStore((state) => state.userInfo?.username)
   return (
     <div className={styles.homeWrapper}>
       <Card className='w-1/3 h-1/3'>
+        <Icon name='svg-vite' />
+        <Icon name='svg-react' />
+        <Icon name='StarOutlined' />
+        <Icon name='StarFilled' />
+        <Icon name='StarTwoTone' />
         <div>欢迎来到首页1，{username}</div>
       </Card>
       <div className={styles.scrollListWrapper}>

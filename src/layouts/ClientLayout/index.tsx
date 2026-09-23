@@ -3,7 +3,7 @@ import styles from './index.module.scss'
 import Header from './Header/index.tsx'
 import { useState } from 'react'
 const ClientLayout = () => {
-  const [isFixed, setIsFixed] = useState(true)
+  const isFixed = true
   const [isScroll, setIsScroll] = useState(false)
   return (
     <div className={styles.clientLayout}>

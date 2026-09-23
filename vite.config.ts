@@ -3,6 +3,7 @@ import react, { reactCompilerPreset } from '@vitejs/plugin-react';
 import babel from '@rolldown/plugin-babel';
 import path from 'path';
 import tailwindcss from '@tailwindcss/vite';
+import svgr from 'vite-plugin-svgr';
 export default defineConfig({
   plugins: [
     react(),
@@ -11,6 +12,7 @@ export default defineConfig({
       plugins: [['@babel/plugin-syntax-decorators', { legacy: true }]],
     }),
     tailwindcss(),
+    svgr({ svgrOptions: { icon: true } }),
   ],
   resolve: {
     alias: {
