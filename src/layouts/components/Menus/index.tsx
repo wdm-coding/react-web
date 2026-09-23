@@ -6,9 +6,10 @@ import { useLocation, useNavigate } from 'react-router-dom'
 type MenuItem = Required<MenuProps>['items'][number]
 interface MenusProps {
   list: MenuItem[]
+  className?: string
   mode?: MenuProps['mode']
 }
-const Menus = ({ list, mode = 'horizontal' }: MenusProps) => {
+const Menus = ({ list, className, mode = 'horizontal' }: MenusProps) => {
   const location = useLocation()
   const navigate = useNavigate()
   const items: MenuItem[] = useMemo(() => list, [list])
@@ -22,6 +23,7 @@ const Menus = ({ list, mode = 'horizontal' }: MenusProps) => {
   return (
     <div className={styles.menuContainer}>
       <Menu
+        className={className}
         mode={mode}
         items={items}
         onClick={onClick}

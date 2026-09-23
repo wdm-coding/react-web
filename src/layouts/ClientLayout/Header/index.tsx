@@ -4,7 +4,13 @@ import logo from '@/assets/images/common/logo.jpeg'
 import Menus from '@/layouts/components/Menus'
 import { useNavigate } from 'react-router-dom'
 import { Dropdown } from 'antd'
-const Header = () => {
+import { navMenus } from './db'
+import classnames from 'classnames'
+interface HeaderProps {
+  isFixed?: boolean
+  isScroll?: boolean
+}
+const Header = ({ isFixed = false, isScroll = false }: HeaderProps) => {
   const { userInfo, userLogout } = useUserStore()
   const navigate = useNavigate()
   const onDropdownClick = async ({ key }: { key: string }) => {
@@ -23,24 +29,18 @@ const Header = () => {
     }
   }
   return (
-    <div className={styles.headerContainer}>
+    <div
+      className={classnames(styles.headerContainer, {
+        [styles.fixedHeader]: isFixed,
+        [styles.scrollHeader]: isScroll
+      })}
+    >
       <div className={styles.logo}>
         <img src={logo} alt='logo' />
         <span>React 门户平台</span>
       </div>
       <div className={styles.navMenuContainer}>
-        <Menus
-          list={[
-            {
-              label: '首页',
-              key: '/client/home'
-            },
-            {
-              label: '用户管理',
-              key: '/client/registerHome'
-            }
-          ]}
-        />
+        <Menus list={navMenus} />
       </div>
       <div className={styles.rightAction}>
         {userInfo ? (

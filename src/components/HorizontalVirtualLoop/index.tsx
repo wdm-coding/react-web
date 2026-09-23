@@ -1,4 +1,11 @@
-import { CSSProperties, ReactNode, useEffect, useRef, useState } from 'react'
+import {
+  CSSProperties,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+  memo
+} from 'react'
 import styles from './index.module.scss'
 
 interface HorizontalVirtualLoopProps<T> {
@@ -22,6 +29,24 @@ interface HorizontalVirtualLoopProps<T> {
   renderItem: (item: T, index: number) => ReactNode
 }
 
+const LoopItem = memo(function LoopItem<T>({
+  item,
+  index,
+  style,
+  renderItem
+}: {
+  item: T
+  index: number
+  style: CSSProperties
+  renderItem: (item: T, index: number) => ReactNode
+}) {
+  return (
+    <div className={styles.loopItem} style={style}>
+      {renderItem(item, index)}
+    </div>
+  )
+})
+
 const HorizontalVirtualLoop = <T,>({
   items,
   itemWidth,
@@ -39,6 +64,7 @@ const HorizontalVirtualLoop = <T,>({
   const offsetRef = useRef(0)
   const hoverRef = useRef(false)
   const startIndexRef = useRef(0)
+  const lastUpdateRef = useRef(0)
   const [startIndex, setStartIndex] = useState(0)
   const [viewportWidth, setViewportWidth] = useState(0)
 
@@ -53,6 +79,7 @@ const HorizontalVirtualLoop = <T,>({
   const cycleWidth = count * slotWidth
   const scrollable = count > 0 && cycleWidth - itemGap > viewportWidth
 
+  // 测量容器宽度
   useEffect(() => {
     const el = containerRef.current
     if (!el) return
@@ -63,16 +90,22 @@ const HorizontalVirtualLoop = <T,>({
     return () => ro.disconnect()
   }, [])
 
+  // rAF 驱动滚动
   useEffect(() => {
     const track = trackRef.current
     if (!track || count === 0 || viewportWidth === 0) return
     if (!scrollable) {
       track.style.transform = ''
+      track.style.willChange = 'auto'
       return
     }
 
+    // 提升为独立合成层，transform 由 GPU 合成器线程处理
+    track.style.willChange = 'transform'
+
     offsetRef.current = 0
     startIndexRef.current = 0
+    lastUpdateRef.current = 0
     setStartIndex(0)
 
     let rafId = 0
@@ -91,7 +124,12 @@ const HorizontalVirtualLoop = <T,>({
         const idx = Math.floor(offset / slotWidth)
         if (idx !== startIndexRef.current) {
           startIndexRef.current = idx
-          setStartIndex(idx)
+          // 节流更新渲染窗口，避免每跨越一个 item 就触发 React 重渲染
+          const nowMs = performance.now()
+          if (nowMs - lastUpdateRef.current > 50) {
+            lastUpdateRef.current = nowMs
+            setStartIndex(idx)
+          }
         }
       }
 
@@ -99,12 +137,15 @@ const HorizontalVirtualLoop = <T,>({
     }
 
     rafId = requestAnimationFrame(step)
-    return () => cancelAnimationFrame(rafId)
+    return () => {
+      cancelAnimationFrame(rafId)
+      track.style.willChange = 'auto'
+    }
   }, [count, scrollable, cycleWidth, slotWidth, speed, viewportWidth])
 
+  // 拖拽处理
   const handleMouseDown = (e: React.MouseEvent) => {
     if (!scrollable) return
-    // 只响应左键
     if (e.button !== 0) return
 
     isDraggingRef.current = true
@@ -125,7 +166,6 @@ const HorizontalVirtualLoop = <T,>({
     const dx = e.clientX - dragStartXRef.current
     let nextOffset = dragStartOffsetRef.current - dx
 
-    // 保持偏移在 [0, cycleWidth) 内，避免无限累加
     if (cycleWidth > 0) {
       nextOffset = nextOffset % cycleWidth
       if (nextOffset < 0) nextOffset += cycleWidth
@@ -141,7 +181,11 @@ const HorizontalVirtualLoop = <T,>({
     const idx = Math.floor(nextOffset / slotWidth)
     if (idx !== startIndexRef.current) {
       startIndexRef.current = idx
-      setStartIndex(idx)
+      const now = performance.now()
+      if (now - lastUpdateRef.current > 50) {
+        lastUpdateRef.current = now
+        setStartIndex(idx)
+      }
     }
   }
 
@@ -200,13 +244,13 @@ const HorizontalVirtualLoop = <T,>({
           const position = scrollable ? startIndex + k : k
           const dataIndex = position % count
           return (
-            <div
+            <LoopItem
               key={position}
-              className={styles.loopItem}
+              item={items[dataIndex]}
+              index={dataIndex}
+              renderItem={renderItem}
               style={{ left: position * slotWidth, width: itemWidth }}
-            >
-              {renderItem(items[dataIndex], dataIndex)}
-            </div>
+            />
           )
         })}
       </div>

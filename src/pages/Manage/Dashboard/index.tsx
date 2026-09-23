@@ -1,6 +1,6 @@
 const Dashboard: React.FC = () => {
   return (
-    <div>
+    <div style={{ height: '120vh' }}>
       <h1>Dashboard</h1>
     </div>
   )

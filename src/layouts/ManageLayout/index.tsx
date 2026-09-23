@@ -2,32 +2,17 @@ import { useNavigate } from 'react-router-dom'
 import OutletPage from '@/layouts/components/OutletPage'
 import { Button, Dropdown, Layout } from 'antd'
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons'
-import SimpleBar from 'simplebar-react'
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import logo from '@/assets/images/common/logo.jpeg'
-import 'simplebar-react/dist/simplebar.min.css'
 import styles from './index.module.scss'
 import { useUserStore } from '@/store/userStore'
 import Menus from '@/layouts/components/Menus'
+import { siderMenus } from './db'
 const { Sider } = Layout
 const ManageLayout = () => {
   const navigate = useNavigate()
   const { userInfo, userLogout } = useUserStore()
   const [collapsed, setCollapsed] = useState(false)
-  const scrollableNodeRef = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    const node = scrollableNodeRef.current
-    if (node) {
-      // 定义滚动处理函数
-      const handleScroll = () => {}
-      // 绑定滚动事件
-      node.addEventListener('scroll', handleScroll)
-      // 清理函数：组件卸载时移除监听，避免内存泄漏
-      return () => {
-        node.removeEventListener('scroll', handleScroll)
-      }
-    }
-  }, [])
   const onLogout = async () => {
     const isLogout = await userLogout()
     if (isLogout) {
@@ -42,29 +27,7 @@ const ManageLayout = () => {
             <img src={logo} alt='logo' />
             {!collapsed && <span>AI 问答后台管理系统</span>}
           </div>
-          <Menus
-            mode='inline'
-            list={[
-              {
-                label: '数据看板',
-                key: '/manage/dashboard'
-              },
-              {
-                label: '系统管理',
-                key: '/manage/systemManage',
-                children: [
-                  {
-                    label: '用户管理',
-                    key: '/manage/systemManage/userManage'
-                  },
-                  {
-                    label: '菜单管理',
-                    key: '/manage/systemManage/menuManage'
-                  }
-                ]
-              }
-            ]}
-          />
+          <Menus className='siderMenu' mode='inline' list={siderMenus} />
         </Sider>
         <Layout className={styles.rightWrapper}>
           <div className={styles.headerWrapper}>
@@ -101,14 +64,7 @@ const ManageLayout = () => {
               </Dropdown>
             </div>
           </div>
-          <SimpleBar
-            style={{ maxHeight: 'calc(100vh - 64px)' }}
-            scrollableNodeProps={{ ref: scrollableNodeRef }}
-          >
-            <div className={styles.contentContainer}>
-              <OutletPage />
-            </div>
-          </SimpleBar>
+          <OutletPage maxHeight='calc(100vh - 64px)' />
         </Layout>
       </Layout>
     </div>

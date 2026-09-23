@@ -1,5 +1,5 @@
 import styles from './index.module.scss'
-import HorizontalVirtualLoop from '../HorizontalVirtualLoop'
+import HorizontalVirtualLoop from '@/components/HorizontalVirtualLoop'
 import EllipsisText from '@/components/EllipsisText'
 interface RegisterPublicItem {
   dataRegistName: string
