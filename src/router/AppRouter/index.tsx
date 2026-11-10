@@ -1,7 +1,6 @@
 import { useRoutes, Navigate } from 'react-router-dom'
 import { Suspense, useMemo } from 'react'
 import { transformRoutes } from '@/router/utils'
-import { useUserStore } from '@/store/modules/user'
 import AuthGuard from '@/router/Guard/AuthGuard'
 import { Spin } from 'antd'
 import { App } from 'antd'
@@ -11,7 +10,6 @@ const AppRouter = () => {
   window.$message = staticFunction.message
   window.$notification = staticFunction.notification
   window.$modal = staticFunction.modal
-  const menuTree = useUserStore((s) => s.menuTree)
   const routes = useMemo(() => {
     const appRoutes = transformRoutes(list)
     console.log('appRoutes', appRoutes)
@@ -23,7 +21,7 @@ const AppRouter = () => {
       ...appRoutes,
       { path: '*', element: <Navigate to='/404' replace /> }
     ]
-  }, [menuTree])
+  }, [])
   const element = useRoutes(routes)
 
   return (

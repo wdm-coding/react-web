@@ -1,5 +1,4 @@
 import styles from './index.module.scss'
-import { useUserStore } from '@/store/modules/user'
 import logo from '@/assets/images/common/logo.jpeg'
 import Menus from '@/layouts/components/Menus'
 import { useNavigate } from 'react-router-dom'
@@ -11,15 +10,11 @@ interface HeaderProps {
   isScroll?: boolean
 }
 const Header = ({ isFixed = false, isScroll = false }: HeaderProps) => {
-  const { userInfo, userLogout } = useUserStore()
   const navigate = useNavigate()
   const onDropdownClick = async ({ key }: { key: string }) => {
     switch (key) {
       case 'logout':
-        const isLogout = await userLogout()
-        if (isLogout) {
-          window.location.href = '/'
-        }
+        window.location.href = '/'
         break
       case 'admin':
         navigate('/manage')
@@ -43,9 +38,9 @@ const Header = ({ isFixed = false, isScroll = false }: HeaderProps) => {
         <Menus list={navMenus} />
       </div>
       <div className={styles.rightAction}>
-        {userInfo ? (
+        {true ? (
           <>
-            <div className={styles.username}>{userInfo.username}</div>
+            <div className={styles.username}>{'WDM'}</div>
             <Dropdown
               menu={{
                 items: [

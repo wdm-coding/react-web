@@ -5,19 +5,14 @@ import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons'
 import { useState } from 'react'
 import logo from '@/assets/images/common/logo.jpeg'
 import styles from './index.module.scss'
-import { useUserStore } from '@/store/modules/user.ts'
 import Menus from '@/layouts/components/Menus'
 import { siderMenusItems } from './db.tsx'
 const { Sider } = Layout
 const ManageLayout = () => {
   const navigate = useNavigate()
-  const { userInfo, userLogout } = useUserStore()
   const [collapsed, setCollapsed] = useState(false)
   const onLogout = async () => {
-    const isLogout = await userLogout()
-    if (isLogout) {
-      window.location.href = '/'
-    }
+    window.location.href = '/'
   }
   return (
     <div className={styles.manageLayout}>
@@ -49,7 +44,7 @@ const ManageLayout = () => {
               >
                 返回客户端
               </Button>
-              <div className={styles.username}>{userInfo?.username}</div>
+              <div className={styles.username}>{'WDM'}</div>
               <Dropdown
                 menu={{
                   items: [{ label: '退出登录', key: 'logout' }],
