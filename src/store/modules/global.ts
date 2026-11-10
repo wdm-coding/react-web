@@ -1,13 +1,9 @@
 import type { StateCreator } from 'zustand'
+import type { GlobalSlice } from '../types'
 
-export interface GlobalSlice {
-  /** 侧边菜单是否收起 */
-  collapsed: boolean
-  /** 切换侧边菜单收起状态 */
-  toggleCollapsed: () => void
-}
 
-export const createGlobalSlice: StateCreator<
+
+const createGlobalSlice: StateCreator<
   GlobalSlice,
   [['zustand/persist', unknown], ['zustand/immer', never]],
   [],
@@ -19,3 +15,5 @@ export const createGlobalSlice: StateCreator<
       state.collapsed = !state.collapsed
     })
 })
+
+export default createGlobalSlice
