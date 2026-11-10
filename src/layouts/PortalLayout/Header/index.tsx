@@ -1,5 +1,5 @@
 import styles from './index.module.scss'
-import { useUserStore } from '@/store/userStore'
+import { useUserStore } from '@/store/modules/user'
 import logo from '@/assets/images/common/logo.jpeg'
 import Menus from '@/layouts/components/Menus'
 import { useNavigate } from 'react-router-dom'

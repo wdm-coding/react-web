@@ -27,6 +27,9 @@ npm install react-router-dom
 
 npm install zustand
 
+统一 store 封装与使用说明见 [useStore 使用文档](./src/hooks/useStore.md)
+
 ## 自定义SVG组件
 
 npm install --save-dev vite-plugin-svgr
+

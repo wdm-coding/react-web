@@ -7,7 +7,6 @@ const AuthGuard = ({ children }: { children: ReactNode }) => {
   const location = useLocation()
   const isLogin = !!getToken()
   const path = location.pathname.split('?')[0]
-
   if (!isLogin && !whitePaths.includes(path)) {
     return (
       <Navigate

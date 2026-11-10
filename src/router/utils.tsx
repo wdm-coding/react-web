@@ -14,8 +14,8 @@ const getElement = (
     return null
   } else {
     switch (item.componentPath) {
-      case 'ClientLayout':
-        return () => import('@/layouts/ClientLayout')
+      case 'PortalLayout':
+        return () => import('@/layouts/PortalLayout')
       case 'ManageLayout':
         return () => import('@/layouts/ManageLayout')
       case 'Outlet':

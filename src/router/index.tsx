@@ -11,34 +11,34 @@ export const whitePaths = [
   '/',
   '/404',
   '/login',
-  '/client',
-  '/client/home',
-  '/client/registerHome',
+  '/portal',
+  '/portal/home',
   '/manage',
-  '/manage/dashboard',
-  '/manage/systemManage',
-  '/manage/systemManage/menuManage',
-  '/manage/systemManage/userManage'
+  '/manage/manageHome',
+  '/manage/regApply',
+  '/manage/regApply/regApplyList',
+  '/manage/regApply/regApplyData',
+  '/portal/regGuide',
 ]
 export const list: RouterItem[] = [
   {
-    path: '/client',
-    name: 'Client',
-    componentPath: 'ClientLayout',
+    path: '/portal',
+    name: 'Portal',
+    componentPath: 'PortalLayout',
     children: [
       {
         path: 'home',
         name: 'Home',
-        componentPath: '/Client/Home/index.tsx',
+        componentPath: '/Portal/PortalHome/index.tsx',
         icon: 'home',
         title: '首页'
       },
       {
-        path: 'registerHome',
-        name: 'RegisterHome',
-        componentPath: '/Client/RegisterHome/index.tsx',
-        icon: 'register-home',
-        title: '登记首页'
+        path:'regGuide',
+        name:'RegGuide',
+        componentPath:'/Portal/RegGuide/index.tsx',
+        icon:'reg-guide',
+        title:'登记指南'
       }
     ]
   },
@@ -50,32 +50,32 @@ export const list: RouterItem[] = [
     title: '控制台',
     children: [
       {
-        path: 'dashboard',
-        name: 'Dashboard',
-        componentPath: '/Manage/Dashboard/index.tsx',
-        icon: 'dashboard',
-        title: '仪表盘'
+        path: 'manageHome',
+        name: 'ManageHome',
+        componentPath: '/Manage/ManageHome/index.tsx',
+        icon: 'home',
+        title: '首页'
       },
       {
-        path: 'systemManage',
-        name: 'SystemManage',
+        path: 'regApply',
+        name: 'RegApply',
         componentPath: 'Outlet',
-        icon: 'system-manage',
-        title: '系统管理',
+        icon: 'reg-apply',
+        title: '登记申请',
         children: [
           {
-            path: 'menuManage',
-            name: 'MenuManage',
-            componentPath: '/Manage/SystemManage/MenuManage/index.tsx',
-            icon: 'menu-manage',
-            title: '菜单管理'
+            path: 'regApplyList',
+            name: 'RegApplyList',
+            componentPath: '/Manage/RegApply/RegApplyList/index.tsx',
+            icon: 'reg-apply-list',
+            title: '登记数据申请'
           },
           {
-            path: 'userManage',
-            name: 'UserManage',
-            componentPath: '/Manage/SystemManage/UserManage/index.tsx',
-            icon: 'user-manage',
-            title: '用户管理'
+            path: 'regApplyData',
+            name: 'RegApplyData',
+            componentPath: '/Manage/RegApply/RegApplyData/index.tsx',
+            icon: 'reg-apply-data',
+            title: '登记数据查询'
           }
         ]
       }

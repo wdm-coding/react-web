@@ -1,23 +1,23 @@
 import Icon from '@/components/Icon'
 const siderMenus = [
   {
-    label: '数据看板',
-    key: '/manage/dashboard',
+    label: '首页',
+    key: '/manage/manageHome',
     icon: 'svg-vite'
   },
   {
-    label: '系统管理',
-    key: '/manage/systemManage',
+    label: '登记申请',
+    key: '/manage/regApply',
     icon: 'AndroidOutlined',
-    children: [
+    children: [ 
       {
-        label: '用户管理',
-        key: '/manage/systemManage/userManage',
+        label: '登记数据申请',
+        key: '/manage/regApply/regApplyList',
         icon: 'AppleOutlined'
       },
       {
-        label: '菜单管理',
-        key: '/manage/systemManage/menuManage',
+        label: '登记数据查询',
+        key: '/manage/regApply/regApplyData',
         icon: 'svg-react'
       }
     ]

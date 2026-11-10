@@ -74,6 +74,8 @@ export default [
       ],
       '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
+      'no-redeclare': 'off',
+      '@typescript-eslint/no-redeclare': 'error',
       'no-case-declarations': 'off',
       'no-useless-catch': 'off'
     }

@@ -1,7 +1,7 @@
 import styles from './index.module.scss'
 import { Button, Form, Input } from 'antd'
 import type { FormProps } from 'antd'
-import { useUserStore } from '@/store/userStore'
+import { useUserStore } from '@/store/modules/user'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 type FieldType = {
   username: string

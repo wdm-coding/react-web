@@ -42,7 +42,7 @@ const Login: React.FC = () => {
           <div
             className='text-sm mt-3 cursor-pointer'
             style={{ color: 'rgba(255,255,255,0.5)' }}
-            onClick={() => navigate('/client/home')}
+            onClick={() => navigate('/portal/portalHome')}
           >
             ← 返回首页
           </div>

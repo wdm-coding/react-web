@@ -1,11 +1,11 @@
 export const navMenus = [
   {
     label: '首页',
-    key: '/client/home'
+    key: '/portal/home'
   },
   {
-    label: '登记平台首页',
-    key: '/client/registerHome'
+    label: '登记指南',
+    key: '/portal/regGuide'
   },
   {
     label: '控制台',

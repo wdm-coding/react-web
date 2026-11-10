@@ -1,7 +1,7 @@
 import { useRoutes, Navigate } from 'react-router-dom'
 import { Suspense, useMemo } from 'react'
 import { transformRoutes } from '@/router/utils'
-import { useUserStore } from '@/store/userStore'
+import { useUserStore } from '@/store/modules/user'
 import AuthGuard from '@/router/Guard/AuthGuard'
 import { Spin } from 'antd'
 import { App } from 'antd'
@@ -18,7 +18,7 @@ const AppRouter = () => {
     return [
       {
         index: true,
-        element: <Navigate to='/client' replace />
+        element: <Navigate to='/portal' replace />
       },
       ...appRoutes,
       { path: '*', element: <Navigate to='/404' replace /> }

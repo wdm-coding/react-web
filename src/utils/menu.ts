@@ -6,7 +6,7 @@ type MenuItem = {
 }
 
 // 格式化菜单，添加前缀路径
-export const formattedMenus = (menus: MenuItem[], prefixPath = '/client') => {
+export const formattedMenus = (menus: MenuItem[], prefixPath = '/portal') => {
   return menus
     .filter((item) => !item.index)
     .map((item) => {

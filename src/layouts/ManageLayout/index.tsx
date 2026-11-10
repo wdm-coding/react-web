@@ -5,7 +5,7 @@ import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons'
 import { useState } from 'react'
 import logo from '@/assets/images/common/logo.jpeg'
 import styles from './index.module.scss'
-import { useUserStore } from '@/store/userStore'
+import { useUserStore } from '@/store/modules/user.ts'
 import Menus from '@/layouts/components/Menus'
 import { siderMenusItems } from './db.tsx'
 const { Sider } = Layout
