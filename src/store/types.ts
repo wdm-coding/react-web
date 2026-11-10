@@ -14,11 +14,9 @@ export interface GlobalSlice {
 
 // 用户状态类型
 export interface UserSlice {
-  /** 当前登录用户信息 */
-  userInfo: Record<string, any> | null
-  /** 设置用户信息 */
-  setUserInfo: (userInfo: UserSlice['userInfo']) => void
-  /** 清除用户信息 */
-  clearUserInfo: () => void
+  isLoggedIn: boolean // 是否登录
+  userInfo: Record<string, any> | null // 当前登录用户信息
+  setUserInfo: (userInfo: UserSlice['userInfo']) => void // 设置用户信息
+  clearUserInfo: () => void // 清除用户信息
 }
 export type BoundState = UserSlice & GlobalSlice

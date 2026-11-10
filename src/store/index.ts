@@ -27,7 +27,7 @@ export const useBoundStore = create<BoundState>()(
     {
       name: 'zustand-store',
       partialize: (state) => ({
-        collapsed: state.collapsed,
+        isLoggedIn: state.isLoggedIn,
         userInfo: state.userInfo
       }),
       storage: createJSONStorage(() => window.sessionStorage)

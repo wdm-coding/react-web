@@ -1,7 +1,6 @@
 .menuContainer {
   min-width: 0;
   flex: 1;
-  padding: 0 20px;
   :global(.ant-menu-horizontal) {
     border: none;
     background-color: transparent;
@@ -13,6 +12,9 @@
   }
   :global(.siderMenu) {
     border: none !important;
-    min-height: calc(100vh - 64px);
+    min-height: calc(100vh - 72px);
+    :global(.ant-menu-sub) {
+      background-color: transparent;
+    }
   }
 }

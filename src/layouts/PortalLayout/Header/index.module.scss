@@ -40,9 +40,9 @@
     display: flex;
     align-items: center;
     margin-left: auto;
-    .username {
-      margin-right: 10px;
-      color: #3a45e8;
+    .userName {
+      padding-left: 10px;
+      white-space: nowrap;
     }
     .logoutBtn {
       cursor: pointer;

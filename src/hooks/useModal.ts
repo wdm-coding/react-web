@@ -14,7 +14,8 @@ export interface SliceMap {
 const sliceSelectors: {
   [K in keyof SliceMap]: (state: BoundState) => SliceMap[K]
 } = {
-  user: ({ userInfo, setUserInfo, clearUserInfo }) => ({
+  user: ({ isLoggedIn, userInfo, setUserInfo, clearUserInfo }) => ({
+    isLoggedIn,
     userInfo,
     setUserInfo,
     clearUserInfo

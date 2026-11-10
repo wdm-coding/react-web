@@ -33,10 +33,10 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
+        target: 'https://sjdj.gansu.gov.cn/register-client',
         changeOrigin: true,
         secure: false,
-        rewrite: (path) => path.replace(/^\/api/, ''), // 重写路径
+        rewrite: (path) => path.replace(/^\/api/, '/api'), // 重写路径
       },
     },
   },

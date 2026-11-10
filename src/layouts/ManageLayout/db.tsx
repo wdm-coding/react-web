@@ -12,13 +12,11 @@ const siderMenus = [
     children: [ 
       {
         label: '登记数据申请',
-        key: '/manage/regApply/regApplyList',
-        icon: 'AppleOutlined'
+        key: '/manage/regApply/regApplyList'
       },
       {
         label: '登记数据查询',
-        key: '/manage/regApply/regApplyData',
-        icon: 'svg-react'
+        key: '/manage/regApply/regApplyData'
       }
     ]
   }

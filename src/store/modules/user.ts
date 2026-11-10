@@ -9,6 +9,7 @@ const createUserSlice: StateCreator<
   [],
   UserSlice
 > = (set) => ({
+  isLoggedIn: true,
   userInfo: null,
   setUserInfo: (userInfo) => set({ userInfo }),
   clearUserInfo: () => set({ userInfo: null })
