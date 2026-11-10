@@ -13,6 +13,13 @@ export const whitePaths = [
   '/login',
   '/portal',
   '/portal/home',
+  '/portal/regPublic',
+  '/portal/regCheck',
+  '/portal/regQuery',
+  '/portal/regPolicy',
+  '/portal/regInstitution',
+  '/portal/demandNumbers',
+  '/portal/inforDisclosure',
   '/manage',
   '/manage/manageHome',
   '/manage/regApply',
@@ -39,6 +46,55 @@ export const list: RouterItem[] = [
         componentPath:'/Portal/RegGuide/index.tsx',
         icon:'reg-guide',
         title:'登记指南'
+      },
+      {
+        path:'regPublic',
+        name:'RegPublic',
+        componentPath:'/Portal/RegPublic/index.tsx',
+        icon:'reg-public',
+        title:'登记公示'
+      },
+      {
+        path:'regCheck',
+        name:'RegCheck',
+        componentPath:'/Portal/RegCheck/index.tsx',
+        icon:'reg-check',
+        title:'登记核验'
+      },
+      {
+        path:'regQuery',
+        name:'RegQuery',
+        componentPath:'/Portal/RegQuery/index.tsx',
+        icon:'reg-query',
+        title:'登记查询'
+      },
+      {
+        path:'regPolicy',
+        name:'RegPolicy',
+        componentPath:'/Portal/RegPolicy/index.tsx',
+        icon:'reg-policy',
+        title:'登记政策'
+      },
+      {
+        path:'regInstitution',
+        name:'RegInstitution',
+        componentPath:'/Portal/RegInstitution/index.tsx',
+        icon:'reg-apply',
+        title:'登记机构'
+      },
+      {
+        path:'demandNumbers',
+        name:'DemandNumbers',
+        componentPath:'/Portal/DemandNumbers/index.tsx',
+        icon:'demand-numbers',
+        title:'用数需求'
+      },
+      {
+        path:'inforDisclosure',
+        name:'InforDisclosure',
+        componentPath:'/Portal/InforDisclosure/index.tsx',
+        icon:'infor-disclosure',
+        title:'信息披露'
       }
     ]
   },

@@ -5,11 +5,13 @@ import { useNavigate } from 'react-router-dom'
 import { Dropdown } from 'antd'
 import { navMenus } from './db'
 import classnames from 'classnames'
+import useModal from '@/hooks/useModal'
 interface HeaderProps {
   isFixed?: boolean
   isScroll?: boolean
 }
 const Header = ({ isFixed = false, isScroll = false }: HeaderProps) => {
+  const { siteName } = useModal('global')
   const navigate = useNavigate()
   const onDropdownClick = async ({ key }: { key: string }) => {
     switch (key) {
@@ -25,14 +27,13 @@ const Header = ({ isFixed = false, isScroll = false }: HeaderProps) => {
   }
   return (
     <div
-      className={classnames(styles.headerContainer, {
+      className={classnames(styles.headerWrapper, {
         [styles.fixedHeader]: isFixed,
         [styles.scrollHeader]: isScroll
       })}
     >
-      <div className={styles.logo}>
-        <img src={logo} alt='logo' />
-        <span>React 门户平台</span>
+      <div className={styles.logoSpace}>
+        <span>{siteName}</span>
       </div>
       <div className={styles.navMenuContainer}>
         <Menus list={navMenus} />

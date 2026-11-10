@@ -19,17 +19,16 @@ const sliceSelectors: {
     setUserInfo,
     clearUserInfo
   }),
-  global: ({ collapsed, toggleCollapsed }) => ({
-    collapsed,
-    toggleCollapsed
+  global: ({ siteName, storage, setItem, getItem, removeItem, clearStorage }) => ({
+    siteName,
+    storage,
+    setItem,
+    getItem,
+    removeItem,
+    clearStorage
   })
 }
 
-/**
- * @example
- * const { userInfo } = useModal('user')
- * const { collapsed, setCollapsed } = useModal('global')
- */
 const useModal = <T extends keyof SliceMap>(name: T): SliceMap[T] => {
   return useBoundStore(useShallow(sliceSelectors[name]))
 }

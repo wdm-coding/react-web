@@ -27,9 +27,17 @@ npm install react-router-dom
 
 npm install zustand
 
-统一 store 封装与使用说明见 [useStore 使用文档](./src/hooks/useStore.md)
+```ts
+// 使用useModal钩子，获取切片的状态与操作函数
+import useModal from '@/hooks/useModal'
+const { userInfo } = useModal('user')
+const { collapsed, setCollapsed } = useModal('global')
+```
 
 ## 自定义SVG组件
 
 npm install --save-dev vite-plugin-svgr
 
+
+
+1. 全局不使用任何localStorage或sessionStorage，所有本地状态都存储在zustand的storage中

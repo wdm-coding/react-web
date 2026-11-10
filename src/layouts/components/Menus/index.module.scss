@@ -5,6 +5,11 @@
   :global(.ant-menu-horizontal) {
     border: none;
     background-color: transparent;
+    font-size: 'sms';
+    :global(.ant-menu-item-selected) {
+      color: #454545;
+      font-size: 16px;
+    }
   }
   :global(.siderMenu) {
     border: none !important;

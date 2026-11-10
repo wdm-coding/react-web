@@ -1,9 +1,15 @@
 // 全局状态类型
 export interface GlobalSlice {
-  /** 侧边菜单是否收起 */
-  collapsed: boolean
-  /** 切换侧边菜单收起状态 */
-  toggleCollapsed: () => void
+  siteName: string // 站点名称
+  storage: Record<string, any> // 本地存储
+  /** 设置本地存储 */
+  setItem: (key: string, value: any) => void
+  /** 获取本地存储 */
+  getItem: (key: string) => any
+  /** 删除本地存储 */
+  removeItem: (key: string) => void
+  /** 清除本地存储 */
+  clearStorage: () => void
 }
 
 // 用户状态类型
