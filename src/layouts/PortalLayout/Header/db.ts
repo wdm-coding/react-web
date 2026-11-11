@@ -36,3 +36,41 @@ export const navMenus = [
     key: '/portal/inforDisclosure'
   },
 ]
+
+export const rightActions = [
+  {
+    label: '联系客服',
+    key: 'contact',
+    type: 'button',
+    show: 'all'
+  },
+  {
+    label: '用户手册',
+    key: 'manual',
+    type: 'button',
+    show: 'all'
+  },
+  {
+    label: '用户',
+    key: 'userName',
+    type: 'dropdown',
+    show: 'login',
+    items: [{ label: '退出登录', key: 'logout' }]
+  },
+  {
+    label: '注册',
+    key: 'register',
+    type: 'dropdown',
+    show: 'noLogin',
+    items: [
+      { label: '个人注册', key: 'personalRegister' },
+      { label: '法人注册', key: 'legalRegister' }
+    ]
+  },
+  {
+    label: '登录',
+    key: 'login',
+    type: 'button',
+    show: 'noLogin'
+  }
+]

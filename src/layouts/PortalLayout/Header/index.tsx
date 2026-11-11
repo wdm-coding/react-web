@@ -3,7 +3,7 @@ import logo from '@/assets/images/portal/user-logo.png'
 import Menus from '@/layouts/components/Menus'
 import { useNavigate } from 'react-router-dom'
 import { Button, Dropdown } from 'antd'
-import { navMenus } from './db'
+import { navMenus, rightActions } from './db'
 import classnames from 'classnames'
 import useModal from '@/hooks/useModal'
 import useAuth from '@/hooks/useAuth'
@@ -13,46 +13,10 @@ interface HeaderProps {
   isFixed?: boolean
   isScroll?: boolean
 }
-const rightActions = [
-  {
-    label: '联系客服',
-    key: 'contact',
-    type: 'button',
-    show: 'all'
-  },
-  {
-    label: '用户手册',
-    key: 'manual',
-    type: 'button',
-    show: 'all'
-  },
-  {
-    label: '用户',
-    key: 'userName',
-    type: 'dropdown',
-    show: 'login',
-    items: [{ label: '退出登录', key: 'logout' }]
-  },
-  {
-    label: '注册',
-    key: 'register',
-    type: 'dropdown',
-    show: 'noLogin',
-    items: [
-      { label: '个人注册', key: 'personalRegister' },
-      { label: '法人注册', key: 'legalRegister' }
-    ]
-  },
-  {
-    label: '登录',
-    key: 'login',
-    type: 'button',
-    show: 'noLogin'
-  }
-]
+
 const Header = ({ isFixed = false, isScroll = false }: HeaderProps) => {
   const { isLoggedIn } = useAuth()
-  const { siteName } = useModal('global')
+  const { siteName,env } = useModal('global')
   const navigate = useNavigate()
   const [registerData, setRegisterData] = useState<{
     naturalRegisterUrl: string
@@ -83,7 +47,7 @@ const Header = ({ isFixed = false, isScroll = false }: HeaderProps) => {
   const onDropdownClick = async ({ key }: { key: string }) => {
     switch (key) {
       case 'login':
-        navigate('/login')
+        env !== 'prod' ? navigate('/login') : null
         break
       case 'logout':
         window.location.href = '/'

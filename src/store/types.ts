@@ -1,15 +1,12 @@
 // 全局状态类型
 export interface GlobalSlice {
   siteName: string // 站点名称
+  env: 'test' | 'prod' | 'dev' // 环境 测试/生产/开发
   storage: Record<string, any> // 本地存储
-  /** 设置本地存储 */
-  setItem: (key: string, value: any) => void
-  /** 获取本地存储 */
-  getItem: (key: string) => any
-  /** 删除本地存储 */
-  removeItem: (key: string) => void
-  /** 清除本地存储 */
-  clearStorage: () => void
+  setItem: (key: string, value: any) => void // 设置本地存储
+  getItem: (key: string) => any // 获取本地存储
+  removeItem: (key: string) => void // 删除本地存储
+  clearStorage: () => void // 清除本地存储
 }
 
 // 用户状态类型
