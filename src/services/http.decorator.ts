@@ -29,7 +29,6 @@ function createRequestFn<T, R>(
 
     let reqUrl = currentMeta.url
     const paramObj = (params ?? {}) as Record<string, any>
-
     // 处理路径参数 :xxx
     const pathParams: Record<string, string> = {}
     const regex = /:(\w+)/g
@@ -49,7 +48,6 @@ function createRequestFn<T, R>(
     Object.keys(paramObj).forEach((k) => {
       if (!pathParams[k]) queryParams[k] = paramObj[k]
     })
-
     // 构建请求配置
     const config: AxiosRequestConfig & RequestOpt = {
       url: reqUrl,
@@ -57,7 +55,7 @@ function createRequestFn<T, R>(
       ...currentMeta.options
     }
     const hasParams = Object.keys(paramObj).length > 0
-    if (hasParams) {
+    if (hasParams || JSON.stringify(queryParams) === '{}') {
       if (config.method?.toUpperCase() === 'GET') {
         config.params = queryParams
       } else {

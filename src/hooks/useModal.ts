@@ -4,7 +4,7 @@ import type { UserSlice, GlobalSlice, BoundState } from '@/store/types'
 
 /** 切片名 → 切片状态类型映射 */
 export interface SliceMap {
-  user: UserSlice
+  user: Partial<UserSlice>
   global: GlobalSlice
 }
 
@@ -14,11 +14,10 @@ export interface SliceMap {
 const sliceSelectors: {
   [K in keyof SliceMap]: (state: BoundState) => SliceMap[K]
 } = {
-  user: ({ isLoggedIn, userInfo, setUserInfo, clearUserInfo }) => ({
+  user: ({ isLoggedIn, userInfo, userLogin }) => ({
     isLoggedIn,
     userInfo,
-    setUserInfo,
-    clearUserInfo
+    userLogin
   }),
   global: ({ siteName, storage, setItem, getItem, removeItem, clearStorage }) => ({
     siteName,

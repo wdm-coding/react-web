@@ -1,7 +1,7 @@
 import axios, { InternalAxiosRequestConfig, AxiosResponse } from 'axios'
 import { BaseResponse, RequestOpt } from './types'
 import { getToken, setToken, clearToken } from '@/utils/storage'
-import UserApi from '@/api/auth.api'
+import UserApi from '@/api/auth'
 
 // 定义控制变量
 let isRefreshing = false // 是否正在刷新 Token
@@ -38,50 +38,65 @@ http.interceptors.request.use(
 http.interceptors.response.use(
   async (res: AxiosResponse<BaseResponse>): Promise<any> => {
     const resData = res.data
-    if (resData.code === 0) {
-      return resData
-    }
-    if (resData.code === -1) {
-      return Promise.reject(resData.message || '系统异常')
-    }
-    if (resData.code === 4001) {
-      // token过期 ，需要刷新token
-      const originalRequest = res.config
-      if (originalRequest.url !== '/auth/refresh') {
-        // 如果当前没有在刷新 Token，则开始刷新流程
-        if (!isRefreshing) {
-          isRefreshing = true
-          try {
-            const { code, data } = await UserApi.tokenRefresh()
-            if (code === 0) {
-              setToken(data)
-              retryRequestQueue.forEach((cb) => cb(data)) // 执行队列中的回调
-              retryRequestQueue = [] // 清空队列
-              // 重试当前失败的请求
-              originalRequest.headers.Authorization = `Bearer ${data}`
-              return http(originalRequest)
-            }
-          } catch (error) {
-            return Promise.reject(error)
-          } finally {
-            isRefreshing = false
-          }
-        } else {
-          return new Promise((resolve) => {
-            // 存入回调，刷新成功后执行
-            retryRequestQueue.push((token: string) => {
-              originalRequest.headers.Authorization = `Bearer ${token}`
-              resolve(http(originalRequest))
-            })
-          })
-        }
+    console.log('success', res)
+    if (resData.return_code === 20000) {
+      return {
+        code: 20000,
+        data: resData.data,
+        msg: resData.return_subMsg,
       }
+    }else{
+      window.$message.error(resData.return_subMsg || '系统异常')
+      return Promise.reject(resData.return_subMsg || '系统异常')
     }
+    // if (resData.return_code === 50000) {
+    //   return Promise.reject(resData.return_msg || '系统异常')
+    // }
+    // if (resData.return_code === 4001) {
+    //   // token过期 ，需要刷新token
+    //   const originalRequest = res.config
+    //   if (originalRequest.url !== '/auth/refresh') {
+    //     // 如果当前没有在刷新 Token，则开始刷新流程
+    //     if (!isRefreshing) {
+    //       isRefreshing = true
+    //       try {
+    //         const { code, data } = {
+    //           code: 0,
+    //           data: 'refresh'
+    //         }
+    //         if (code === 0) {
+    //           setToken(data)
+    //           retryRequestQueue.forEach((cb) => cb(data)) // 执行队列中的回调
+    //           retryRequestQueue = [] // 清空队列
+    //           // 重试当前失败的请求
+    //           originalRequest.headers.Authorization = `Bearer ${data}`
+    //           return http(originalRequest)
+    //         }
+    //       } catch (error) {
+    //         return Promise.reject(error)
+    //       } finally {
+    //         isRefreshing = false
+    //       }
+    //     } else {
+    //       return new Promise((resolve) => {
+    //         // 存入回调，刷新成功后执行
+    //         retryRequestQueue.push((token: string) => {
+    //           originalRequest.headers.Authorization = `Bearer ${token}`
+    //           resolve(http(originalRequest))
+    //         })
+    //       })
+    //     }
+    //   }
+    // }
   },
   async (err) => {
+    console.log('error', err.response)
     const status = err.response?.status
     let errorMsg = ''
     switch (status) {
+      case 400:
+        errorMsg = '请求参数错误'
+        break
       case 401:
         const response = err.response
         const { message } = response.data
@@ -104,6 +119,7 @@ http.interceptors.response.use(
         errorMsg = '网络异常'
         break
     }
+    window.$message.error(errorMsg)
     return Promise.reject(err)
   }
 )

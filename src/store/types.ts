@@ -16,7 +16,7 @@ export interface GlobalSlice {
 export interface UserSlice {
   isLoggedIn: boolean // 是否登录
   userInfo: Record<string, any> | null // 当前登录用户信息
-  setUserInfo: (userInfo: UserSlice['userInfo']) => void // 设置用户信息
-  clearUserInfo: () => void // 清除用户信息
+  fetchCurrentUser: () => Promise<void> // 获取当前用户信息
+  userLogin: () => Promise<void> // 用户登录
 }
 export type BoundState = UserSlice & GlobalSlice

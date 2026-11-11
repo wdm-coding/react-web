@@ -7,7 +7,8 @@ import { navMenus } from './db'
 import classnames from 'classnames'
 import useModal from '@/hooks/useModal'
 import useAuth from '@/hooks/useAuth'
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import AuthApi from '@/api/auth'
 interface HeaderProps {
   isFixed?: boolean
   isScroll?: boolean
@@ -30,9 +31,7 @@ const rightActions = [
     key: 'userName',
     type: 'dropdown',
     show: 'login',
-    items: [
-      { label: '退出登录', key: 'logout' }
-    ]
+    items: [{ label: '退出登录', key: 'logout' }]
   },
   {
     label: '注册',
@@ -55,7 +54,19 @@ const Header = ({ isFixed = false, isScroll = false }: HeaderProps) => {
   const { isLoggedIn } = useAuth()
   const { siteName } = useModal('global')
   const navigate = useNavigate()
-
+  const [registerData, setRegisterData] = useState<{
+    naturalRegisterUrl: string
+    corpRegisterUrl: string
+  } | null>(null)
+  const getRegister = async () => {
+    const { code, data } = await AuthApi.getRegister()
+    if (code === 20000) {
+      setRegisterData(data)
+    }
+  }
+  useEffect(() => {
+    getRegister()
+  }, [])
   // 过滤出需要显示的rightActions
   const rightActionsFilter = useMemo(
     () =>
@@ -68,16 +79,22 @@ const Header = ({ isFixed = false, isScroll = false }: HeaderProps) => {
     [rightActions, isLoggedIn]
   )
 
+  // 下拉菜单点击事件
   const onDropdownClick = async ({ key }: { key: string }) => {
     switch (key) {
+      case 'login':
+        navigate('/login')
+        break
       case 'logout':
         window.location.href = '/'
         break
       case 'personalRegister':
-        console.log('个人注册')
+        registerData?.naturalRegisterUrl &&
+          window.open(registerData?.naturalRegisterUrl || '', '_blank')
         break
       case 'legalRegister':
-        console.log('法人注册')
+        registerData?.corpRegisterUrl &&
+          window.open(registerData?.corpRegisterUrl || '', '_blank')
         break
       default:
         break
@@ -103,7 +120,7 @@ const Header = ({ isFixed = false, isScroll = false }: HeaderProps) => {
         {rightActionsFilter.map((item) => {
           if (item.type === 'button') {
             return (
-              <Button key={item.key} type='text'>
+              <Button key={item.key} type='text' onClick={() => onDropdownClick(item)}>
                 {item.label}
               </Button>
             )
@@ -117,13 +134,18 @@ const Header = ({ isFixed = false, isScroll = false }: HeaderProps) => {
                 }}
               >
                 {item.key === 'userName' ? (
-                  <div className='flex items-center cursor-pointer' onClick={() => navigate('/manage')}>
+                  <div
+                    className='flex items-center cursor-pointer'
+                    onClick={() => navigate('/manage')}
+                  >
                     <img
                       src={logo}
                       alt='logo'
                       style={{ width: 30, height: 30, borderRadius: 50 }}
                     />
-                    <span className={styles.userName}>用户用户用户用户用户用户</span>
+                    <span className={styles.userName}>
+                      用户用户用户用户用户用户
+                    </span>
                   </div>
                 ) : (
                   <div style={{ cursor: 'pointer', margin: '0 10px' }}>

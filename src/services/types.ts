@@ -2,9 +2,10 @@
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
 /** 接口统一返回格式 */
 export interface BaseResponse<T = any> {
-  code: number
+  return_code: number
   data: T
-  message: string
+  return_msg: string
+  return_subMsg: string
 }
 /** 请求自定义配置 */
 type ContentType =
