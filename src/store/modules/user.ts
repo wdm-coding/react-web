@@ -40,8 +40,15 @@ const createUserSlice: StateCreator<
     }
   },
   userLogin: async (params:any) => {
-    const { authCode } = params
+    const { authCode,tokenCookie } = params
     try {
+      if (tokenCookie) {
+        await get().fetchCurrentUser()
+        return new Promise((resolve) => {
+          set((state) => {state.isLoggedIn = true})
+          resolve('/portal')
+        })
+      }
       const {random,publicKey} = await get().fetchSecret()
       const password = Encrypt({random,publicKey},params.password)
       await AuthApi.Login(authCode ? { authCode } : {...params,password})

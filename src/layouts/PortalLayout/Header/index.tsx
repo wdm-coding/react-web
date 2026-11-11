@@ -17,6 +17,7 @@ interface HeaderProps {
 const Header = ({ isFixed = false, isScroll = false }: HeaderProps) => {
   const { isLoggedIn } = useAuth()
   const { siteName,env } = useModal('global')
+  const {userInfo} = useModal('user')
   const navigate = useNavigate()
   const [registerData, setRegisterData] = useState<{
     naturalRegisterUrl: string
@@ -118,7 +119,7 @@ const Header = ({ isFixed = false, isScroll = false }: HeaderProps) => {
                       style={{ width: 30, height: 30, borderRadius: 50 }}
                     />
                     <span className={styles.userName}>
-                      用户用户用户用户用户用户
+                      {userInfo?.userName || '用户'}
                     </span>
                   </div>
                 ) : (

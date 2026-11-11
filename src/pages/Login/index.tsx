@@ -1,7 +1,7 @@
 import styles from './index.module.scss'
 import useModal from '@/hooks/useModal'
 import { SafetyOutlined, UnlockOutlined, UserOutlined } from '@ant-design/icons'
-import { Form, Input, Button, Spin } from 'antd'
+import { Form, Input, Button, Spin, Modal } from 'antd'
 import classnames from 'classnames'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -25,7 +25,9 @@ const Login = () => {
   const [loginMethod, setLoginMethod] = useState<'subject' | 'personal'>(
     'subject'
   )
-  const { siteName } = useModal('global')
+  const { siteName, env } = useModal('global')
+  const [modalOpen, setModalOpen] = useState(false)
+  const [tokenCookie, setTokenCookie] = useState('')
   const { fetchCaptcha, userLogin } = useModal('user')
   const [captcha, setCaptcha] = useState<any>({
     loading: false,
@@ -55,6 +57,36 @@ const Login = () => {
       console.log('账号密码-登录失败', error)
     }
   }
+  const handleOk = async () => {
+    setModalOpen(false)
+    setTokenCookie(tokenCookie)
+    const date = new Date();
+    date.setTime(date.getTime() + 7 * 24 * 60 * 60 * 1000);
+    document.cookie = `token=${tokenCookie}; expires=${date}; path=/`
+    document.cookie = `hasToken=hasToken; expires=${date}; path=/`
+    window.location.reload()
+  }
+  const handleCancel = () => {
+    setModalOpen(false)
+    setTokenCookie('')
+    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'
+    document.cookie = 'hasToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'
+  }
+  const tokenLogin = async () => {
+     const cookie = document.cookie
+      if(cookie.indexOf('hasToken=hasToken') !== -1){
+        try {
+          const redirectUrl = await userLogin({tokenCookie:'1'})
+          navigate(redirectUrl, { replace: true })
+          window.$message.success('登录成功')
+        } catch (error) {
+          console.log('token-登录失败', error)
+        }
+      }
+  }
+  useEffect(()=>{
+   tokenLogin()
+  },[])
   return (
     <div className={styles.loginWrapper}>
       {/* 顶部标题 */}
@@ -174,6 +206,22 @@ const Login = () => {
           返回上一页
         </div>
       </div>
+      {
+        env === 'dev' && <>
+          <div className={styles.tokenLogin} onClick={() => setModalOpen(true)}>token登录</div>
+          <Modal
+            title="token登录"
+            closable={{ 'aria-label': 'Custom Close Button' }}
+            okText='登录'
+            cancelText='取消'
+            open={modalOpen}
+            onOk={handleOk}
+            onCancel={handleCancel}
+          >
+            <Input placeholder='请输入token' value={tokenCookie} onChange={(e) => setTokenCookie(e.target.value)} />
+          </Modal>
+        </>
+      }
     </div>
   )
 }
