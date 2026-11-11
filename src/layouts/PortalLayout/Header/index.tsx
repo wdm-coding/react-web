@@ -42,12 +42,22 @@ const Header = ({ isFixed = false, isScroll = false }: HeaderProps) => {
       ),
     [rightActions, isLoggedIn]
   )
-
+  const thirdLogin = async () => {
+    const { code, data } = await AuthApi.getThirdLoginUrl()
+    if (code === 20000 && data?.loginAfter) {
+      if(env === 'dev'){
+        window.location.href = ' /register-client/ssoLogin?authCode=' + '0620000000620'
+      }else{
+        window.location.href = data?.loginAfter
+      }
+    }
+  }
   // 下拉菜单点击事件
   const onDropdownClick = async ({ key }: { key: string }) => {
     switch (key) {
       case 'login':
-        env !== 'prod' ? navigate('/login') : null
+        // thirdLogin()
+        env !== 'prod' ? navigate('/login') : thirdLogin()
         break
       case 'logout':
         window.location.href = '/'

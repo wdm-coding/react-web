@@ -1,10 +1,14 @@
-import { defineConfig } from 'vite';
+import { defineConfig,loadEnv  } from 'vite';
 import react, { reactCompilerPreset } from '@vitejs/plugin-react';
 import babel from '@rolldown/plugin-babel';
 import path from 'path';
 import tailwindcss from '@tailwindcss/vite';
 import svgr from 'vite-plugin-svgr';
-export default defineConfig({
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), 'VITE_');
+  console.log(env)
+  return {
+  base: env.VITE_BASE_PATH,
   plugins: [
     react(),
     babel({
@@ -40,4 +44,5 @@ export default defineConfig({
       },
     },
   },
+}
 });

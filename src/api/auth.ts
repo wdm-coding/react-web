@@ -5,17 +5,21 @@ class AuthApi {
   @Get('/auth/register')
   static getRegister: RequestFn<any, any>
 
+  // 获取加密公钥
+  @Post('/auth/secret')
+  static getSecret: RequestFn<any, any>
+  
   // 账号密码登录
   @Post('/auth/login')
   static Login: RequestFn<any, any>
 
   // 获取图片验证码
   @Post('/auth/captcha')
-  static GetCaptcha: RequestFn<any, any>
+  static getCaptcha: RequestFn<any, any>
 
   // 获取第三方登录跳转地址
   @Post('/auth/alreadyLogin')
-  static AlreadyLogin: RequestFn<any, any>
+  static getThirdLoginUrl: RequestFn<any, any>
 
   // 退出登录
   @Post('/auth/logout')

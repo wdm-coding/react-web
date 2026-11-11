@@ -14,6 +14,10 @@ export interface UserSlice {
   isLoggedIn: boolean // 是否登录
   userInfo: Record<string, any> | null // 当前登录用户信息
   fetchCurrentUser: () => Promise<void> // 获取当前用户信息
-  userLogin: () => Promise<void> // 用户登录
-}
+  userLogin: (params:any) => Promise<any> // 用户登录
+  fetchCaptcha: () => Promise<any> // 获取图片验证码
+  captchaId: string // 图片验证码id
+  fetchSecret: () => Promise<any> // 获取加密公钥
+  randomId: string // 加密随机数id
+ }
 export type BoundState = UserSlice & GlobalSlice

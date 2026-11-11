@@ -14,13 +14,16 @@ export interface SliceMap {
 const sliceSelectors: {
   [K in keyof SliceMap]: (state: BoundState) => SliceMap[K]
 } = {
-  user: ({ isLoggedIn, userInfo, userLogin }) => ({
+  user: ({ isLoggedIn, userInfo, userLogin, fetchCaptcha, captchaId }) => ({
     isLoggedIn,
     userInfo,
-    userLogin
+    userLogin,
+    fetchCaptcha,
+    captchaId
   }),
-  global: ({ siteName, storage, setItem, getItem, removeItem, clearStorage }) => ({
+  global: ({ siteName, env, storage, setItem, getItem, removeItem, clearStorage }) => ({
     siteName,
+    env,
     storage,
     setItem,
     getItem,

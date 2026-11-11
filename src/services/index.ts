@@ -47,7 +47,11 @@ http.interceptors.response.use(
       }
     }else{
       window.$message.error(resData.return_subMsg || '系统异常')
-      return Promise.reject(resData.return_subMsg || '系统异常')
+      throw {
+        code: resData.return_code,
+        data: resData.data,
+        msg: resData.return_subMsg,
+      }
     }
     // if (resData.return_code === 50000) {
     //   return Promise.reject(resData.return_msg || '系统异常')

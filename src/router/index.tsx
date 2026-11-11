@@ -9,6 +9,7 @@ export interface RouterItem {
 }
 export const whitePaths = [
   '/',
+  '/ssoLogin',
   '/404',
   '/login',
   '/portal',
@@ -141,6 +142,11 @@ export const list: RouterItem[] = [
     path: '/login',
     name: 'Login',
     componentPath: '/Login/index.tsx'
+  },
+  {
+    path: '/ssoLogin',
+    name: 'SsoLogin',
+    componentPath: '/SsoLogin/index.tsx'
   },
   {
     path: '/404',

@@ -28,7 +28,8 @@ export const useBoundStore = create<BoundState>()(
       name: 'zustand-store',
       partialize: (state) => ({
         isLoggedIn: state.isLoggedIn,
-        userInfo: state.userInfo
+        userInfo: state.userInfo,
+        captchaId: state.captchaId
       }),
       storage: createJSONStorage(() => window.sessionStorage)
     }

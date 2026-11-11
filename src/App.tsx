@@ -6,7 +6,7 @@ const queryClient = new QueryClient()
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.VITE_BASE_PATH}>
         <AntdApp>
           <AppRouter />
         </AntdApp>
