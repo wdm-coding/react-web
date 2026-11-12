@@ -1,7 +1,7 @@
 import type { StateCreator } from 'zustand'
 import type { UserSlice } from '../types'
-import UserApi from '@/api/user'
 import AuthApi from '@/api/auth'
+import UserApi from '@/api/user'
 import Encrypt from '@/utils/encrypt'
 
 
@@ -17,9 +17,18 @@ const createUserSlice: StateCreator<
   captchaId: '',
   randomId: '',
   fetchCurrentUser: async () => {
-    const res = await UserApi.getCurrentUser({})
+    const res = await AuthApi.getCurrentUser({})
     if (res.code === 20000) {
-      set((state) => {state.userInfo = res.data})
+      const insRes = await UserApi.getInsList()
+      if (insRes.code === 20000) {
+        const currentIns = res.personage ? (insRes.data || []).find(v=>v.setDefault === 1) : insRes.data?.[0]
+        set((state) => {state.userInfo = {
+          ...res.data,
+          insList: insRes.data || [],
+          currentIns,
+          userName:res.personage ? res.userName : currentIns.institutionName
+        }})
+      }
     }
   },
   fetchCaptcha: async () => {
@@ -53,8 +62,8 @@ const createUserSlice: StateCreator<
       const password = Encrypt({random,publicKey},params.password)
       await AuthApi.Login(authCode ? { authCode } : {...params,password})
       await get().fetchCurrentUser()
+      set((state) => {state.isLoggedIn = true})
       return new Promise((resolve) => {
-        set((state) => {state.isLoggedIn = true})
         resolve('/portal')
       })
     } catch (error) {
@@ -62,6 +71,25 @@ const createUserSlice: StateCreator<
       set((state) => {state.userInfo = null})
       throw error
     }
+  },
+  useLogout:async ()=>{
+    const res = await AuthApi.Logout()
+    if (res.code === 20000) {
+      get().clearCache()
+      return new Promise((resolve) => {
+        resolve(true)
+      })
+    }
+  },
+  clearCache: () => {
+    set((state) => {
+      state.isLoggedIn = false
+      state.userInfo = null
+      state.captchaId = ''
+      state.randomId = ''
+    })
+    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'
+    document.cookie = 'hasToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'
   }
 })
 

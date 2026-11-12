@@ -1,3 +1,4 @@
+import { clearCache } from '@/utils/storage';
 // 全局状态类型
 export interface GlobalSlice {
   siteName: string // 站点名称
@@ -19,5 +20,7 @@ export interface UserSlice {
   captchaId: string // 图片验证码id
   fetchSecret: () => Promise<any> // 获取加密公钥
   randomId: string // 加密随机数id
+  useLogout: ()=>Promise<boolean> // 退出登录
+  clearCache: () => void // 清除登录缓存
  }
 export type BoundState = UserSlice & GlobalSlice

@@ -21,6 +21,10 @@ class AuthApi {
   @Post('/auth/alreadyLogin')
   static getThirdLoginUrl: RequestFn<any, any>
 
+  // 获取账号信息
+  @Post('/auth/currentUser')
+  static getCurrentUser: RequestFn<any, any>
+
   // 退出登录
   @Post('/auth/logout')
   static Logout: RequestFn<any, any>

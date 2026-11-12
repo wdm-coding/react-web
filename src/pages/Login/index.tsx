@@ -21,6 +21,7 @@ const loginMethodOptions = [
   }
 ]
 const Login = () => {
+  const [formRef] = Form.useForm()
   const navigate = useNavigate()
   const [loginMethod, setLoginMethod] = useState<'subject' | 'personal'>(
     'subject'
@@ -42,12 +43,16 @@ const Login = () => {
     getCaptch()
   },[])
   const onFinish = async (values: FieldType) => {
-    const params = {
+    const params:any = {
       "captcha": values.captcha,
       "password": values.password,
-      "institutioncode": values.username,
       "loginAfter": "/portal",
-      "loginMethod": loginMethod === 'subject' ? 1 : 2,
+      "loginMethod": 1,
+    }
+    if(loginMethod === 'subject'){
+      params.institutioncode = values.username
+    }else{
+      params.idnumber = values.username
     }
     try {
       const redirectUrl = await userLogin(params)
@@ -85,8 +90,10 @@ const Login = () => {
       }
   }
   useEffect(()=>{
-   tokenLogin()
-  },[])
+    if(env === 'dev'){
+      tokenLogin()
+    }
+  },[env])
   return (
     <div className={styles.loginWrapper}>
       {/* 顶部标题 */}
@@ -99,6 +106,7 @@ const Login = () => {
             (item: { label: string; value: 'subject' | 'personal' }) => (
               <div
                 onClick={() => {
+                  formRef?.resetFields()
                   setLoginMethod(item.value)
                   getCaptch()
                 }}
@@ -113,7 +121,8 @@ const Login = () => {
           )}
         </div>
         <Form
-          name='basic'
+          name='loginForm'
+          form={formRef}
           labelCol={{ span: 0 }}
           wrapperCol={{ span: 24 }}
           style={{ width: 400 }}

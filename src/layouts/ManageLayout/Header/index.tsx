@@ -1,30 +1,21 @@
-import { Dropdown, Tag } from 'antd'
+import { Dropdown, Popover, Tag } from 'antd'
 import styles from './index.module.scss'
 import useModal from '@/hooks/useModal'
 import logo from '@/assets/images/portal/user-logo.png'
 import { useNavigate } from 'react-router-dom'
+import InsSelect from './modules/InsSelect'
+import { BellOutlined, SwapOutlined } from '@ant-design/icons'
 
 const ManageHeader = () => {
   const { siteName } = useModal('global')
+  const {userInfo,useLogout} = useModal('user')
   const navigate = useNavigate()
-  const item = {
-    key: 'userName',
-    label: '用户中心',
-    items: [
-      {
-        key: 'userName',
-        label: '用户中心'
-      },
-      {
-        key: 'logout',
-        label: '退出登录'
-      }
-    ]
-  }
   const onDropdownClick = async ({ key }: { key: string }) => {
     switch (key) {
       case 'logout':
-        window.location.href = '/'
+        useLogout().then(()=>{
+          navigate('/portal')
+        })
         break
       default:
         break
@@ -44,8 +35,14 @@ const ManageHeader = () => {
       </div>
       {/* 右侧用户中心 */}
       <div className={styles.rightSpace}>
+        <BellOutlined style={{marginRight:15,fontSize:18,cursor:'pointer'}}/>
+        <Popover content={<InsSelect />}>
+          <div className={styles.currentIns}>
+            <SwapOutlined style={{marginRight:10,fontSize:18}} />
+            当前登记主体：{userInfo?.currentIns?.institutionName}
+          </div>
+        </Popover>
         <Dropdown
-          key={item.key}
           menu={{
             items: [{ label: '退出登录', key: 'logout' }],
             onClick: onDropdownClick
@@ -60,7 +57,7 @@ const ManageHeader = () => {
               alt='logo'
               style={{ width: 30, height: 30, borderRadius: 50 }}
             />
-            <span className={styles.userName}>用户用户用户用户用户用户</span>
+            <span className={styles.userName}>{userInfo?.userName}</span>
           </div>
         </Dropdown>
       </div>

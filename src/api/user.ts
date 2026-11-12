@@ -1,8 +1,9 @@
 import { Post, type RequestFn } from '@/services/http.decorator'
 
 class UserApi {
-  @Post('/auth/currentUser')
-  static getCurrentUser: RequestFn<any, any>
+  // 获取主体信息
+  @Post('user/getInstitutionList')
+  static getInsList: RequestFn<any, any>
 }
 
 export default UserApi

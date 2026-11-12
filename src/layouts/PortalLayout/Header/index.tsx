@@ -17,7 +17,7 @@ interface HeaderProps {
 const Header = ({ isFixed = false, isScroll = false }: HeaderProps) => {
   const { isLoggedIn } = useAuth()
   const { siteName,env } = useModal('global')
-  const {userInfo} = useModal('user')
+  const {userInfo,useLogout} = useModal('user')
   const navigate = useNavigate()
   const [registerData, setRegisterData] = useState<{
     naturalRegisterUrl: string
@@ -61,7 +61,7 @@ const Header = ({ isFixed = false, isScroll = false }: HeaderProps) => {
         env !== 'prod' ? navigate('/login') : thirdLogin()
         break
       case 'logout':
-        window.location.href = '/'
+        useLogout()
         break
       case 'personalRegister':
         registerData?.naturalRegisterUrl &&
