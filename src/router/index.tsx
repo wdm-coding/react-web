@@ -21,11 +21,6 @@ export const whitePaths = [
   '/portal/regInstitution',
   '/portal/demandNumbers',
   '/portal/inforDisclosure',
-  '/manage',
-  '/manage/manageHome',
-  '/manage/regApply',
-  '/manage/regApply/regApplyList',
-  '/manage/regApply/regApplyData',
   '/portal/regGuide',
 ]
 export const list: RouterItem[] = [
@@ -112,6 +107,13 @@ export const list: RouterItem[] = [
         componentPath: '/Manage/ManageHome/index.tsx',
         icon: 'home',
         title: '首页'
+      },
+      {
+        path: 'firstReg',
+        name: 'FirstReg',
+        componentPath: '/Manage/FirstReg/index.tsx',
+        icon: 'first-reg',
+        title: '首次登记'
       },
       {
         path: 'regApply',

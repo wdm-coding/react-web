@@ -1,13 +1,12 @@
 import { useLocation, Navigate } from 'react-router-dom'
-import { getToken } from '@/utils/storage'
 import { ReactNode } from 'react'
 import { whitePaths } from '@/router'
-
+import useAuth from '@/hooks/useAuth'
 const AuthGuard = ({ children }: { children: ReactNode }) => {
+  const { isLoggedIn } = useAuth()
   const location = useLocation()
-  const isLogin = !!getToken()
   const path = location.pathname.split('?')[0]
-  if (!isLogin && !whitePaths.includes(path)) {
+  if (!isLoggedIn && !whitePaths.includes(path)) {
     return (
       <Navigate
         to={`/login?redirect=${encodeURIComponent(location.pathname)}`}
