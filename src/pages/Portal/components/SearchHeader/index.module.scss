@@ -1,14 +1,14 @@
 .search_header {
   width: 100%;
-  height: 386px;
+  height: 30vh;
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-position: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: 'shsm';
- .page_title {
+  position: relative;
+  .page_title {
     font-size: 48px;
     color: #000000;
     padding-top: 137px;

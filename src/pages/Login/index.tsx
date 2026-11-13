@@ -208,7 +208,7 @@ const Login = () => {
           </Form.Item>
         </Form>
         <div
-          className='text-center'
+          className='text-center cursor-pointer'
           style={{ color: '#006BD3' }}
           onClick={() => navigate(-1)}
         >

@@ -3,12 +3,13 @@ import styles from './index.module.scss'
 const { Search } = Input
 interface Props {
   bg: string
-  pageTitle: string
+  pageTitle?: string
   subTitle?: string
   total?: number
   loading?: boolean
   onSearch?: (value: string) => void
   showSearch?: boolean
+  children?: React.ReactNode
 }
 const SearchHeader: React.FC<Props> = ({
   bg,
@@ -16,8 +17,9 @@ const SearchHeader: React.FC<Props> = ({
   subTitle,
   total,
   loading,
-  showSearch = true,
-  onSearch
+  showSearch = false,
+  onSearch,
+  children
 }) => {
   return (
     <div
@@ -44,6 +46,7 @@ const SearchHeader: React.FC<Props> = ({
           />
         </div>
       )}
+      {children}
     </div>
   )
 }
