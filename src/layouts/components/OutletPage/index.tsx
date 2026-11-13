@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import SimpleBar from 'simplebar-react'
 import 'simplebar-react/dist/simplebar.min.css'
 import { ReactNode, useEffect, useRef } from 'react'
@@ -14,6 +14,7 @@ const OutletPage = ({
   children,
   onScroll
 }: OutletPageProps) => {
+  const {pathname} = useLocation()
   const scrollableNodeRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
     const node = scrollableNodeRef.current
@@ -30,6 +31,12 @@ const OutletPage = ({
       }
     }
   }, [])
+  // 切换路由时，滚动到顶部
+  useEffect(() => {
+    if (scrollableNodeRef.current) {
+      scrollableNodeRef.current.scrollTop = 0
+    }
+  }, [pathname])
   return (
     <SimpleBar
       style={{ maxHeight: maxHeight }}
