@@ -5,8 +5,15 @@
     border: none;
     background-color: transparent;
     font-size: 'sms';
+    :global(.ant-menu-item),
+    :global(.ant-menu-submenu-title) {
+      color: #fff;
+    }
+    :global(.ant-menu-item:not(.ant-menu-item-selected):not(.ant-menu-submenu-selected):hover) {
+      color: #fff;
+    }
     :global(.ant-menu-item-selected) {
-      color: #454545;
+      color: #fff;
       font-size: 16px;
     }
   }

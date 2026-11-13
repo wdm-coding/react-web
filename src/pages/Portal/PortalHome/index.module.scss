@@ -1,4 +1,16 @@
 .portalHomeWrapper{
   width: 100%;
-  min-height: 100vh;
+  min-height: 200vh;
+  .bannerBg{
+    width: 100%;
+    height: 446px;
+    background: url('@/assets/images/registerHome/banner-bg.png') no-repeat center center / cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 44px;
+    font-weight: 600;
+  }
 }

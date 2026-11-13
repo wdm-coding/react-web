@@ -15,10 +15,9 @@ const ClientLayout = () => {
         }}
       >
         <div className={styles.footerContainer}>
-          <div>ICP备案/许可证号：陇ICP备19000165号</div>
+          <div>ICP备案/许可证号：陇ICP备10000569号-12</div>
           <div>
-            建议使用Edge浏览器 (79以上版本)，Chrome浏览器
-            (73.0以上版本)，1440*900以上分辨率浏览本站
+            建议使用Edge浏览器（79以上版本），Chrome浏览器（73.0以上版本），1440*900以上分辨率浏览本站
           </div>
         </div>
       </OutletPage>

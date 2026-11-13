@@ -123,9 +123,9 @@ const Header = ({ isFixed = false, isScroll = false }: HeaderProps) => {
                     </span>
                   </div>
                 ) : (
-                  <div style={{ cursor: 'pointer', margin: '0 10px' }}>
+                  <Button type='text' style={{ margin: '0 10px' }}>
                     {item.label}
-                  </div>
+                  </Button>
                 )}
               </Dropdown>
             )
