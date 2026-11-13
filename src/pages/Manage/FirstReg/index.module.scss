@@ -1,4 +1,33 @@
 .firstRegWrapper{
   width: 100%;
-  padding: 15px 20px;
+  :global(.ant-pro-form-group){
+    padding: 15px 10px;
+    border-radius: 4px;
+    background-color: #fff;
+    margin-bottom: 15px;
+    .groupTitle{
+      position: relative;
+      font-size: 16px;
+      font-weight: 500;
+      color: #000;
+      &::after{
+        content: "";
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 0;
+        width: 3px;
+        height: 16px;
+        background: #1471ff;
+        border-radius: 2px;
+      }
+    }
+    :global(.ant-pro-form-group-container){
+      width: 100%;
+      :global(.ant-space-item){
+        width: 100%;
+        padding: 0 20px;
+      }
+    }
+  }
 }

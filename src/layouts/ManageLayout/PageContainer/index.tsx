@@ -9,9 +9,10 @@ interface Props {
   extra?: string | ReactNode,
   showBack?: boolean,
   children?: ReactNode,
+  contentStyle?: React.CSSProperties,
   onScroll?: (e: Event) => void,
 }
-const pageContainer: React.FC<Props> = ({ title, extra, showBack = true, children, onScroll }) => { 
+const pageContainer: React.FC<Props> = ({ title, extra, showBack = true, children,contentStyle, onScroll }) => { 
   const {pathname} = useLocation()
   const scrollableNodeRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
@@ -54,7 +55,7 @@ const pageContainer: React.FC<Props> = ({ title, extra, showBack = true, childre
         style={{ maxHeight: 'calc(100vh - 72px - 50px)' }}
         scrollableNodeProps={{ ref: scrollableNodeRef }}
       >
-        <div className={styles.pageContent}>
+        <div style={contentStyle}>
           {children}
         </div>
       </SimpleBar>

@@ -9,7 +9,7 @@ interface ApiResponse<T> {
   };
 }
 
-const useRequest = <T>(
+export const useRequest = <T>(
   fetcher: (params?: any) => Promise<ApiResponse<T>>,
   options?: Options<any, any>,
 )=> {
@@ -39,5 +39,3 @@ const useRequest = <T>(
     error
   }
 }
-
-export default useRequest

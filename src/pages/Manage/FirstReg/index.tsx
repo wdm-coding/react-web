@@ -5,6 +5,7 @@ const FirstReg = () => {
   return (
     <PageContainer
         title='登记申请'
+        contentStyle={{ padding: '20px' }}
         extra={
           <span>
             标有红色<span style={{ color: 'red' }}> * </span>

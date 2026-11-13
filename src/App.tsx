@@ -1,17 +1,21 @@
 import { BrowserRouter } from 'react-router-dom'
 import AppRouter from '@/router/AppRouter'
-import { App as AntdApp } from 'antd'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-const queryClient = new QueryClient()
+import { App as AntdApp, ConfigProvider } from 'antd'
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
+    <ConfigProvider theme={{ 
+      components: {
+        Input: {
+          borderRadius: 0,
+        }
+      }
+    }}>
       <BrowserRouter basename={import.meta.env.VITE_BASE_PATH}>
         <AntdApp>
           <AppRouter />
         </AntdApp>
       </BrowserRouter>
-    </QueryClientProvider>
+    </ConfigProvider>
   )
 }
 
