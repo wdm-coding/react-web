@@ -21,7 +21,7 @@
       color: #000  !important; // 滚动后变成黑色
     }
     :global(.ant-menu-item-selected) {
-      color: #1677ff !important; // 选中态也可以单独设
+      color: #fff !important; // 选中态也可以单独设
     }
   }
   .rightAction {
@@ -50,13 +50,14 @@
     span {
       font-size: 24px;
       color: #fff;
-      font-family: 'almmsht';
+      font-family: 'ybtth';
       white-space: nowrap;
     }
   }
   .navMenuContainer{
     min-width: 0;
     flex: 1;
+    height: 100%;
   }
   .rightAction {
     display: flex;

@@ -1,20 +1,37 @@
 .menuContainer {
+  height: 100%;
   min-width: 0;
   flex: 1;
   :global(.ant-menu-horizontal) {
+    height: 100%;
     border: none;
     background-color: transparent;
     font-size: 'sms';
     :global(.ant-menu-item),
     :global(.ant-menu-submenu-title) {
       color: #fff;
+      height: 100%;
+      line-height: 72px;
+      font-size: 16px;
+      &::after {
+        display: none;
+      }
     }
     :global(.ant-menu-item:not(.ant-menu-item-selected):not(.ant-menu-submenu-selected):hover) {
-      color: #fff;
+      color: #1471ff;
+      &::after {
+        display: none;
+      }
     }
     :global(.ant-menu-item-selected) {
       color: #fff;
-      font-size: 16px;
+      background-color: #1471ff;
+      &:hover {
+        background-color: #1471ff;
+      }
+      &::after {
+        display: none;
+      }
     }
   }
   :global(.siderMenu) {

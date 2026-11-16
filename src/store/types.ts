@@ -21,6 +21,7 @@ export interface UserSlice {
   fetchSecret: () => Promise<any> // 获取加密公钥
   randomId: string // 加密随机数id
   useLogout: ()=>Promise<boolean> // 退出登录
+  checkLogin: () => Promise<void> // 检查是否已登录
   clearCache: () => void // 清除登录缓存
  }
 export type BoundState = UserSlice & GlobalSlice

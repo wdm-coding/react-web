@@ -53,8 +53,8 @@ const createUserSlice: StateCreator<
     try {
       if (tokenCookie) {
         await get().fetchCurrentUser()
+        set((state) => {state.isLoggedIn = true})
         return new Promise((resolve) => {
-          set((state) => {state.isLoggedIn = true})
           resolve('/portal')
         })
       }
@@ -75,10 +75,22 @@ const createUserSlice: StateCreator<
   useLogout:async ()=>{
     const res = await AuthApi.Logout()
     if (res.code === 20000) {
+      document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'
+      document.cookie = 'hasToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'
       get().clearCache()
       return new Promise((resolve) => {
         resolve(true)
       })
+    }
+  },
+  // 检查是否已登录
+  checkLogin: async () => {
+    const {code,data} = await AuthApi.checkLogin()
+    if (code === 20000) {
+      if(data?.login){
+        await get().fetchCurrentUser()
+        set((state) => {state.isLoggedIn = true})
+      }
     }
   },
   clearCache: () => {
@@ -88,8 +100,6 @@ const createUserSlice: StateCreator<
       state.captchaId = ''
       state.randomId = ''
     })
-    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'
-    document.cookie = 'hasToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'
   }
 })
 

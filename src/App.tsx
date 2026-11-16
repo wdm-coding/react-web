@@ -1,7 +1,14 @@
 import { BrowserRouter } from 'react-router-dom'
 import AppRouter from '@/router/AppRouter'
 import { App as AntdApp, ConfigProvider } from 'antd'
+import useModal from '@/hooks/useModal'
+import { useEffect } from 'react'
+
 function App() {
+  const {checkLogin} = useModal('user')
+  useEffect(() => {
+    checkLogin()
+  }, [])
   return (
     <ConfigProvider theme={{ 
       components: {
