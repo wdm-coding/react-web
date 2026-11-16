@@ -18,4 +18,5 @@ export interface RequestOpt {
   showLoading?: boolean // 开启loading
   contentType?: ContentType // 自定义请求头Content-Type
   responseType?: 'blob' | 'json' | 'text' // 自定义响应类型
+  paramsAsQuery?: boolean // 参数拼接到URL query上（用于POST等非GET请求）
 }

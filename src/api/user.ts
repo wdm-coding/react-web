@@ -10,8 +10,8 @@ class UserApi {
   static getAccountInfo: RequestFn<any, any>
 
   // 获取确认单管理与登记审请菜单权限 subjectCode=91620103MA73CK0N0P - 个人账号调用
-  @Post('userMenu/getMenus')
-  static getMenus: RequestFn<any, any>
+  @Post('userMenu/getMenus', { paramsAsQuery: true })
+  static getMenusPermissions: RequestFn<{ subjectCode: string }, any>
 }
 
 export default UserApi

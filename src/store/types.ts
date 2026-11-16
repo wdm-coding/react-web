@@ -19,13 +19,14 @@ export interface UserSlice {
   isLoggedIn: boolean // 是否登录
   userInfo: Record<string, any> | null // 当前登录用户信息
   fetchCurrentUser: () => Promise<void> // 获取当前用户信息
-  userLogin: (params:any) => Promise<any> // 用户登录
+  fetchMenusPermissions: (params: any) => Promise<any> // 获取菜单权限
+  userLogin: (params: any) => Promise<any> // 用户登录
   fetchCaptcha: () => Promise<any> // 获取图片验证码
   captchaId: string // 图片验证码id
   fetchSecret: () => Promise<any> // 获取加密公钥
   randomId: string // 加密随机数id
-  useLogout: ()=>Promise<boolean> // 退出登录
+  useLogout: () => Promise<boolean> // 退出登录
   checkLogin: () => Promise<void> // 检查是否已登录
   clearCache: () => void // 清除登录缓存
- }
+}
 export type BoundState = UserSlice & GlobalSlice

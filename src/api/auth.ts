@@ -8,7 +8,7 @@ class AuthApi {
   // 获取加密公钥
   @Post('/auth/secret')
   static getSecret: RequestFn<any, any>
-  
+
   // 账号密码登录 第三方登录传authCode,账号密码登录传username,password
   @Post('/auth/login')
   static Login: RequestFn<any, any>

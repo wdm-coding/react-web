@@ -56,12 +56,13 @@ function createRequestFn<T, R>(
     }
     const hasParams = Object.keys(paramObj).length > 0
     if (hasParams || JSON.stringify(queryParams) === '{}') {
-      if (config.method?.toUpperCase() === 'GET') {
+      if (config.method?.toUpperCase() === 'GET' || config.paramsAsQuery) {
         config.params = queryParams
       } else {
         config.data = queryParams
       }
     }
+    console.log('config', config)
 
     // 发送请求
     return httpService(config) as Promise<R>
