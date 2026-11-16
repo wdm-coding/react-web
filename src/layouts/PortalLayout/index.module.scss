@@ -1,0 +1,22 @@
+.clientLayout {
+  width: 100%;
+  background-color: #f8f8f8;
+  min-height: 100vh;
+  .contentContainer {
+    width: 100%;
+    min-height: calc(100vh - 75px);
+    box-sizing: border-box;
+  }
+  .footerContainer {
+    width: 100%;
+    height: 10vh;
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.73vw;
+    line-height: 2;
+  }
+}

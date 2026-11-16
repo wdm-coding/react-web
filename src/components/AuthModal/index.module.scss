@@ -1,0 +1,5 @@
+.authModal {
+  :global(.ant-btn:not(:disabled):focus-visible){
+    outline: none;
+  }
+}

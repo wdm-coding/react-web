@@ -1,0 +1,84 @@
+
+.fixedHeader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+.scrollHeader {
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(0px);
+  transition: all 0.2s ease-in-out;
+  .logoSpace{
+    span{
+      color: #000 !important;
+    }
+  }
+  :global(.ant-menu-horizontal) {
+    :global(.ant-menu-item),
+    :global(.ant-menu-submenu-title) {
+      color: #000  !important; // 滚动后变成黑色
+    }
+    :global(.ant-menu-item-selected) {
+      color: #fff !important; // 选中态也可以单独设
+    }
+  }
+  .rightAction {
+    color: #000 !important;
+  }
+}
+.headerWrapper {
+  width: 100%;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease-in-out;
+  .logoSpace {
+    display: flex;
+    align-items: center;
+    margin-right: 60px;
+    img {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+      border-radius: 50%;
+    }
+    span {
+      font-size: 24px;
+      color: #fff;
+      font-family: 'ybtth';
+      white-space: nowrap;
+    }
+  }
+  .navMenuContainer{
+    min-width: 0;
+    flex: 1;
+    height: 100%;
+  }
+  .rightAction {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    color: #fff;
+    :global(.ant-btn) {
+      color: inherit;
+      &:hover {
+        color: inherit;
+      }
+    }
+    .userName {
+      padding-left: 10px;
+      white-space: nowrap;
+    }
+    .logoutBtn {
+      cursor: pointer;
+    }
+    .loginBtn {
+      cursor: pointer;
+    }
+  }
+}

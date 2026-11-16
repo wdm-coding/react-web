@@ -1,0 +1,72 @@
+{
+  "name": "react-web",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build:prod": "tsc -b && vite build --mode production",
+    "build:test": "tsc -b && vite build --mode test",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "preview": "vite preview",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^5.6.1",
+    "@ant-design/pro-components": "^3.1.15-9",
+    "@tailwindcss/vite": "^4.3.0",
+    "ahooks": "^3.11.0",
+    "antd": "^6.7.0",
+    "antd-img-crop": "^4.30.0",
+    "axios": "^1.16.1",
+    "dayjs": "^1.11.23",
+    "immer": "^11.2.9",
+    "jsencrypt": "^3.5.4",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-fast-marquee": "^1.6.5",
+    "react-router-dom": "^7.15.1",
+    "reflect-metadata": "^0.2.2",
+    "simplebar-react": "^3.3.2",
+    "tailwindcss": "^4.3.0",
+    "zustand": "^5.0.13"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.29.0",
+    "@babel/plugin-syntax-decorators": "^7.28.6",
+    "@commitlint/cli": "^21.2.4",
+    "@commitlint/config-conventional": "^21.2.4",
+    "@rolldown/plugin-babel": "^0.2.2",
+    "@types/babel__core": "^7.20.5",
+    "@types/node": "^24.12.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@typescript-eslint/eslint-plugin": "^8.60.0",
+    "@typescript-eslint/parser": "^8.60.0",
+    "@vitejs/plugin-react": "^6.0.1",
+    "babel-plugin-react-compiler": "^1.0.0",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.6",
+    "globals": "^17.6.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.8.3",
+    "sass": "^1.99.0",
+    "typescript": "~6.0.2",
+    "vite": "^8.0.4",
+    "vite-plugin-html": "^3.2.2",
+    "vite-plugin-svgr": "^5.2.0"
+  },
+  "lint-staged": {
+    "*.{js,mjs,cjs,jsx,ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{css,scss,less,json,md,html}": [
+      "prettier --write"
+    ]
+  }
+}

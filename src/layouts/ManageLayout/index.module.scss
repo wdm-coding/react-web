@@ -1,0 +1,27 @@
+.manageLayout {
+  width: 100%;
+  background-color: #f8f8f8;
+  height: 100vh;
+  padding-top: 72px;
+  .manageWrapper{
+    width: 100%;
+    height: calc(100vh - 72px);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e5e5e5;
+    overflow: hidden;
+    .firstRegBtn{
+      margin: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      background-color: #1471ff;
+      height: 50px;
+      line-height: 50px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+}
