@@ -4,6 +4,7 @@ import { App as AntdApp, ConfigProvider } from 'antd'
 import useModal from '@/hooks/useModal'
 import AuthModal from '@/components/AuthModal'
 import { useEffect } from 'react'
+import zhCN from 'antd/locale/zh_CN';
 
 function App() {
   const {checkLogin} = useModal('user')
@@ -11,7 +12,9 @@ function App() {
     checkLogin()
   }, [])
   return (
-    <ConfigProvider theme={{ 
+    <ConfigProvider
+    locale={zhCN}
+    theme={{ 
       components: {
         Input: {
           borderRadius: 0,
