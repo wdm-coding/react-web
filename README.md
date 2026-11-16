@@ -190,3 +190,25 @@ const Demo = () => {
 
 export default Demo
 ```
+
+## 接口请求
+
+1. 通过正常的 async/await 方式调用接口请求
+2. 项目中通过hooks/useRequest 调用接口请求(参数与ahooks/useRequest参数一致)
+
+```ts
+import { useRequest } from '@/hooks/useRequest'
+const { run, data, loading } = useRequest(fetcher, options)
+```
+
+## 登录认证
+
+1. 开发环境登录-登录页面-token登录，在输入框中将复制的token粘贴即可登录
+2. 生产环境登录-sso登录
+3. 测试环境登录--账号密码登录
+4. 项目中通过hooks/useAuth 获取登录状态
+
+```ts
+import { useAuth } from '@/hooks/useAuth'
+const { isLoggedIn } = useAuth()
+```

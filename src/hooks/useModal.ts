@@ -14,7 +14,15 @@ export interface SliceMap {
 const sliceSelectors: {
   [K in keyof SliceMap]: (state: BoundState) => SliceMap[K]
 } = {
-  user: ({ isLoggedIn, userInfo, userLogin, fetchCaptcha, captchaId,checkLogin,useLogout }) => ({
+  user: ({
+    isLoggedIn,
+    userInfo,
+    userLogin,
+    fetchCaptcha,
+    captchaId,
+    checkLogin,
+    useLogout
+  }) => ({
     isLoggedIn,
     userInfo,
     userLogin,
@@ -23,7 +31,16 @@ const sliceSelectors: {
     checkLogin,
     useLogout
   }),
-  global: ({ siteName, env, storage, authModal, setItem, getItem, removeItem, clearStorage }) => ({
+  global: ({
+    siteName,
+    env,
+    storage,
+    authModal,
+    setItem,
+    getItem,
+    removeItem,
+    clearStorage
+  }) => ({
     siteName,
     env,
     storage,
