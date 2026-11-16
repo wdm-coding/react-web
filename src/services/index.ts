@@ -1,6 +1,6 @@
 import axios, { InternalAxiosRequestConfig, AxiosResponse } from 'axios'
 import { BaseResponse, RequestOpt } from './types'
-import {useBoundStore} from '@/store'
+import { useBoundStore } from '@/store'
 
 // 创建实例
 const http = axios.create({
@@ -30,16 +30,16 @@ http.interceptors.response.use(
       return {
         code: 20000,
         data: resData.data,
-        msg: resData.return_subMsg,
+        msg: resData.return_subMsg
       }
-    }else{
+    } else {
       // 处理token过期情况
-      const tokenMissMsg = [
-        '当前会话未登录',
-        '未提供有效的Token'
-      ]
-      if(resData.return_code === 50001 && tokenMissMsg.includes(resData.return_subMsg)){
-        const {clearCache} = useBoundStore.getState()
+      const tokenMissMsg = ['当前会话未登录', '未提供有效的Token']
+      if (
+        resData.return_code === 50001 &&
+        tokenMissMsg.includes(resData.return_subMsg)
+      ) {
+        const { clearCache } = useBoundStore.getState()
         clearCache()
         window.$message.error(`${resData.return_subMsg}，请重新登录`)
         return
@@ -48,7 +48,7 @@ http.interceptors.response.use(
       throw {
         code: resData.return_code,
         data: resData.data,
-        msg: resData.return_subMsg,
+        msg: resData.return_subMsg
       }
     }
   },

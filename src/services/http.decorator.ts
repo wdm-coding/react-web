@@ -62,7 +62,6 @@ function createRequestFn<T, R>(
         config.data = queryParams
       }
     }
-    console.log('config', config)
 
     // 发送请求
     return httpService(config) as Promise<R>
