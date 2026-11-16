@@ -8,6 +8,10 @@ class UserApi {
   // 获取账号信息
   @Post('accountInfo/getAccountInfo')
   static getAccountInfo: RequestFn<any, any>
+
+  // 获取确认单管理与登记审请菜单权限 subjectCode=91620103MA73CK0N0P - 个人账号调用
+  @Post('userMenu/getMenus')
+  static getMenus: RequestFn<any, any>
 }
 
 export default UserApi
