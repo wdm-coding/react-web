@@ -13,6 +13,19 @@ const createGlobalSlice: StateCreator<
   siteName: '甘肃省公共数据资源登记平台',
   env: getEnv(),
   storage: {},
+  authModal:{
+    isOpen: false,
+    open: () => {
+      set((state) => {
+        state.authModal.isOpen = true
+      })
+    },
+    close : () => {
+      set((state) => {
+        state.authModal.isOpen = false
+      })
+    },
+  },
   setItem: (key, value) => set((state) => {
     state.storage[key] = value
   }),

@@ -1,8 +1,12 @@
-import { clearCache } from '@/utils/storage';
 // 全局状态类型
 export interface GlobalSlice {
   siteName: string // 站点名称
   env: 'test' | 'prod' | 'dev' // 环境 测试/生产/开发
+  authModal: {
+    isOpen: boolean // 是否打开登录弹窗
+    open: () => void // 打开登录弹窗
+    close: () => void // 关闭登录弹窗
+  }
   storage: Record<string, any> // 本地存储
   setItem: (key: string, value: any) => void // 设置本地存储
   getItem: (key: string) => any // 获取本地存储

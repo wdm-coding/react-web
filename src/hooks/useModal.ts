@@ -23,10 +23,11 @@ const sliceSelectors: {
     checkLogin,
     useLogout
   }),
-  global: ({ siteName, env, storage, setItem, getItem, removeItem, clearStorage }) => ({
+  global: ({ siteName, env, storage, authModal, setItem, getItem, removeItem, clearStorage }) => ({
     siteName,
     env,
     storage,
+    authModal,
     setItem,
     getItem,
     removeItem,

@@ -1,15 +1,15 @@
 import { useNavigate } from 'react-router-dom'
-import { getToken } from '@/utils/storage'
 import { useEffect } from 'react'
+import useAuth from '@/hooks/useAuth'
 const LoginGuard = ({ children }) => {
   const navigate = useNavigate()
-  const isLogin = !!getToken()
+  const {isLoggedIn} = useAuth()
   useEffect(() => {
-    if (isLogin) {
+    if (isLoggedIn) {
       navigate(-1)
     }
-  }, [isLogin])
-  if (isLogin) {
+  }, [isLoggedIn])
+  if (isLoggedIn) {
     return null
   }
   return children

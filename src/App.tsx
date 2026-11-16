@@ -2,6 +2,7 @@ import { BrowserRouter } from 'react-router-dom'
 import AppRouter from '@/router/AppRouter'
 import { App as AntdApp, ConfigProvider } from 'antd'
 import useModal from '@/hooks/useModal'
+import AuthModal from '@/components/AuthModal'
 import { useEffect } from 'react'
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
     }}>
       <BrowserRouter basename={import.meta.env.VITE_BASE_PATH}>
         <AntdApp>
+          <AuthModal />
           <AppRouter />
         </AntdApp>
       </BrowserRouter>

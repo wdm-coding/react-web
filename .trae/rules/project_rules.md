@@ -37,7 +37,7 @@ src/
 ├── components/      # 公共组件
 ├── hooks/           # 自定义 Hooks
 ├── pages/           # 页面级组件
-  ├── Client/        # 客户端页面
+  ├── Portal/        # 门户页面
   ├── Manage/        # 管理端页面
 ├── services/        # Axios 请求封装
 ├── router/          # 路由配置
