@@ -1,6 +1,7 @@
 # RegisterPortal
 
 -- 登记平台客户端前端项目
+-- node.js 22.16+
 
 ## 项目结构
 
