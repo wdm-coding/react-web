@@ -1,5 +1,4 @@
 import { Pagination as AntdPagination, PaginationProps } from 'antd'
-import { useState } from 'react'
 const Pagination: React.FC<PaginationProps> = ({
   total,
   current,
