@@ -21,7 +21,7 @@ export const whitePaths = [
   '/portal/regInstitution',
   '/portal/demandNumbers',
   '/portal/inforDisclosure',
-  '/portal/regGuide',
+  '/portal/regGuide'
 ]
 export const list: RouterItem[] = [
   {
@@ -37,60 +37,67 @@ export const list: RouterItem[] = [
         title: '首页'
       },
       {
-        path:'regGuide',
-        name:'RegGuide',
-        componentPath:'/Portal/RegGuide/index.tsx',
-        icon:'reg-guide',
-        title:'登记指南'
+        path: 'regGuide',
+        name: 'RegGuide',
+        componentPath: '/Portal/RegGuide/index.tsx',
+        icon: 'reg-guide',
+        title: '登记指南'
       },
       {
-        path:'regPublic',
-        name:'RegPublic',
-        componentPath:'/Portal/RegPublic/index.tsx',
-        icon:'reg-public',
-        title:'登记公示'
+        path: 'regPublic',
+        name: 'RegPublic',
+        componentPath: '/Portal/RegPublic/index.tsx',
+        icon: 'reg-public',
+        title: '登记公示'
       },
       {
-        path:'regCheck',
-        name:'RegCheck',
-        componentPath:'/Portal/RegCheck/index.tsx',
-        icon:'reg-check',
-        title:'登记核验'
+        path: 'regPublicDetail',
+        name: 'RegPublicDetail',
+        componentPath: '/Portal/RegPublic/Detail/index.tsx',
+        icon: 'reg-public-detail',
+        title: '登记公示详情'
       },
       {
-        path:'regQuery',
-        name:'RegQuery',
-        componentPath:'/Portal/RegQuery/index.tsx',
-        icon:'reg-query',
-        title:'登记查询'
+        path: 'regCheck',
+        name: 'RegCheck',
+        componentPath: '/Portal/RegCheck/index.tsx',
+        icon: 'reg-check',
+        title: '登记核验'
       },
       {
-        path:'regPolicy',
-        name:'RegPolicy',
-        componentPath:'/Portal/RegPolicy/index.tsx',
-        icon:'reg-policy',
-        title:'登记政策'
+        path: 'regQuery',
+        name: 'RegQuery',
+        componentPath: '/Portal/RegQuery/index.tsx',
+        icon: 'reg-query',
+        title: '登记查询'
       },
       {
-        path:'regInstitution',
-        name:'RegInstitution',
-        componentPath:'/Portal/RegInstitution/index.tsx',
-        icon:'reg-apply',
-        title:'登记机构'
+        path: 'regPolicy',
+        name: 'RegPolicy',
+        componentPath: '/Portal/RegPolicy/index.tsx',
+        icon: 'reg-policy',
+        title: '登记政策'
       },
       {
-        path:'demandNumbers',
-        name:'DemandNumbers',
-        componentPath:'/Portal/DemandNumbers/index.tsx',
-        icon:'demand-numbers',
-        title:'用数需求'
+        path: 'regInstitution',
+        name: 'RegInstitution',
+        componentPath: '/Portal/RegInstitution/index.tsx',
+        icon: 'reg-apply',
+        title: '登记机构'
       },
       {
-        path:'inforDisclosure',
-        name:'InforDisclosure',
-        componentPath:'/Portal/InforDisclosure/index.tsx',
-        icon:'infor-disclosure',
-        title:'信息披露'
+        path: 'demandNumbers',
+        name: 'DemandNumbers',
+        componentPath: '/Portal/DemandNumbers/index.tsx',
+        icon: 'demand-numbers',
+        title: '用数需求'
+      },
+      {
+        path: 'inforDisclosure',
+        name: 'InforDisclosure',
+        componentPath: '/Portal/InforDisclosure/index.tsx',
+        icon: 'infor-disclosure',
+        title: '信息披露'
       }
     ]
   },
