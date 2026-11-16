@@ -15,7 +15,7 @@ import { rules, Enum } from '../config'
 import { useState } from 'react'
 import CommonApi from '@/api/common'
 import { Form } from 'antd'
-import {useRequest} from '@/hooks/useRequest'
+import { useRequest } from '@/hooks/useRequest'
 import { transformTree } from '../utils'
 
 const BaseData = () => {
@@ -48,11 +48,13 @@ const BaseData = () => {
     },
     { title: '操作', valueType: 'option' }
   ]
-  useRequest(CommonApi.getIndustryTree,{
-    onSuccess: ({code,data}) => {
-      if(code === 20000){
-        setAllIndustry(transformTree(data || []))
-        setIndustryTree(transformTree(data || []))
+  useRequest(CommonApi.getIndustryTree, {
+    onSuccess: ({ code, data }) => {
+      if (code === 20000) {
+        const newTree = transformTree(data || [])
+        console.log(newTree)
+        setAllIndustry(newTree)
+        setIndustryTree(newTree)
       }
     }
   })
@@ -106,6 +108,7 @@ const BaseData = () => {
         allowClear
         secondary
         fieldProps={{
+          popupClassName: 'industryTreeSelectPopup',
           treeData: industryTree,
           filterTreeNode: true,
           showSearch: true,

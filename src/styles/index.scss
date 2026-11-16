@@ -11,3 +11,16 @@
   width: 100vw;
   height: 100vh;
 }
+.industryTreeSelectPopup {
+  .ant-select-tree-treenode-unselectable .ant-select-tree-node-content-wrapper {
+    color: #000 !important;
+    cursor: default !important;
+  }
+  .ant-select-tree-treenode[aria-disabled='true']
+    .ant-select-tree-node-content-wrapper {
+    color: rgba(0, 0, 0, 0.25);
+    cursor: not-allowed;
+  }
+}
+
+// ant-select-tree-treenode ant-select-tree-treenode-unselectable ant-select-tree-treenode-switcher-open
