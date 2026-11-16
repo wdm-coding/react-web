@@ -15,11 +15,11 @@ import { rules, Enum } from '../config'
 import { useState } from 'react'
 import CommonApi from '@/api/common'
 import { Form } from 'antd'
-import {useRequest} from '@/hooks/useRequest'
-import { transformTree } from '../utils'
+import useIndusTree from '../useIndusTree'
 
 const BaseData = () => {
   const formIns = Form.useFormInstance()
+  const { industryTreeData, createTreeData } = useIndusTree()
   const [dataRegistOrgName, setDataRegistOrgName] = useState('')
   const [authOperatEditableKeys, setAuthOperatEditableKeys] = useState<any[]>(
     []
@@ -48,18 +48,13 @@ const BaseData = () => {
     },
     { title: '操作', valueType: 'option' }
   ]
-  useRequest(CommonApi.getIndustryTree,{
-    onSuccess: ({code,data}) => {
-      if(code === 20000){
-        setAllIndustry(transformTree(data || []))
-        setIndustryTree(transformTree(data || []))
-      }
-    }
-  })
-  const [allIndustry, setAllIndustry] = useState<any[]>([])
-  const [industryTree, setIndustryTree] = useState<any[]>([])
   const onIndustryChange = (value: any[]) => {
     console.log(value)
+    if (value.length > 0) {
+      createTreeData(value[0]?.value)
+    } else {
+      createTreeData(null)
+    }
   }
   return (
     <>
@@ -106,7 +101,8 @@ const BaseData = () => {
         allowClear
         secondary
         fieldProps={{
-          treeData: industryTree,
+          popupClassName: 'industryPopup',
+          treeData: industryTreeData,
           filterTreeNode: true,
           showSearch: true,
           popupMatchSelectWidth: false,
@@ -115,9 +111,7 @@ const BaseData = () => {
           multiple: true,
           treeNodeFilterProp: 'title',
           fieldNames: {
-            label: 'name',
-            value: 'industryId',
-            children: 'children'
+            label: 'name'
           },
           onChange: (value) => {
             onIndustryChange(value)
