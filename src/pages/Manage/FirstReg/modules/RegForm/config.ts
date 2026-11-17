@@ -1,26 +1,26 @@
 export const rules = {
   baseData: {
-    regionCoverArea: [{ required: true, message: '请选择资源覆盖地区' }],
-    name: [{ required: true, message: '请输入项目名称' }],
-    dataRegistName2: [{ required: true, message: '请输入被授权登记数据名称' }],
-    dataRegistCode2: [{ required: true, message: '请输入被授权数据登记编码' }],
-    authOperatTimeRange: [{ required: true, message: '请输入被授权运营时间' }],
+    regionCoverArea: [{ required: false, message: '请选择资源覆盖地区' }],
+    name: [{ required: false, message: '请输入项目名称' }],
+    dataRegistName2: [{ required: false, message: '请输入被授权登记数据名称' }],
+    dataRegistCode2: [{ required: false, message: '请输入被授权数据登记编码' }],
+    authOperatTimeRange: [{ required: false, message: '请输入被授权运营时间' }]
   },
   proxyData: {
-    name: [{ required: true, message: '请输入项目名称' }],
-  },
+    name: [{ required: false, message: '请输入项目名称' }]
+  }
 }
 export const Enum = {
   // 登记数据类型
   regDataTypeEnum: [
     {
       label: '公共数据资源',
-      value: '1',
+      value: '1'
     },
     {
       label: '公共数据产品和服务',
-      value: '2',
-    },
+      value: '2'
+    }
   ],
   // 公共数据产品和服务类型
   dataProductAndServiceTypeEnum: [
@@ -56,5 +56,5 @@ export const Enum = {
     { label: '公共数据', value: '1' },
     { label: '企业数据', value: '2' },
     { label: '个人数据', value: '3' }
-  ],
+  ]
 }

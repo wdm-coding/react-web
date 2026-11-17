@@ -1,9 +1,9 @@
-import { ProFormText } from "@ant-design/pro-components"
+import { ProFormText } from '@ant-design/pro-components'
 
 const OpenData = () => {
   return (
     <>
-      <ProFormText name="name" label="项目名称" rules={[{ required: true }]} />
+      <ProFormText name='name' label='项目名称' />
     </>
   )
 }

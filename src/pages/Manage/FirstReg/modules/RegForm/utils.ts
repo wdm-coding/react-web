@@ -7,8 +7,8 @@ export const transformTree = (tree: any[]): any[] => {
       key: item.industryId,
       value: item.industryId,
       title: item.name,
-      selectable: !item.children || item.children.length === 0,
-      isLeaf: !item.children || item.children.length === 0,
+      selectable: item.children && item.children.length === 0,
+      isLeaf: item.children && item.children.length === 0,
       children: transformTree(item.children),
       disabled: false
     }
