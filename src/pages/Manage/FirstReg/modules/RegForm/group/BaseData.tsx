@@ -17,8 +17,12 @@ import CommonApi from '@/api/common'
 import { Button, Flex, Form } from 'antd'
 import useIndusTree from '../utils/useIndusTree'
 import { industryChange, authOperationStatusChange } from '../config'
+import useCustomUpload from '@/hooks/useCustomUpload'
 
-const BaseData = () => {
+interface BaseDataProps {
+  uploadOnlyId?: string
+}
+const BaseData: React.FC<BaseDataProps> = ({ uploadOnlyId }) => {
   const formIns = Form.useFormInstance()
   const { industryTreeData, createTreeData, industryName } = useIndusTree()
   const [authOperatEditableKeys, setAuthOperatEditableKeys] = useState<any[]>(
@@ -104,6 +108,13 @@ const BaseData = () => {
   useEffect(() => {
     formIns?.setFieldValue('industryName', industryName || '')
   }, [industryName])
+  const productAndServiceDetailsUploadProps = useCustomUpload({
+    extraParams: {
+      dataRegistCode: uploadOnlyId,
+      field: 'productAndServiceDetails'
+    }
+  }).props
+  console.log(productAndServiceDetailsUploadProps)
   return (
     <>
       <ProFormCascader
@@ -321,8 +332,10 @@ const BaseData = () => {
                 title='上传'
                 label='产品和服务详情'
                 name='productAndServiceDetails'
-                action='upload.do'
                 rules={rules.baseData.productAndServiceDetails}
+                fieldProps={{
+                  ...productAndServiceDetailsUploadProps
+                }}
               />
               <ProFormRadio.Group
                 name='productUsage'

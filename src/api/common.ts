@@ -1,4 +1,4 @@
-import { Post,Get, type RequestFn } from '@/services/http.decorator'
+import { Post, Get, type RequestFn } from '@/services/http.decorator'
 
 class CommonApi {
   // 获取区域树

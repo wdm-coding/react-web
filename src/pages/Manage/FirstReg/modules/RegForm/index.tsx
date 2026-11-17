@@ -1,5 +1,4 @@
 import styles from '../../index.module.scss'
-
 import { ProForm, ProFormInstance } from '@ant-design/pro-components'
 import BaseData from './group/BaseData'
 import ProxyData from './group/ProxyData'
@@ -10,8 +9,11 @@ import ShareData from './group/ShareData'
 import DirecData from './group/DirecData'
 import DataSource from './group/DataSource'
 import { useRef } from 'react'
+import FileApi from '@/api/file'
+import { useRequest } from '@/hooks/useRequest'
 const RegForm = () => {
   const formRef = useRef<ProFormInstance>(null)
+  const { data: uploadOnlyId } = useRequest(FileApi.getFileUploadOnlyId)
   const groupTitle = (title: string) => {
     return (
       <div key={title} className={styles.groupTitle}>
@@ -38,7 +40,7 @@ const RegForm = () => {
       }}
     >
       <ProForm.Group title={groupTitle('数据基本信息')}>
-        <BaseData />
+        <BaseData uploadOnlyId={uploadOnlyId} />
       </ProForm.Group>
       <ProForm.Group title={groupTitle('委托代理信息')}>
         <ProxyData />
