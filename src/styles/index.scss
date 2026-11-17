@@ -23,3 +23,8 @@
     cursor: not-allowed !important;
   }
 }
+.readOnlyFormItem {
+  .ant-input-disabled {
+    color: #666 !important;
+  }
+}

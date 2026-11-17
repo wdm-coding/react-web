@@ -11,7 +11,7 @@ import DirecData from './group/DirecData'
 import DataSource from './group/DataSource'
 import { useRef } from 'react'
 const RegForm = () => {
-  const formRef = useRef<ProFormInstance>(null);
+  const formRef = useRef<ProFormInstance>(null)
   const groupTitle = (title: string) => {
     return (
       <div key={title} className={styles.groupTitle}>
@@ -30,11 +30,11 @@ const RegForm = () => {
       formRef={formRef}
       onFinish={onFinish}
       initialValues={{
-        dataRegisteType: '1',
-        authOperatType: '1',
-        authResourcDevelop: '1',
-        dataProductAndServicesType: '1',
+        dataRegistType: '1',
+        authOperationStatus: '1',
         dataType: '1',
+        dataProductAndServicesType: '11',
+        authResourceDevelop: '1'
       }}
     >
       <ProForm.Group title={groupTitle('数据基本信息')}>

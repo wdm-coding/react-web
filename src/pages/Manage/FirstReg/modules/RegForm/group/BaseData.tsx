@@ -12,23 +12,23 @@ import {
   ProFormUploadButton
 } from '@ant-design/pro-components'
 import { rules, Enum } from '../config'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import CommonApi from '@/api/common'
-import { Form } from 'antd'
-import useIndusTree from '../useIndusTree'
+import { Button, Flex, Form } from 'antd'
+import useIndusTree from '../utils/useIndusTree'
+import { industryChange, authOperationStatusChange } from '../config'
 
 const BaseData = () => {
   const formIns = Form.useFormInstance()
-  const { industryTreeData, createTreeData } = useIndusTree()
-  const [dataRegistOrgName, setDataRegistOrgName] = useState('')
+  const { industryTreeData, createTreeData, industryName } = useIndusTree()
   const [authOperatEditableKeys, setAuthOperatEditableKeys] = useState<any[]>(
     []
   )
   type authOperatItem = {
     id: any
-    dataRegistName2: string
-    dataRegistCode2: string
-    authOperatTimeRange: string[]
+    dataRegistName2?: string
+    dataRegistCode2?: string
+    authOperatTimeRange2?: string[]
   }
   const authOperatColumns: ProColumns<authOperatItem>[] = [
     {
@@ -43,25 +43,73 @@ const BaseData = () => {
     },
     {
       title: '被授权运营时间',
-      dataIndex: 'authOperatTimeRange',
-      formItemProps: { rules: rules.baseData.authOperatTimeRange }
+      dataIndex: 'authOperatTimeRange2',
+      valueType: 'dateRange',
+      formItemProps: { rules: rules.baseData.authOperatTimeRange2 }
     },
-    { title: '操作', valueType: 'option' }
+    {
+      title: '操作',
+      valueType: 'option',
+      render: (_, row, __, action) => {
+        return (
+          <>
+            <Button
+              type='text'
+              onClick={() => {
+                action?.startEditable?.(row.id)
+              }}
+              style={{ color: '#1890FF' }}
+            >
+              编辑
+            </Button>
+            <Button
+              type='text'
+              onClick={() => {
+                const currentData = formIns?.getFieldValue('authOperatList')
+                if (currentData?.length) {
+                  const newData = currentData.filter(
+                    (item) => item.id !== row.id
+                  )
+                  formIns?.setFieldValue('authOperatList', newData)
+                }
+              }}
+              style={{ color: '#FF4D4F' }}
+            >
+              删除
+            </Button>
+          </>
+        )
+      }
+    }
   ]
-  const onIndustryChange = (value: any[]) => {
-    console.log(value)
-    if (value.length > 0) {
-      createTreeData(value[0]?.value)
-    } else {
-      createTreeData(null)
+  // 初始化授权运营情况
+  useEffect(() => {
+    authOperationStatusChange(
+      formIns,
+      formIns?.getFieldValue('authOperationStatus')
+    )
+  }, [])
+  // 覆盖地区改变时
+  const coverageAreaChange = async (value: any[], selectedOptions: any[]) => {
+    const pathName = selectedOptions.map((item) => item.name).join('-')
+    formIns?.setFieldValue('coverageAreaName', pathName || '')
+    const { code, data } = await CommonApi.getOrgByArea({
+      areaPath: value.join(',')
+    })
+    if (code === 20000) {
+      formIns?.setFieldValue('orgArea', data?.organizationName || '')
     }
   }
+  // 行业分类改变时
+  useEffect(() => {
+    formIns?.setFieldValue('industryName', industryName || '')
+  }, [industryName])
   return (
     <>
       <ProFormCascader
-        name='regionCoverArea'
+        name='coverageArea'
         label='资源覆盖地区'
-        rules={rules.baseData.regionCoverArea}
+        rules={rules.baseData?.coverageArea}
         fieldProps={{
           fieldNames: {
             label: 'name',
@@ -69,18 +117,8 @@ const BaseData = () => {
             children: 'children'
           },
           changeOnSelect: true,
-          onChange: async (value) => {
-            const { code, data } = await CommonApi.getOrgByArea({
-              areaPath: value.join(',')
-            })
-            if (code === 20000) {
-              setDataRegistOrgName(data?.organizationName || '')
-              formIns?.setFieldValue(
-                'dataRegistOrgName',
-                data?.organizationName || ''
-              )
-            }
-          }
+          onChange: (value, selectedOptions) =>
+            coverageAreaChange(value, selectedOptions)
         }}
         request={async () => {
           const { code, data } = await CommonApi.getAreaTree()
@@ -91,16 +129,23 @@ const BaseData = () => {
           }
         }}
       />
-      <ProForm.Item name='dataRegistOrgName' label='登记机构'>
-        {dataRegistOrgName}
-      </ProForm.Item>
+      <ProFormText
+        label='登记机构'
+        name='orgArea'
+        className='readOnlyFormItem'
+        fieldProps={{ readOnly: true, disabled: true }}
+      />
       <ProFormTreeSelect
         label='行业分类'
         name='industry'
         placeholder='请选择行业分类'
         allowClear
         secondary
+        rules={rules.baseData.industry}
         fieldProps={{
+          onChange: (value) => {
+            industryChange(value, createTreeData)
+          },
           popupClassName: 'industryTreeSelectPopup',
           treeData: industryTreeData,
           filterTreeNode: true,
@@ -114,72 +159,106 @@ const BaseData = () => {
             label: 'name',
             value: 'industryId',
             children: 'children'
-          },
-          onChange: (value) => {
-            onIndustryChange(value)
           }
         }}
       />
-      <ProFormText
-        name='name'
+      <ProForm.Item
         label='数据资源名称'
-        rules={rules.baseData.name}
-        fieldProps={{
-          maxLength: 148,
-          showCount: true
-        }}
-      />
+        name='dataRegistName'
+        rules={rules.baseData.dataRegistName}
+      >
+        <ProFormDependency name={['industryName', 'coverageAreaName']}>
+          {({ industryName, coverageAreaName }) => {
+            const usedLength =
+              (industryName?.length || 0) + (coverageAreaName?.length || 0)
+            const maxLength = 148 - usedLength
+            return (
+              <Flex gap={12} style={{ width: '100%' }}>
+                <ProFormText
+                  name='industryName'
+                  className='readOnlyFormItem'
+                  style={{ marginBottom: 0 }}
+                  fieldProps={{ readOnly: true, disabled: true }}
+                />
+                <div style={{ paddingTop: 5 }}>-</div>
+                <ProFormText
+                  className='readOnlyFormItem'
+                  name='coverageAreaName'
+                  style={{ marginBottom: 0 }}
+                  fieldProps={{ readOnly: true, disabled: true }}
+                />
+                <div style={{ paddingTop: 5 }}>-</div>
+                <ProFormText
+                  name='dataRegistName'
+                  style={{ minWidth: 0, flex: 1, marginBottom: 0 }}
+                  fieldProps={{ maxLength, showCount: true }}
+                />
+              </Flex>
+            )
+          }}
+        </ProFormDependency>
+      </ProForm.Item>
       <ProFormRadio.Group
-        name='dataRegisteType'
+        name='dataRegistType'
         label='登记数据类型'
-        options={Enum.regDataTypeEnum}
+        rules={rules.baseData.dataRegistType}
+        options={Enum.dataRegistTypeEnum}
       />
       <ProFormDependency
         name={[
-          'dataRegisteType',
-          'authOperatType',
-          'authResourcDevelop',
+          'dataRegistType',
+          'authOperationStatus',
+          'authResourceDevelop',
           'dataProductAndServicesType'
         ]}
       >
         {({
-          dataRegisteType,
-          authOperatType,
-          authResourcDevelop,
+          dataRegistType,
+          authOperationStatus,
+          authResourceDevelop,
           dataProductAndServicesType
         }) =>
-          dataRegisteType === '1' ? (
+          dataRegistType === '1' ? (
             <>
-              <ProFormDateRangePicker name='dateRange' label='数据覆盖时间' />
-              <ProFormRadio.Group
-                name='authOperatType'
-                label='授权运营情况'
-                options={Enum.authOperatTypeEnum}
+              <ProFormDateRangePicker
+                name='dataCoverageTimeRange'
+                label='数据覆盖时间'
+                rules={rules.baseData.dataCoverageTimeRange}
               />
-              {authOperatType === '1' ? (
+              <ProFormRadio.Group
+                name='authOperationStatus'
+                label='授权运营情况'
+                options={Enum.authOperationStatusEnum}
+                rules={rules.baseData.authOperationStatus}
+                fieldProps={{
+                  onChange: (e) =>
+                    authOperationStatusChange(formIns, e.target.value)
+                }}
+              />
+              {authOperationStatus === '1' ? (
                 <>
                   <ProFormText
-                    name='name'
+                    name='authOperatEntityName'
                     label='运营机构名称'
-                    rules={rules.baseData.name}
+                    rules={rules.baseData.authOperatEntityName}
                     fieldProps={{
                       maxLength: 50,
                       showCount: true
                     }}
                   />
                   <ProFormText
-                    name='name'
+                    name='authOperatEntityCode'
                     label='运营机构代码'
-                    rules={rules.baseData.name}
+                    rules={rules.baseData.authOperatEntityCode}
                     fieldProps={{
                       maxLength: 20,
                       showCount: true
                     }}
                   />
                   <ProFormText
-                    name='name'
+                    name='authOperatTimeRange'
                     label='授权运营时间'
-                    rules={rules.baseData.name}
+                    rules={rules.baseData.authOperatTimeRange}
                   />
                 </>
               ) : null}
@@ -188,13 +267,15 @@ const BaseData = () => {
             <>
               <ProFormRadio.Group
                 name='dataProductAndServicesType'
-                label='数据产品和服务类型'
-                options={Enum.dataProductAndServiceTypeEnum}
+                label='公共数据产品和服务类型'
+                options={Enum.dataProductAndServicesTypeEnum}
+                rules={rules.baseData.dataProductAndServicesType}
               />
               {dataProductAndServicesType === '11' ? (
                 <ProFormText
-                  name='dataProductAndServicesOtherType'
-                  label='其他数据产品和服务类型'
+                  name='dataProductsAndServicesOtherType'
+                  label='其他数据产品或服务类型'
+                  rules={rules.baseData.dataProductsAndServicesOtherType}
                   fieldProps={{
                     maxLength: 100,
                     showCount: true
@@ -202,26 +283,31 @@ const BaseData = () => {
                 />
               ) : null}
               <ProFormRadio.Group
-                name='authResourcDevelop'
+                name='authResourceDevelop'
                 label='是否基于被授权资源开发'
                 options={Enum.whetherEnum}
+                rules={rules.baseData.authResourceDevelop}
               />
-              {authResourcDevelop === '1' ? (
+              {authResourceDevelop === '1' ? (
                 <ProForm.Item
                   name='authOperatList'
-                  label='授权操作列表'
-                  fieldProps={{
-                    maxLength: 100,
-                    showCount: true
-                  }}
+                  label='被授权资源信息'
+                  rules={rules.baseData.authOperatList}
                 >
                   <EditableProTable<authOperatItem>
-                    name='tasks'
+                    name='authOperatList'
                     rowKey='id'
                     columns={authOperatColumns}
                     scroll={{ x: 480 }}
                     toolBarRender={false}
-                    recordCreatorProps={false}
+                    recordCreatorProps={{
+                      position: 'bottom',
+                      newRecordType: 'dataSource',
+                      record: () => ({
+                        id: new Date().getTime() + Math.random()
+                      }),
+                      creatorButtonText: '新增一行'
+                    }}
                     editable={{
                       type: 'multiple',
                       editableKeys: authOperatEditableKeys,
@@ -234,13 +320,15 @@ const BaseData = () => {
               <ProFormUploadButton
                 title='上传'
                 label='产品和服务详情'
-                name='productAndServiceDetail'
+                name='productAndServiceDetails'
                 action='upload.do'
+                rules={rules.baseData.productAndServiceDetails}
               />
               <ProFormRadio.Group
-                name='productUse'
+                name='productUsage'
                 label='产品用途'
-                options={Enum.productUseEnum}
+                options={Enum.productUsageEnum}
+                rules={rules.baseData.productUsage}
               />
             </>
           )
@@ -249,27 +337,29 @@ const BaseData = () => {
       <ProFormUploadButton
         title='上传'
         label='数据安全风险评估报告'
-        name='dataSecurityRiskAssessmentReport'
+        name='infoSecurityAssessReport'
         action='upload.do'
+        rules={rules.baseData.infoSecurityAssessReport}
       />
       <ProFormRadio.Group
         name='dataType'
         label='数据分类'
         options={Enum.dataTypeEnum}
+        rules={rules.baseData.dataType}
       />
       <ProFormTextArea
-        name='name'
+        name='dataContentIntroduction'
         label='数据内容简介'
-        rules={rules.baseData.name}
+        rules={rules.baseData.dataContentIntroduction}
         fieldProps={{
           maxLength: 100,
           showCount: true
         }}
       />
       <ProFormText
-        name='name'
+        name='dataLabel'
         label='数据标签'
-        rules={rules.baseData.name}
+        rules={rules.baseData.dataLabel}
         fieldProps={{
           maxLength: 60,
           showCount: true

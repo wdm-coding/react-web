@@ -76,6 +76,7 @@ const useIndusTree = () => {
   // 刷新树数据
   const createTreeData = (id: string | null) => {
     if (!id) {
+      setLevelTwo(null)
       setTreeData(industryTree)
       return
     }
@@ -92,7 +93,8 @@ const useIndusTree = () => {
   }
   return {
     industryTreeData: treeData,
-    createTreeData
+    createTreeData,
+    industryName: levelTwo?.node?.name || ''
   }
 }
 
