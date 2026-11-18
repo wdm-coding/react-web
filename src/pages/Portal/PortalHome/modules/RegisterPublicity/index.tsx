@@ -3,14 +3,11 @@ import { Spin, Tooltip } from 'antd'
 import dayjs from 'dayjs'
 import { useNavigate } from 'react-router-dom'
 import HomeApi, { type PublicityItem } from '@/api/front/home.api'
+import { DATA_REGIST_TYPE_MAP } from '@/dict'
 import rpaIcon from '@/assets/images/registerHome/rpa_icon.png'
 import SectionHeader from '../../components/SectionHeader'
 import MoreLink from '../../components/MoreLink'
 import styles from './index.module.scss'
-
-const REGIST_TYPE_MAP: Record<string, string> = {
-  '1': '公共数据资源'
-}
 
 const formatDate = (value: string) =>
   value ? dayjs(value).format('YYYY-MM-DD') : '-'
@@ -82,7 +79,7 @@ const RegisterPublicity = () => {
                   <div className={styles.field}>
                     <span className={styles.label}>登记类型：</span>
                     <span>
-                      {REGIST_TYPE_MAP[item.dataRegistType] ||
+                      {DATA_REGIST_TYPE_MAP[item.dataRegistType] ||
                         item.dataRegistType}
                     </span>
                   </div>
