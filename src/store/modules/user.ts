@@ -14,6 +14,7 @@ const createUserSlice: StateCreator<
   userInfo: null,
   captchaId: '',
   randomId: '',
+  // 获取当前用户信息
   fetchCurrentUser: async () => {
     const res = await AuthApi.getCurrentUser({})
     if (res.code === 20000) {
@@ -40,6 +41,7 @@ const createUserSlice: StateCreator<
       }
     }
   },
+  // 获取验证码
   fetchCaptcha: async () => {
     const { code, data } = await AuthApi.getCaptcha()
     if (code === 20000) {
@@ -49,6 +51,7 @@ const createUserSlice: StateCreator<
       return data?.captcha || ''
     }
   },
+  // 获取密钥对
   fetchSecret: async () => {
     const { code, data } = await AuthApi.getSecret()
     if (code === 20000) {
@@ -61,12 +64,14 @@ const createUserSlice: StateCreator<
       }
     }
   },
+  // 获取菜单权限
   fetchMenusPermissions: async (params: any) => {
     const { code, data } = await UserApi.getMenusPermissions(params)
     if (code === 20000) {
       return data
     }
   },
+  // 用户登录
   userLogin: async (params: any) => {
     const { authCode, tokenCookie } = params
     try {
@@ -99,6 +104,7 @@ const createUserSlice: StateCreator<
       throw error
     }
   },
+  // 用户退出登录
   useLogout: async () => {
     const res = await AuthApi.Logout()
     if (res.code === 20000) {
@@ -123,6 +129,7 @@ const createUserSlice: StateCreator<
       }
     }
   },
+  // 清除登录缓存
   clearCache: () => {
     set((state) => {
       state.isLoggedIn = false

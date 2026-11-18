@@ -11,18 +11,13 @@ import {
   ProFormTreeSelect,
   ProFormUploadButton
 } from '@ant-design/pro-components'
-import { rules, Enum } from '../config'
+import { rules, Enum, uploadTransform, tooltips } from '../config'
 import { useEffect, useState } from 'react'
 import CommonApi from '@/api/common'
 import { Button, Flex, Form } from 'antd'
 import useIndusTree from '../utils/useIndusTree'
-import {
-  industryChange,
-  authOperationStatusChange,
-  uploadTransform
-} from '../config'
 import useCustomUpload from '@/hooks/useCustomUpload'
-
+import { authOperatItem } from '../types'
 interface BaseDataProps {
   uploadOnlyId?: string
   setUploadCount?: any
@@ -36,28 +31,31 @@ const BaseData: React.FC<BaseDataProps> = ({
   const [authOperatEditableKeys, setAuthOperatEditableKeys] = useState<any[]>(
     []
   )
-  type authOperatItem = {
-    id: any
-    dataRegistName2?: string
-    dataRegistCode2?: string
-    authOperatTimeRange2?: string[]
-  }
+
+  // 被授权登记数据列表
   const authOperatColumns: ProColumns<authOperatItem>[] = [
     {
       title: '被授权登记数据名称',
       dataIndex: 'dataRegistName2',
-      formItemProps: { rules: rules.baseData.dataRegistName2 }
+      tooltip: tooltips.dataRegistName2,
+      formItemProps: {
+        rules: rules.baseData.dataRegistName2
+      }
     },
     {
       title: '被授权数据登记编码',
       dataIndex: 'dataRegistCode2',
+      tooltip: tooltips.dataRegistCode2,
       formItemProps: { rules: rules.baseData.dataRegistCode2 }
     },
     {
       title: '被授权运营时间',
+      tooltip: tooltips.authOperatTimeRange2,
       dataIndex: 'authOperatTimeRange2',
       valueType: 'dateRange',
-      formItemProps: { rules: rules.baseData.authOperatTimeRange2 }
+      formItemProps: {
+        rules: rules.baseData.authOperatTimeRange2
+      }
     },
     {
       title: '操作',
@@ -94,16 +92,42 @@ const BaseData: React.FC<BaseDataProps> = ({
       }
     }
   ]
+
+  // 授权运营情况改变时
+  const authOperationStatusChange = (value: string) => {
+    if (value === '1') {
+      formIns?.setFieldsValue({
+        authOperatEntityName: '丝绸之路信息港股份有限公司',
+        authOperatEntityCode: '91620100MA73UAR56E',
+        authOperatTimeRange: ['2026-11-17', '2028-04-16']
+      })
+      return
+    }
+    formIns?.setFieldsValue({
+      authOperatEntityName: '',
+      authOperatEntityCode: '',
+      authOperatTimeRange: []
+    })
+  }
+
+  // 行业分类改变时
+  const industryChange = (value: any[]) => {
+    console.log(value)
+    if (value.length > 0) {
+      createTreeData(value[0]?.value)
+    } else {
+      createTreeData(null)
+    }
+  }
+
   // 初始化授权运营情况
   useEffect(() => {
-    authOperationStatusChange(
-      formIns,
-      formIns?.getFieldValue('authOperationStatus')
-    )
+    authOperationStatusChange(formIns?.getFieldValue('authOperationStatus'))
   }, [])
+
   // 覆盖地区改变时
   const coverageAreaChange = async (value: any[], selectedOptions: any[]) => {
-    const pathName = selectedOptions.map((item) => item.name).join('-')
+    const pathName = selectedOptions.map((item) => item.name).join('')
     formIns?.setFieldValue('coverageAreaName', pathName || '')
     const { code, data } = await CommonApi.getOrgByArea({
       areaPath: value.join(',')
@@ -112,6 +136,7 @@ const BaseData: React.FC<BaseDataProps> = ({
       formIns?.setFieldValue('orgArea', data?.organizationName || '')
     }
   }
+
   // 行业分类改变时
   useEffect(() => {
     formIns?.setFieldValue('industryName', industryName || '')
@@ -122,6 +147,7 @@ const BaseData: React.FC<BaseDataProps> = ({
         name='coverageArea'
         label='资源覆盖地区'
         rules={rules.baseData?.coverageArea}
+        tooltip={tooltips.coverageArea}
         fieldProps={{
           fieldNames: {
             label: 'name',
@@ -148,6 +174,7 @@ const BaseData: React.FC<BaseDataProps> = ({
         fieldProps={{ readOnly: true, disabled: true }}
       />
       <ProFormTreeSelect
+        tooltip={tooltips.industry}
         label='行业分类'
         name='industry'
         placeholder='请选择行业分类'
@@ -156,7 +183,7 @@ const BaseData: React.FC<BaseDataProps> = ({
         rules={rules.baseData.industry}
         fieldProps={{
           onChange: (value) => {
-            industryChange(value, createTreeData)
+            industryChange(value)
           },
           popupClassName: 'industryTreeSelectPopup',
           treeData: industryTreeData,
@@ -175,7 +202,8 @@ const BaseData: React.FC<BaseDataProps> = ({
         }}
       />
       <ProForm.Item
-        label='数据资源名称'
+        label='登记数据名称'
+        tooltip={tooltips.dataRegistName}
         name='dataRegistName'
         rules={rules.baseData.dataRegistName}
       >
@@ -211,6 +239,7 @@ const BaseData: React.FC<BaseDataProps> = ({
         </ProFormDependency>
       </ProForm.Item>
       <ProFormRadio.Group
+        tooltip={tooltips.dataRegistType}
         name='dataRegistType'
         label='登记数据类型'
         rules={rules.baseData.dataRegistType}
@@ -233,23 +262,26 @@ const BaseData: React.FC<BaseDataProps> = ({
           dataRegistType === '1' ? (
             <>
               <ProFormDateRangePicker
+                tooltip={tooltips.dataCoverageTimeRange}
                 name='dataCoverageTimeRange'
                 label='数据覆盖时间'
                 rules={rules.baseData.dataCoverageTimeRange}
               />
               <ProFormRadio.Group
+                tooltip={tooltips.authOperationStatus}
                 name='authOperationStatus'
                 label='授权运营情况'
                 options={Enum.authOperationStatusEnum}
                 rules={rules.baseData.authOperationStatus}
                 fieldProps={{
-                  onChange: (e) =>
-                    authOperationStatusChange(formIns, e.target.value)
+                  multiple: true,
+                  onChange: (e) => authOperationStatusChange(e.target.value)
                 }}
               />
               {authOperationStatus === '1' ? (
                 <>
                   <ProFormText
+                    tooltip={tooltips.authOperatEntityName}
                     name='authOperatEntityName'
                     label='运营机构名称'
                     rules={rules.baseData.authOperatEntityName}
@@ -259,6 +291,7 @@ const BaseData: React.FC<BaseDataProps> = ({
                     }}
                   />
                   <ProFormText
+                    tooltip={tooltips.authOperatEntityCode}
                     name='authOperatEntityCode'
                     label='运营机构代码'
                     rules={rules.baseData.authOperatEntityCode}
@@ -267,7 +300,8 @@ const BaseData: React.FC<BaseDataProps> = ({
                       showCount: true
                     }}
                   />
-                  <ProFormText
+                  <ProFormDateRangePicker
+                    tooltip={tooltips.authOperatTimeRange}
                     name='authOperatTimeRange'
                     label='授权运营时间'
                     rules={rules.baseData.authOperatTimeRange}
@@ -278,6 +312,7 @@ const BaseData: React.FC<BaseDataProps> = ({
           ) : (
             <>
               <ProFormRadio.Group
+                tooltip={tooltips.dataProductAndServicesType}
                 name='dataProductAndServicesType'
                 label='公共数据产品和服务类型'
                 options={Enum.dataProductAndServicesTypeEnum}
@@ -295,6 +330,7 @@ const BaseData: React.FC<BaseDataProps> = ({
                 />
               ) : null}
               <ProFormRadio.Group
+                tooltip={tooltips.authResourceDevelop}
                 name='authResourceDevelop'
                 label='是否基于被授权资源开发'
                 options={Enum.whetherEnum}
@@ -312,6 +348,7 @@ const BaseData: React.FC<BaseDataProps> = ({
                     columns={authOperatColumns}
                     scroll={{ x: 480 }}
                     toolBarRender={false}
+                    className='editableProTable'
                     recordCreatorProps={{
                       position: 'bottom',
                       newRecordType: 'dataSource',
@@ -333,12 +370,19 @@ const BaseData: React.FC<BaseDataProps> = ({
                 title='上传'
                 label='产品和服务详情'
                 name='productAndServiceDetails'
-                max={2}
+                max={1}
                 rules={rules.baseData.productAndServiceDetails}
                 transform={uploadTransform}
+                extra={
+                  <div style={{ paddingTop: 10 }}>
+                    支持上传jpg、png、pdf、jpeg格式，文件大小不能超过5M，支持上传1个文件
+                    <a style={{ marginLeft: 16 }}>样例数据.xlsx</a>
+                  </div>
+                }
                 fieldProps={{
                   ...useCustomUpload({
-                    maxCount: 2,
+                    accept: ['.jpg', '.png', '.pdf', '.jpeg'],
+                    maxSizeMB: 5,
                     setUploadCount,
                     extraParams: {
                       dataRegistCode: uploadOnlyId,
@@ -348,6 +392,7 @@ const BaseData: React.FC<BaseDataProps> = ({
                 }}
               />
               <ProFormRadio.Group
+                tooltip={tooltips.productUsage}
                 name='productUsage'
                 label='产品用途'
                 options={Enum.productUsageEnum}
@@ -358,15 +403,24 @@ const BaseData: React.FC<BaseDataProps> = ({
         }
       </ProFormDependency>
       <ProFormUploadButton
+        tooltip={tooltips.infoSecurityAssessReport}
         title='上传'
-        max={2}
+        max={5}
         label='数据安全风险评估报告'
         name='infoSecurityAssessReport'
         rules={rules.baseData.infoSecurityAssessReport}
         transform={uploadTransform}
+        extra={
+          <div style={{ paddingTop: 10 }}>
+            支持上传jpg、png、pdf、jpeg格式，每个文件大小不能超过20M，最多支持5个
+            <a style={{ marginLeft: 16 }}>样例数据.xlsx</a>
+          </div>
+        }
         fieldProps={{
           ...useCustomUpload({
-            maxCount: 2,
+            accept: ['.jpg', '.png', '.pdf', '.jpeg'],
+            maxCount: 5,
+            maxSizeMB: 20,
             setUploadCount,
             extraParams: {
               dataRegistCode: uploadOnlyId,
@@ -382,6 +436,7 @@ const BaseData: React.FC<BaseDataProps> = ({
         rules={rules.baseData.dataType}
       />
       <ProFormTextArea
+        tooltip={tooltips.dataContentIntroduction}
         name='dataContentIntroduction'
         label='数据内容简介'
         rules={rules.baseData.dataContentIntroduction}
@@ -391,6 +446,7 @@ const BaseData: React.FC<BaseDataProps> = ({
         }}
       />
       <ProFormText
+        tooltip={tooltips.dataLabel}
         name='dataLabel'
         label='数据标签'
         rules={rules.baseData.dataLabel}

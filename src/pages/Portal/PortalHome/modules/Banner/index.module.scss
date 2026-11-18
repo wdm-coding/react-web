@@ -1,0 +1,234 @@
+.bannerSection {
+  position: relative;
+  width: 100%;
+  background: url('@/assets/images/registerHome/banner-bg.png') no-repeat center
+    center / cover;
+  overflow: hidden;
+
+  .bannerContent {
+    height: 374px;
+    padding: 72px 20px 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .bannerTitle {
+      margin: 0;
+      color: #fff;
+      font-family: 'almmsht', 'shsm', sans-serif;
+      font-size: 50px;
+      font-weight: 700;
+      line-height: 1.5;
+      letter-spacing: 2px;
+      text-align: center;
+      text-shadow: 0 2px 12px rgba(0, 31, 77, 0.35);
+    }
+
+    .applyBtn {
+      position: relative;
+      width: 212px;
+      height: 64px;
+      margin-top: 30px;
+      // border: none;
+      border-radius: 32px;
+      background: linear-gradient(135deg, #fc8c25 0%, #fac130 100%);
+      color: #fff;
+      font-size: 24px;
+      font-weight: 600;
+      box-shadow: 0 6px 18px rgba(250, 150, 40, 0.35);
+      transition: box-shadow 0.3s ease;
+
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: linear-gradient(135deg, #fac130 0%, #fc8c25 100%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      & > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      &:hover {
+        background: linear-gradient(135deg, #fc8c25 0%, #fac130 100%);
+        color: #fff;
+        box-shadow: 0 8px 22px rgba(250, 150, 40, 0.45);
+
+        &::before {
+          opacity: 1;
+        }
+      }
+
+      :global(.anticon-edit) {
+        margin-right: 6px;
+      }
+
+      .applyArrow {
+        margin-left: 8px;
+        font-size: 18px;
+      }
+    }
+  }
+
+  .statsBar {
+    width: 100%;
+    height: 116px;
+    background-color: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+
+    .statsInner {
+      width: 100%;
+      height: 100%;
+      padding: 0 20px;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    .statItem {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+
+      .statIcon {
+        width: 44px;
+        height: 44px;
+        flex: none;
+        object-fit: contain;
+      }
+
+      .statInfo {
+        display: flex;
+        flex-direction: column;
+        color: #fff;
+
+        .statLabel {
+          font-size: 20px;
+          font-weight: 600;
+          line-height: 22px;
+          margin-bottom: 10px;
+        }
+
+        .statValue {
+          font-size: 36px;
+          line-height: 40px;
+          font-weight: 600;
+          color: #f7a500;
+
+          .statUnit {
+            margin-left: 4px;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 400;
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1440px) {
+  .bannerSection {
+    .bannerContent {
+      .bannerTitle {
+        font-size: 42px;
+      }
+    }
+
+    .statsBar {
+      .statItem {
+        .statInfo {
+          .statValue {
+            font-size: 30px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .bannerSection {
+    .bannerContent {
+      height: 330px;
+
+      .bannerTitle {
+        font-size: 34px;
+      }
+
+      .applyBtn {
+        width: 180px;
+        height: 54px;
+        margin-top: 24px;
+        font-size: 20px;
+      }
+    }
+
+    .statsBar {
+      height: 100px;
+
+      .statItem {
+        gap: 10px;
+
+        .statIcon {
+          width: 36px;
+          height: 36px;
+        }
+
+        .statInfo {
+          .statValue {
+            font-size: 26px;
+            line-height: 30px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .bannerSection {
+    .bannerContent {
+      height: 300px;
+      padding: 72px 16px 16px;
+
+      .bannerTitle {
+        font-size: 24px;
+        line-height: 1.6;
+        letter-spacing: 1px;
+      }
+
+      .applyBtn {
+        width: 156px;
+        height: 46px;
+        font-size: 16px;
+      }
+    }
+
+    .statsBar {
+      height: auto;
+      padding: 16px 0;
+
+      .statsInner {
+        flex-wrap: wrap;
+        row-gap: 18px;
+      }
+
+      .statItem {
+        width: 50%;
+        justify-content: center;
+        padding-left: 0;
+      }
+    }
+  }
+}

@@ -1,3 +1,74 @@
-.industryTreeSelect {
+.regFormContainer {
   width: 100%;
+  position: relative;
+  :global(.ant-pro-form-group) {
+    padding: 15px 10px;
+    border-radius: 4px;
+    background-color: #fff;
+    margin-bottom: 15px;
+    .groupTitle {
+      position: relative;
+      font-size: 16px;
+      font-weight: 500;
+      color: #000;
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 0;
+        width: 3px;
+        height: 16px;
+        background: #1471ff;
+        border-radius: 2px;
+      }
+    }
+    :global(.ant-pro-form-group-container) {
+      width: 100%;
+      :global(.ant-space-item) {
+        width: 100%;
+        padding: 0 20px;
+      }
+    }
+  }
+  :global(.ant-input-group-addon) {
+    width: 120px;
+    padding: 0;
+    background-color: #fff;
+    :global(.ant-form-item) {
+      margin: 0 !important;
+    }
+  }
+  .customSubmitter {
+    width: calc(100% - 200px);
+    background-color: #fff !important;
+    padding: 15px 10px;
+    position: fixed;
+    bottom: 0;
+    left: 200px;
+    right: 0;
+    box-shadow: 0 -1px 0px 0px rgba(0, 0, 0, 0.1);
+  }
+}
+.productionMethodCheckboxGroup {
+  .productionMethodCheckbox {
+    position: relative;
+    width: 330px;
+    height: 120px;
+    margin-right: 0;
+    padding: 10px;
+    border: 1px solid #d9d9d9;
+    &:hover {
+      border-color: #1890ff;
+    }
+    :global(.ant-checkbox) {
+      position: absolute;
+      top: 13px;
+      right: 13px;
+    }
+  }
+  :global(.ant-checkbox-wrapper-checked) {
+    border-color: #1890ff;
+    background-color: rgba(24, 144, 255, 0.1);
+  }
 }

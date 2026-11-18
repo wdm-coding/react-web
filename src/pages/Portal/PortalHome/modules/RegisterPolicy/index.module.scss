@@ -1,0 +1,135 @@
+.policySection {
+  width: 100%;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  background: url('@/assets/images/registerHome/rp_bg.png') no-repeat center
+    center / cover;
+
+  .contentWrapper {
+    width: 100%;
+    max-width: 1360px;
+    margin: 36px auto 0;
+    display: flex;
+    align-items: stretch;
+    gap: 25px;
+
+    .placeholder {
+      width: 100%;
+      height: 368px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cover {
+      position: relative;
+      width: 640px;
+      height: 368px;
+      flex: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      overflow: hidden;
+      cursor: pointer;
+      background: url('@/assets/images/registerHome/rpr_banner.png') no-repeat
+        center center / cover;
+
+      .coverInfo {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        height: 50px;
+        padding: 0 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        background: rgba(0, 0, 0, 0.25);
+
+        .coverName {
+          flex: 1;
+          overflow: hidden;
+          color: #fff;
+          font-size: 24px;
+          font-weight: 600;
+          line-height: 30px;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+
+          &:hover {
+            color: #1471ff;
+          }
+        }
+
+        .coverDate {
+          flex: none;
+          color: rgba(255, 255, 255, 0.85);
+          font-size: 16px;
+          line-height: 50px;
+        }
+      }
+    }
+
+    .policyList {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .policyItem {
+        flex: 1;
+        min-height: 41px;
+        padding: 6px 4px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        border-bottom: 1px solid #e0e0e0;
+        cursor: pointer;
+        transition: color 0.2s ease;
+
+        &:last-child {
+          border-bottom-color: transparent;
+        }
+
+        &:hover {
+          .policyTitle {
+            color: #1471ff;
+          }
+        }
+
+        .policyTitle {
+          flex: 1;
+          min-width: 0;
+          overflow: hidden;
+          color: rgba(0, 0, 0, 0.88);
+          font-size: 20px;
+          line-height: 1.5;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          transition: color 0.2s ease;
+        }
+
+        .policyDate {
+          flex: none;
+          color: #3d485d;
+          font-size: 16px;
+          line-height: 1.5;
+        }
+      }
+
+      .policyItemEmpty {
+        border-bottom-color: transparent;
+        cursor: default;
+      }
+
+      .policyItemLast {
+        border-bottom-color: transparent;
+      }
+    }
+  }
+}

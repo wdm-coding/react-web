@@ -16,8 +16,8 @@ interface HeaderProps {
 
 const Header = ({ isFixed = false, isScroll = false }: HeaderProps) => {
   const { isLoggedIn } = useAuth()
-  const { siteName,env } = useModal('global')
-  const {userInfo,useLogout} = useModal('user')
+  const { siteName, env } = useModal('global')
+  const { userInfo, useLogout } = useModal('user')
   const navigate = useNavigate()
   const [registerData, setRegisterData] = useState<{
     naturalRegisterUrl: string
@@ -46,9 +46,10 @@ const Header = ({ isFixed = false, isScroll = false }: HeaderProps) => {
   const thirdLogin = async () => {
     const { code, data } = await AuthApi.getThirdLoginUrl()
     if (code === 20000 && data?.loginAfter) {
-      if(env === 'dev'){
-        window.location.href = ' /register-client/ssoLogin?authCode=' + '0620000000620'
-      }else{
+      if (env === 'dev') {
+        window.location.href =
+          ' /register-client/ssoLogin?authCode=' + '0620000000620'
+      } else {
         window.location.href = data?.loginAfter
       }
     }
@@ -57,19 +58,24 @@ const Header = ({ isFixed = false, isScroll = false }: HeaderProps) => {
   const onDropdownClick = async ({ key }: { key: string }) => {
     switch (key) {
       case 'login':
-        // thirdLogin()
-        env !== 'prod' ? navigate('/login') : thirdLogin()
+        if (env !== 'prod') {
+          navigate('/login')
+        } else {
+          await thirdLogin()
+        }
         break
       case 'logout':
         useLogout()
         break
       case 'personalRegister':
-        registerData?.naturalRegisterUrl &&
-          window.open(registerData?.naturalRegisterUrl || '', '_blank')
+        if (registerData?.naturalRegisterUrl) {
+          window.open(registerData.naturalRegisterUrl, '_blank')
+        }
         break
       case 'legalRegister':
-        registerData?.corpRegisterUrl &&
-          window.open(registerData?.corpRegisterUrl || '', '_blank')
+        if (registerData?.corpRegisterUrl) {
+          window.open(registerData.corpRegisterUrl, '_blank')
+        }
         break
       default:
         break
@@ -95,7 +101,11 @@ const Header = ({ isFixed = false, isScroll = false }: HeaderProps) => {
         {rightActionsFilter.map((item) => {
           if (item.type === 'button') {
             return (
-              <Button key={item.key} type='text' onClick={() => onDropdownClick(item)}>
+              <Button
+                key={item.key}
+                type='text'
+                onClick={() => onDropdownClick(item)}
+              >
                 {item.label}
               </Button>
             )

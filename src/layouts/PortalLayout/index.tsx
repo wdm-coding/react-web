@@ -2,14 +2,23 @@ import OutletPage from '@/layouts/components/OutletPage'
 import styles from './index.module.scss'
 import Header from './Header/index.tsx'
 import { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 const ClientLayout = () => {
+  const { pathname } = useLocation()
   const isFixed = true
   const [isScroll, setIsScroll] = useState(false)
+  // 详情页没有顶部 banner，顶栏固定为白底样式，避免白色文字在浅色背景上不可见
+  const isDetailPage = pathname.endsWith('Detail')
+  const solidHeader = isDetailPage || isScroll
   return (
     <div className={styles.clientLayout}>
-      <Header isFixed={isFixed} isScroll={isScroll} />
+      <Header isFixed={isFixed} isScroll={solidHeader} />
       <OutletPage
         maxHeight={isFixed ? '100vh' : 'calc(100vh - 75px)'}
+        // 页脚固定占 10vh，详情页内容较短时扣除页脚高度，避免出现多余的竖向滚动条
+        contentStyle={
+          isDetailPage ? { minHeight: 'calc(100vh - 10vh)' } : undefined
+        }
         onScroll={(e) => {
           setIsScroll((e.target as HTMLElement).scrollTop > 10 ? true : false)
         }}

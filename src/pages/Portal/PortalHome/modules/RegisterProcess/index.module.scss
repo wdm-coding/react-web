@@ -1,0 +1,155 @@
+.processSection {
+  width: 100%;
+  padding: 48px 20px 20px;
+  box-sizing: border-box;
+
+  .flowList {
+    width: 100%;
+    max-width: 1200px;
+    margin: 65px auto 46px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .flowItemWrapper {
+      display: flex;
+      align-items: center;
+      flex: none;
+      cursor: pointer;
+
+      .flowItem {
+        width: 188px;
+        height: 180px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 24px;
+        border: 1px solid #fff;
+        border-radius: 4px;
+        background: #f8fcff url('@/assets/images/registerHome/pr_bg.png')
+          no-repeat center center / cover;
+        box-shadow: 0 2px 10px 1px #e8f5ff;
+        transition: all 0.7s;
+
+        &:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 4px 15px 2px rgba(54, 126, 232, 0.6);
+        }
+
+        .flowIcon {
+          width: 56px;
+          height: 56px;
+          object-fit: contain;
+        }
+
+        .flowLabel {
+          color: #000;
+          font-size: 24px;
+          font-weight: 600;
+          line-height: 1.2;
+          white-space: nowrap;
+        }
+      }
+
+      .flowArrow {
+        width: 27px;
+        height: 20px;
+        margin: 0 14px;
+        object-fit: contain;
+        user-select: none;
+      }
+    }
+  }
+}
+
+@media (max-width: 1440px) {
+  .processSection {
+    .flowList {
+      .flowItemWrapper {
+        .flowItem {
+          width: 170px;
+          height: 165px;
+
+          .flowLabel {
+            font-size: 21px;
+          }
+        }
+
+        .flowArrow {
+          margin: 0 10px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .processSection {
+    .flowList {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+
+      .flowItemWrapper {
+        width: 200px;
+
+        .flowArrow {
+          display: none;
+        }
+
+        .flowItem {
+          width: 100%;
+          height: 170px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .processSection {
+    padding: 36px 20px 48px;
+
+    .flowList {
+      margin-top: 32px;
+
+      .flowItemWrapper {
+        width: calc((100% - 40px) / 3);
+
+        .flowItem {
+          width: 100%;
+          height: 150px;
+          gap: 18px;
+
+          .flowIcon {
+            width: 46px;
+            height: 46px;
+          }
+
+          .flowLabel {
+            font-size: 18px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .processSection {
+    .flowList {
+      gap: 12px;
+
+      .flowItemWrapper {
+        width: calc((100% - 12px) / 2);
+
+        .flowItem {
+          width: 100%;
+          height: 132px;
+        }
+      }
+    }
+  }
+}

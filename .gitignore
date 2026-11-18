@@ -6,3 +6,8 @@ package-lock.json
 dist/
 # 忽略所有文件下的.vite
 .vite/
+
+PROJECT_ARCHITECTURE.md
+# macOS 目录元数据
+.DS_Store
+**/.DS_Store

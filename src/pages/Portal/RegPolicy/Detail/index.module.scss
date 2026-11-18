@@ -1,0 +1,83 @@
+.wrapper {
+  // 滚动容器内含 10vh 页脚，减去后内容较短时不会出现多余滚动条
+  min-height: calc(100vh - 10vh);
+  // 72px 顶栏高度 + 顶部间距，避免内容被固定顶栏遮挡
+  padding: 90px 20px 60px;
+  box-sizing: border-box;
+  background: #f5f7fa;
+}
+
+.breadcrumb {
+  max-width: 1200px;
+  margin: 0 auto 16px;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+
+  :global(a) {
+    color: rgba(0, 0, 0, 0.65);
+
+    &:hover {
+      color: #1471ff;
+    }
+  }
+
+  .breadcrumbCurrent {
+    color: #1471ff;
+  }
+}
+
+.container {
+  max-width: 1200px;
+  min-height: 400px;
+  margin: 0 auto;
+  padding: 40px 48px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.placeholder {
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 16px;
+}
+
+.article {
+  .title {
+    margin: 0;
+    color: rgba(0, 0, 0, 0.88);
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  .meta {
+    margin: 20px 0 32px;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    border-bottom: 1px solid #eef2f7;
+    color: rgba(0, 0, 0, 0.45);
+    font-size: 14px;
+  }
+
+  .content {
+    color: rgba(0, 0, 0, 0.78);
+    font-size: 16px;
+    line-height: 1.9;
+
+    :global(p) {
+      margin: 0 0 12px;
+    }
+
+    :global(img) {
+      max-width: 100%;
+    }
+  }
+}

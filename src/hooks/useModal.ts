@@ -1,11 +1,17 @@
 import { useShallow } from 'zustand/react/shallow'
 import { useBoundStore } from '@/store'
-import type { UserSlice, GlobalSlice, BoundState } from '@/store/types'
+import type {
+  UserSlice,
+  GlobalSlice,
+  SystemSlice,
+  BoundState
+} from '@/store/types'
 
 /** 切片名 → 切片状态类型映射 */
 export interface SliceMap {
   user: Partial<UserSlice>
   global: GlobalSlice
+  system: SystemSlice
 }
 
 /**
@@ -49,6 +55,11 @@ const sliceSelectors: {
     getItem,
     removeItem,
     clearStorage
+  }),
+  system: ({ doorTitle, platformTitle, fetchSystemConfig }) => ({
+    doorTitle,
+    platformTitle,
+    fetchSystemConfig
   })
 }
 
