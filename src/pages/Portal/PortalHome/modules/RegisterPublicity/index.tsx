@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Spin, Tooltip } from 'antd'
 import dayjs from 'dayjs'
+import { useNavigate } from 'react-router-dom'
 import HomeApi, { type PublicityItem } from '@/api/front/home.api'
 import rpaIcon from '@/assets/images/registerHome/rpa_icon.png'
 import SectionHeader from '../../components/SectionHeader'
@@ -15,6 +16,7 @@ const formatDate = (value: string) =>
   value ? dayjs(value).format('YYYY-MM-DD') : '-'
 
 const RegisterPublicity = () => {
+  const navigate = useNavigate()
   const [list, setList] = useState<PublicityItem[]>([])
   const [loading, setLoading] = useState(false)
 
@@ -62,6 +64,11 @@ const RegisterPublicity = () => {
               <div
                 className={styles.cardWrapper}
                 key={`${item.publicityInfoId}-${index}`}
+                onClick={() =>
+                  navigate(
+                    `/portal/regPublicDetail?publiclyInfoId=${item.publicityInfoId}`
+                  )
+                }
               >
                 <div className={styles.card}>
                   <div className={styles.cardTitle}>

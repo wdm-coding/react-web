@@ -29,4 +29,11 @@ export interface UserSlice {
   checkLogin: () => Promise<void> // 检查是否已登录
   clearCache: () => void // 清除登录缓存
 }
-export type BoundState = UserSlice & GlobalSlice
+
+// 系统配置状态类型
+export interface SystemSlice {
+  doorTitle: string // 门户标题
+  platformTitle: string // 平台标题
+  fetchSystemConfig: () => Promise<void> // 获取系统配置
+}
+export type BoundState = UserSlice & GlobalSlice & SystemSlice

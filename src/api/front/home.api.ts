@@ -46,6 +46,23 @@ export interface PageResult<T> {
   total?: number
 }
 
+/** 登记公示详情 */
+export interface PublicityDetail {
+  publiclyInfoId: string
+  dataRegistName: string
+  institutionName: string
+  dataRegistType: string
+  startDate: string
+  endDate: string
+  publicityStatus: string
+  platformName: string
+  organizationName: string
+  dataContentIntroduction: string
+  canObjectionApply: boolean
+  industrys?: string[]
+  areas?: string[]
+}
+
 export interface PolicyQuery {
   pageNum: number
   pageSize: number
@@ -87,6 +104,13 @@ class HomeApi {
   static getPublicityList: RequestFn<
     PublicityQuery,
     HomeApiResponse<PageResult<PublicityItem>>
+  >
+
+  // 登记公示详情
+  @Post('publicInfo/details')
+  static getPublicityDetail: RequestFn<
+    { publiclyInfoId: string },
+    HomeApiResponse<PublicityDetail>
   >
 
   // 首页登记政策列表
