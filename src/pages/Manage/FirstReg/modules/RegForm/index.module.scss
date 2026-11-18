@@ -31,6 +31,14 @@
       }
     }
   }
+  :global(.ant-input-group-addon) {
+    width: 120px;
+    padding: 0;
+    background-color: #fff;
+    :global(.ant-form-item) {
+      margin: 0 !important;
+    }
+  }
   .customSubmitter {
     width: calc(100% - 200px);
     background-color: #fff !important;

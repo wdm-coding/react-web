@@ -82,31 +82,32 @@ export const rules = {
     ],
     storageMethod: [{ required: true, message: '请选择数据存储方式' }],
     storageOtherMethod: [{ required: true, message: '请输入其他数据存储方式' }],
-    storageVolumeInitial: [
-      { required: true, message: '请输入数据存储量(初始)' }
-    ],
-    storageVolumeInitialUnit: [{ required: true, message: '请选择单位' }],
+    dataStorage: [{ required: true, message: '请输入数据存储量(初始)' }],
+    dataStorageUnit: [{ required: true, message: '请选择单位' }],
     updateFrequency: [{ required: true, message: '请选择更新频率' }],
+    updateOtherFrequency: [
+      { required: true, message: '请输入其他数据更新频率' }
+    ],
     updateMethod: [{ required: true, message: '请选择更新方式' }],
-    storageVolumeIncrement: [
+    dataStorageIncrease: [
       { required: true, message: '请输入数据存储量(增长)' }
     ],
-    storageVolumeIncrementUnit: [{ required: true, message: '请选择单位' }],
-    isSensitiveInfo: [{ required: true, message: '请选择是否包含敏感信息' }],
-    relatedSubjects: [{ required: true, message: '请选择涉及主体' }],
-    dataCoverageCount: [{ required: true, message: '请输入数据覆盖数量' }],
-    isDesensitized: [{ required: true, message: '请选择是否脱敏' }],
+    sensitiveInformation: [
+      { required: true, message: '请选择是否包含敏感信息' }
+    ],
+    sensitiveInvolvingSubject: [{ required: true, message: '请选择涉及主体' }],
+    sensitiveDataCoverageNumber: [
+      { required: true, message: '请输入数据覆盖数量' }
+    ],
+    desensitizationSituation: [{ required: true, message: '请选择是否脱敏' }],
     desensitizationMethod: [{ required: true, message: '请选择脱敏方式' }],
-    certificationMethod: [{ required: true, message: '请选择存证方式' }],
-    certificationDescription: [
-      { required: true, message: '请输入存证方式说明' }
+    desensitizationOtherMethod: [
+      { required: true, message: '请输入其他脱敏方式' }
     ],
-    certificationProofFile: [
-      { required: false, message: '请上传存证证明文件' }
-    ],
-    certificationDataPath: [
-      { required: false, message: '请输入存证数据存放路径' }
-    ]
+    depositMethod: [{ required: true, message: '请选择存证方式' }],
+    depositDescription: [{ required: true, message: '请输入存证方式说明' }],
+    depositProofDocument: [{ required: false, message: '请上传存证证明文件' }],
+    depositDataPath: [{ required: false, message: '请输入存证数据存放路径' }]
   },
   direcData: {
     basedDataDirectory: [{ required: true, message: '请选择基于数据目录' }],
@@ -247,47 +248,46 @@ export const Enum = {
     { label: '其他', value: '7' }
   ],
   // 存储量单位
-  storageVolumeUnitEnum: [
-    { label: 'B', value: '1' },
-    { label: 'KB', value: '2' },
-    { label: 'MB', value: '3' },
-    { label: 'GB', value: '4' },
-    { label: 'TB', value: '5' },
-    { label: 'PB', value: '6' }
+  dataStorageUnitEnum: [
+    { label: 'KB', value: 'KB' },
+    { label: 'MB', value: 'MB' },
+    { label: 'GB', value: 'GB' },
+    { label: 'TB', value: 'TB' }
   ],
   // 更新频率
   updateFrequencyEnum: [
-    { label: '实时更新', value: '1' },
-    { label: '每日', value: '2' },
-    { label: '每周', value: '3' },
-    { label: '每月', value: '4' },
-    { label: '每季度', value: '5' },
-    { label: '每年', value: '6' },
-    { label: '其他', value: '7' }
+    { label: '按时更新', value: '1' },
+    { label: '按天更新', value: '2' },
+    { label: '按周更新', value: '3' },
+    { label: '按月更新', value: '4' },
+    { label: '按季度更新', value: '5' },
+    { label: '按年更新', value: '6' },
+    { label: '不更新', value: '7' },
+    { label: '其他', value: '11' }
   ],
   // 更新方式
   updateMethodEnum: [
-    { label: '全量', value: '1' },
-    { label: '增量', value: '2' },
-    { label: '全量+增量', value: '3' }
+    { label: '全量更新', value: '1' },
+    { label: '增量更新', value: '2' }
   ],
   // 涉及主体
-  relatedSubjectsEnum: [
-    { label: '个人', value: '1' },
-    { label: '企业', value: '2' },
-    { label: '政府机关', value: '3' },
-    { label: '其他', value: '4' }
+  sensitiveInvolvingSubjectEnum: [
+    { label: '企业主体', value: '1' },
+    { label: '个人主体', value: '2' },
+    { label: '企业主体和个人主体', value: '3' }
   ],
   // 脱敏方式
   desensitizationMethodEnum: [
-    { label: '掩码', value: '1' },
-    { label: '替换', value: '2' },
-    { label: '加密', value: '3' },
-    { label: '泛化', value: '4' },
-    { label: '其他', value: '5' }
+    { label: '替换脱敏', value: '1' },
+    { label: '加密脱敏', value: '2' },
+    { label: '伪装脱敏', value: '3' },
+    { label: '数据扰动', value: '4' },
+    { label: '数据分割', value: '5' },
+    { label: '伪数据生成', value: '6' },
+    { label: '其他', value: '7' }
   ],
   // 存证方式
-  certificationMethodEnum: [
+  depositMethodEnum: [
     { label: '登记主体自证', value: '1' },
     { label: '第三方机构证明', value: '2' }
   ],
@@ -370,16 +370,26 @@ export const tooltips = {
     '提示： ①关系型数据库存储：指采用关系模型来组织数据的数据库，它以行和列的形式存储数据。常见的关系型数据库包括Oracle、MySQL、SQL Server等。 ②键值数据库存储：指非关系型数据库，使用简单的键值对系统存储数据，常见的键值数据库包括Redis、Memcached等。 ③列数据库存储：指一种专门用于处理大规模数据分析的数据库类型，它将数据按列而不是按行存储。 ④图数据库存储：指一种用于存储实体之间关系的数据库类型，它使用图结构来表示数据，常见的图数据库包括Neo4j、ArangoDB等。 ⑤文档数据库存储：指一种以文档作为基本单位进行数据存储和管理的非关系型数据库。常见的文档数据库包括MongoDB、CouchDB等。 ⑥对象数据库存储：指一种使用对象导向模型来设计其数据结构和操作的数据库。 ⑦其他：除了上述选项外，其他的数据库存储方式。',
   storageOtherMethod: '请详细描述除上述选项外的数据存储方式',
   storageVolumeInitial: '提示：指“数据资源”在申请登记时所占用的存储空间总量。',
-  updateFrequency: '提示：指“数据资源”进行内容更新的周期频率。',
-  updateMethod: '提示：指“数据资源”进行内容更新的方式，如全量、增量等。',
-  storageVolumeIncrement:
-    '提示：指“数据资源”预计单位周期内新增占用的存储空间量。',
-  isSensitiveInfo: '提示：指“数据资源”中是否包含个人隐私、商业秘密等敏感信息。',
-  relatedSubjects: '提示：指“数据资源”所含敏感信息涉及的主体类型。',
-  dataCoverageCount: '提示：指“数据资源”覆盖的数据记录条数，单位为个。',
-  isDesensitized: '提示：指“数据资源”中所含敏感信息是否已进行脱敏处理。',
-  desensitizationMethod: '提示：指对敏感信息所采取的具体脱敏处理方式。',
-  certificationMethod: '提示：指对“数据资源”真实性、合法性进行证明的方式。',
+  updateOtherFrequency: '请详细描述除上述选项外的数据产生方式',
+  updateMethod:
+    '提示： 1.全量更新：指将数据源中的所有数据重新完整地同步到目标数据库或数据集中。 2.增量更新：指仅同步自上次更新以来发生变化的数据。',
+  dataStorageIncrease: '提示：仅支持输入正数，根据数据存储量选择存储单位。',
+  sensitiveInformation:
+    '提示：指未经授权被访问、泄露、修改或滥用，可能会对个人、组织或国家的利益、安全、隐私或权益造成不利影响的信息。如个人隐私信息、商业秘密、国家机密、知识产权信息、其他敏感信息等。',
+  sensitiveInvolvingSubject:
+    '提示：指选择与数据直接相关或受到数据影响的主要实体。',
+  sensitiveDataCoverageNumber: '提示：指的是涉及主体所覆盖的数据量。',
+  desensitizationSituation:
+    '提示：若提供的数据集已进行脱敏处理则选择“是”；若提供的数据集未进行脱敏处理则选择“否”。',
+  desensitizationMethod:
+    '提示: 1.替换脱敏：指将数据集中的敏感信息替换为其他值或占位符的过程。例如，在电话号码中，可以将区号或后四位数字替换为特定的数字或星号（*）。 2.加密脱敏：指通过加密技术来保护敏感数据的过程。只有拥有解密密钥的人才能将密文转换回明文。 3.伪装脱敏：指通过修改数据的某些特征来隐藏其真实含义的过程。例如，可以通过在数字中添加随机噪声或改变文本数据的格式来伪装数据。 4.数据扰动：通过添加随机噪声或进行其他形式的修改来扰乱数据原始值的方法。 5.数据分割：指通过将数据集分成几个部分的过程，通常是为了满足不同的隐私、安全或合规性要求。 6.伪数据生成：指创建与原始数据集具有相似统计特性和分布，但不包含任何真实敏感信息的数据集的过程。 7.其他：除上述选项外其他的脱敏方式。',
+  desensitizationOtherMethod: '请详细描述除上述选项外的脱敏方式',
+  depositMethod: '提示：指为了证明和记录数据存在于某个具体介质或系统中的方法。',
+  depositDescription:
+    '提示：指对数据存证方式的描述和解释，它明确了数据是以何种方式被存储、保护并准备进行后续追溯的，例如存储于某系统、在何区块链平台存证、在何处公证等。',
+  depositProofDocument:
+    '提示：指为了证明数据已经按照既定的存证方式进行存储和保护的正式文件或证据，可上传自证文件、电子版存证证书或电子版公证证书等。',
+
   // 数据合规性来源及承诺
   dataSourceCommitment:
     '提示：指为确保数据在各个环节中符合相关法律法规、行业标准及企业内部政策规定，而需要提供的证明材料或政策性文件。包括但不限于数据的合法来源证明及承诺、数据处理过程的合规性记录、数据使用授权的合法确认单等。'

@@ -20,17 +20,6 @@ const StorageData: React.FC<StorageDataProps> = ({
   uploadOnlyId,
   setUploadCount
 }) => {
-  // 存证证明文件上传配置
-  const certUploadProps = useCustomUpload({
-    maxCount: 5,
-    maxSizeMB: 20,
-    accept: ['.jpg', '.png', '.pdf', '.jpeg'],
-    setUploadCount,
-    extraParams: {
-      dataRegistCode: uploadOnlyId,
-      field: 'certificationProofFile'
-    }
-  })
   return (
     <>
       <ProForm.Item
@@ -151,39 +140,46 @@ const StorageData: React.FC<StorageDataProps> = ({
           </>
         )}
       </ProFormDependency>
-      <ProForm.Item
+      <ProFormText
         label='数据存储量(初始)'
-        tooltip={tooltips.storageVolumeInitial}
-        required
-      >
-        <Flex gap={8}>
-          <ProFormText
-            name='storageVolumeInitial'
-            rules={rules.storageData.storageVolumeInitial}
-            fieldProps={{
-              maxLength: 10,
-              showCount: true,
-              placeholder: '请输入数据存储量(初始)'
-            }}
-            style={{ flex: 1, marginBottom: 0 }}
-          />
-          <ProFormSelect
-            name='storageVolumeInitialUnit'
-            rules={rules.storageData.storageVolumeInitialUnit}
-            options={Enum.storageVolumeUnitEnum}
-            placeholder='请选择单位'
-            style={{ width: 120, marginBottom: 0 }}
-          />
-        </Flex>
-      </ProForm.Item>
+        name='dataStorage'
+        rules={rules.storageData.dataStorage}
+        fieldProps={{
+          maxLength: 10,
+          showCount: true,
+          placeholder: '请输入数据存储量(初始)',
+          addonAfter: (
+            <ProFormSelect
+              name='dataStorageUnit'
+              options={Enum.dataStorageUnitEnum}
+              placeholder='请选择单位'
+            />
+          )
+        }}
+      />
       <ProFormSelect
         name='updateFrequency'
         label='更新频率'
-        tooltip={tooltips.updateFrequency}
         rules={rules.storageData.updateFrequency}
         options={Enum.updateFrequencyEnum}
         placeholder='请选择更新频率'
       />
+      <ProFormDependency name={['updateFrequency']}>
+        {({ updateFrequency }) =>
+          updateFrequency === '11' ? (
+            <ProFormText
+              name='updateOtherFrequency'
+              label='其他更新频率'
+              tooltip={tooltips.updateOtherFrequency}
+              rules={rules.storageData.updateOtherFrequency}
+              fieldProps={{
+                maxLength: 100,
+                showCount: true
+              }}
+            />
+          ) : null
+        }
+      </ProFormDependency>
       <ProFormSelect
         name='updateMethod'
         label='更新方式'
@@ -192,98 +188,109 @@ const StorageData: React.FC<StorageDataProps> = ({
         options={Enum.updateMethodEnum}
         placeholder='请选择更新方式'
       />
-      <ProForm.Item
-        label='数据存储量(增长)'
-        tooltip={tooltips.storageVolumeIncrement}
-        required
-      >
-        <Flex gap={8}>
-          <ProFormText
-            name='storageVolumeIncrement'
-            rules={rules.storageData.storageVolumeIncrement}
-            fieldProps={{
-              maxLength: 10,
-              showCount: true,
-              placeholder: '请输入数据存储量(增长)'
-            }}
-            style={{ flex: 1, marginBottom: 0 }}
-          />
-          <ProFormSelect
-            name='storageVolumeIncrementUnit'
-            rules={rules.storageData.storageVolumeIncrementUnit}
-            options={Enum.storageVolumeUnitEnum}
-            placeholder='请选择单位'
-            style={{ width: 120, marginBottom: 0 }}
-          />
-        </Flex>
-      </ProForm.Item>
-      <ProFormRadio.Group
-        name='isSensitiveInfo'
-        label='是否包含敏感信息'
-        tooltip={tooltips.isSensitiveInfo}
-        initialValue='1'
-        rules={rules.storageData.isSensitiveInfo}
-        options={Enum.whetherEnum}
-      />
-      <ProFormDependency name={['isSensitiveInfo']}>
-        {({ isSensitiveInfo }) =>
-          isSensitiveInfo === '1' ? (
-            <ProFormSelect
-              name='relatedSubjects'
-              label='涉及主体'
-              tooltip={tooltips.relatedSubjects}
-              rules={rules.storageData.relatedSubjects}
-              options={Enum.relatedSubjectsEnum}
-              placeholder='请选择涉及主体'
-            />
-          ) : null
-        }
-      </ProFormDependency>
       <ProFormText
-        name='dataCoverageCount'
-        label='数据覆盖数量'
-        tooltip={tooltips.dataCoverageCount}
-        rules={rules.storageData.dataCoverageCount}
+        label='数据存储量(增长)'
+        name='dataStorageIncrease'
+        tooltip={tooltips.dataStorageIncrease}
+        rules={rules.storageData.dataStorageIncrease}
         fieldProps={{
-          maxLength: 100,
+          maxLength: 10,
           showCount: true,
-          placeholder: '请输入数据覆盖数量单位（个）'
+          addonAfter: (
+            <ProFormSelect
+              name='dataStorageIncreaseUnit'
+              options={Enum.dataStorageUnitEnum}
+              placeholder='请选择单位'
+            />
+          )
         }}
       />
       <ProFormRadio.Group
-        name='isDesensitized'
-        label='是否脱敏'
-        tooltip={tooltips.isDesensitized}
+        name='sensitiveInformation'
+        label='是否包含敏感信息'
+        tooltip={tooltips.sensitiveInformation}
         initialValue='1'
-        rules={rules.storageData.isDesensitized}
+        rules={rules.storageData.sensitiveInformation}
         options={Enum.whetherEnum}
       />
-      <ProFormDependency name={['isDesensitized']}>
-        {({ isDesensitized }) =>
-          isDesensitized === '1' ? (
-            <ProFormSelect
-              name='desensitizationMethod'
-              label='脱敏方式'
-              tooltip={tooltips.desensitizationMethod}
-              rules={rules.storageData.desensitizationMethod}
-              options={Enum.desensitizationMethodEnum}
-              placeholder='请选择脱敏方式'
-            />
+      <ProFormDependency
+        name={[
+          'sensitiveInformation',
+          'desensitizationSituation',
+          'desensitizationMethod'
+        ]}
+      >
+        {({
+          sensitiveInformation,
+          desensitizationSituation,
+          desensitizationMethod
+        }) =>
+          sensitiveInformation === '1' ? (
+            <>
+              <ProFormSelect
+                name='sensitiveInvolvingSubject'
+                label='涉及主体'
+                tooltip={tooltips.sensitiveInvolvingSubject}
+                rules={rules.storageData.sensitiveInvolvingSubject}
+                options={Enum.sensitiveInvolvingSubjectEnum}
+              />
+              <ProFormText
+                name='sensitiveDataCoverageNumber'
+                label='数据覆盖数量'
+                tooltip={tooltips.sensitiveDataCoverageNumber}
+                rules={rules.storageData.sensitiveDataCoverageNumber}
+                fieldProps={{
+                  maxLength: 100,
+                  showCount: true
+                }}
+              />
+              <ProFormRadio.Group
+                name='desensitizationSituation'
+                label='是否脱敏'
+                tooltip={tooltips.desensitizationSituation}
+                initialValue='1'
+                rules={rules.storageData.desensitizationSituation}
+                options={Enum.whetherEnum}
+              />
+              {desensitizationSituation === '1' ? (
+                <ProFormSelect
+                  name='desensitizationMethod'
+                  label='脱敏方式'
+                  tooltip={tooltips.desensitizationMethod}
+                  rules={rules.storageData.desensitizationMethod}
+                  options={Enum.desensitizationMethodEnum}
+                  placeholder='请选择脱敏方式'
+                />
+              ) : null}
+              {desensitizationMethod === '7' ? (
+                <ProFormText
+                  name='desensitizationOtherMethod'
+                  label='其他脱敏方式'
+                  tooltip={tooltips.desensitizationOtherMethod}
+                  rules={rules.storageData.desensitizationOtherMethod}
+                  fieldProps={{
+                    maxLength: 100,
+                    showCount: true
+                  }}
+                />
+              ) : null}
+            </>
           ) : null
         }
       </ProFormDependency>
       <ProFormRadio.Group
-        name='certificationMethod'
+        name='depositMethod'
         label='存证方式'
-        tooltip={tooltips.certificationMethod}
+        tooltip={tooltips.depositMethod}
         initialValue='1'
-        rules={rules.storageData.certificationMethod}
-        options={Enum.certificationMethodEnum}
+        rules={rules.storageData.depositMethod}
+        options={Enum.depositMethodEnum}
       />
       <ProFormTextArea
         name='certificationDescription'
         label='存证方式说明'
-        rules={rules.storageData.certificationDescription}
+        tooltip={tooltips.depositDescription}
+        rules={rules.storageData.depositDescription}
         fieldProps={{
           maxLength: 200,
           showCount: true,
@@ -293,9 +300,10 @@ const StorageData: React.FC<StorageDataProps> = ({
       <ProFormUploadButton
         title='上传'
         label='存证证明文件'
-        name='certificationProofFile'
+        name='depositProofDocument'
         max={5}
-        rules={rules.storageData.certificationProofFile}
+        tooltip={tooltips.depositProofDocument}
+        rules={rules.storageData.depositProofDocument}
         transform={uploadTransform}
         extra={
           <Flex vertical gap={4}>
@@ -305,12 +313,23 @@ const StorageData: React.FC<StorageDataProps> = ({
             <a>公共数据资源登记存证指南.pdf</a>
           </Flex>
         }
-        fieldProps={certUploadProps}
+        fieldProps={{
+          ...useCustomUpload({
+            maxCount: 5,
+            maxSizeMB: 20,
+            accept: ['.jpg', '.png', '.pdf', '.jpeg'],
+            setUploadCount,
+            extraParams: {
+              dataRegistCode: uploadOnlyId,
+              field: 'depositProofDocument'
+            }
+          })
+        }}
       />
       <ProFormText
-        name='certificationDataPath'
+        name='depositDataPath'
         label='存证数据存放路径'
-        rules={rules.storageData.certificationDataPath}
+        rules={rules.storageData.depositDataPath}
         fieldProps={{
           maxLength: 200,
           showCount: true,
