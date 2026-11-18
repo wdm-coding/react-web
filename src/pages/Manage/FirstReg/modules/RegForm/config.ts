@@ -69,6 +69,45 @@ export const rules = {
     socialOpenness: [{ required: true, message: '请选择是否向社会开放' }],
     opennessConditions: [{ required: true, message: '请输入开放条件' }]
   },
+  storageData: {
+    productionMethod: [{ required: true, message: '请选择数据产生方式' }],
+    productionOtherMethod: [
+      { required: true, message: '请输入其他数据产生方式说明' }
+    ],
+    dataStructure: [{ required: true, message: '请选择数据结构' }],
+    dataOtherStructure: [{ required: true, message: '请输入其他数据数据结构' }],
+    dataProvisionFormat: [{ required: true, message: '请选择数据提供格式' }],
+    dataProvisionOtherFormat: [
+      { required: true, message: '请输入其他数据提供格式' }
+    ],
+    storageMethod: [{ required: true, message: '请选择数据存储方式' }],
+    storageOtherMethod: [{ required: true, message: '请输入其他数据存储方式' }],
+    storageVolumeInitial: [
+      { required: true, message: '请输入数据存储量(初始)' }
+    ],
+    storageVolumeInitialUnit: [{ required: true, message: '请选择单位' }],
+    updateFrequency: [{ required: true, message: '请选择更新频率' }],
+    updateMethod: [{ required: true, message: '请选择更新方式' }],
+    storageVolumeIncrement: [
+      { required: true, message: '请输入数据存储量(增长)' }
+    ],
+    storageVolumeIncrementUnit: [{ required: true, message: '请选择单位' }],
+    isSensitiveInfo: [{ required: true, message: '请选择是否包含敏感信息' }],
+    relatedSubjects: [{ required: true, message: '请选择涉及主体' }],
+    dataCoverageCount: [{ required: true, message: '请输入数据覆盖数量' }],
+    isDesensitized: [{ required: true, message: '请选择是否脱敏' }],
+    desensitizationMethod: [{ required: true, message: '请选择脱敏方式' }],
+    certificationMethod: [{ required: true, message: '请选择存证方式' }],
+    certificationDescription: [
+      { required: true, message: '请输入存证方式说明' }
+    ],
+    certificationProofFile: [
+      { required: false, message: '请上传存证证明文件' }
+    ],
+    certificationDataPath: [
+      { required: false, message: '请输入存证数据存放路径' }
+    ]
+  },
   direcData: {
     basedDataDirectory: [{ required: true, message: '请选择基于数据目录' }],
     demandFile: [{ required: true, message: '请上传上传数据字段项' }],
@@ -154,6 +193,104 @@ export const Enum = {
     { label: '介质交换', value: '4' },
     { label: '其他', value: '5' }
   ],
+  // 数据产生方式
+  productionMethodEnum: [
+    {
+      label: '人工采集',
+      value: '1',
+      desc: '指通过人力手动收集数据的过程，如填写纸质表格、观察记录、访谈、问卷调查等获取数据。'
+    },
+    {
+      label: '信息系统产生',
+      value: '2',
+      desc: '指通过计算机软件或业务系统在处理业务过程中产生的数据。'
+    },
+    {
+      label: '感知设备采集',
+      value: '3',
+      desc: '指通过传感器、摄像头、麦克风等物联网（IoT）设备自动获取的数据。'
+    },
+    {
+      label: '二次加工',
+      value: '4',
+      desc: '指对已有的数据进行进一步处理或转换，以生成新的数据或信息。如包括数据清洗、转换、聚合等。'
+    },
+    {
+      label: '其他',
+      value: '6',
+      desc: '指除上述选项外其他的数据产生方式。'
+    }
+  ],
+  // 数据结构
+  dataStructureEnum: [
+    { label: '结构化数据', value: '1' },
+    { label: '半结构化数据', value: '2' },
+    { label: '非结构化数据', value: '3' },
+    { label: '其他', value: '4' }
+  ],
+  // 数据提供格式
+  dataProvisionFormatEnum: [
+    { label: 'JSON', value: '1' },
+    { label: 'XML', value: '2' },
+    { label: 'Excel', value: '3' },
+    { label: 'Word', value: '4' },
+    { label: '其他', value: '5' }
+  ],
+  // 存储方式
+  storageMethodEnum: [
+    { label: '关系型数据库存储', value: '1' },
+    { label: '键值数据库存储', value: '2' },
+    { label: '列数据库存储', value: '3' },
+    { label: '图数据库存储', value: '4' },
+    { label: '文档数据库存储', value: '5' },
+    { label: '对象数据库存储', value: '6' },
+    { label: '其他', value: '7' }
+  ],
+  // 存储量单位
+  storageVolumeUnitEnum: [
+    { label: 'B', value: '1' },
+    { label: 'KB', value: '2' },
+    { label: 'MB', value: '3' },
+    { label: 'GB', value: '4' },
+    { label: 'TB', value: '5' },
+    { label: 'PB', value: '6' }
+  ],
+  // 更新频率
+  updateFrequencyEnum: [
+    { label: '实时更新', value: '1' },
+    { label: '每日', value: '2' },
+    { label: '每周', value: '3' },
+    { label: '每月', value: '4' },
+    { label: '每季度', value: '5' },
+    { label: '每年', value: '6' },
+    { label: '其他', value: '7' }
+  ],
+  // 更新方式
+  updateMethodEnum: [
+    { label: '全量', value: '1' },
+    { label: '增量', value: '2' },
+    { label: '全量+增量', value: '3' }
+  ],
+  // 涉及主体
+  relatedSubjectsEnum: [
+    { label: '个人', value: '1' },
+    { label: '企业', value: '2' },
+    { label: '政府机关', value: '3' },
+    { label: '其他', value: '4' }
+  ],
+  // 脱敏方式
+  desensitizationMethodEnum: [
+    { label: '掩码', value: '1' },
+    { label: '替换', value: '2' },
+    { label: '加密', value: '3' },
+    { label: '泛化', value: '4' },
+    { label: '其他', value: '5' }
+  ],
+  // 存证方式
+  certificationMethodEnum: [
+    { label: '登记主体自证', value: '1' },
+    { label: '第三方机构证明', value: '2' }
+  ],
   // 是否基于已有成果填报
   basedDataDirectoryEnum: [
     { label: '基于2017年政务信息资源目录', value: '1' },
@@ -219,6 +356,30 @@ export const tooltips = {
     '提示：无条件共享类和有条件共享类的政务信息资源，应标明使用要求，包括作为行政依据、工作参考，用于数据校核、业务协同等；有条件共享类的政务信息资源，还应注明共享条件和共享范围；对于不予共享类的政务信息资源，应注明相关的法律、行政法规或党中央、国务院政策依据。',
   sharingOtherMethod: '请详细描述除上述选项外的共享方式',
   opennessConditions: '提示：描述对数据开放的约束条件',
+  // 数据存储信息
+  productionMethod:
+    '提示： ①原始数据：指未经任何处理或转换的初始数据。 ②人工采集：指通过人力手动收集数据的过程。如填写纸质表格、观察记录、访谈、问卷调查等获取数据。 ③信息系统产生：指通过计算机软件或业务系统在处理业务过程中产生的数据。 ④感知设备采集：指通过传感器、摄像头、麦克风等物联网（IoT）设备自动获取的数据。 ⑤二次加工：指对已有的数据进行进一步处理或转换，以生成新的数据或信息。如包括数据清洗、转换、聚合、挖掘等操作。 ⑥其他：除上述选项外其他的数据产生方式。',
+  productionOtherMethod: '请详细描述除上述选项外的数据产生方式',
+  dataStructure:
+    '提示： ①结构化数据：指按照一定的规则或格式组织存储的数据，具有固定的数据模型和数据结构。通常可以被存储在关系型数据库中以表格的形式呈现，其中包含明确的字段、类型和关系。 ②半结构化数据：是介于结构化数据和非结构化数据之间的一种数据类型。具有一定的组织和规则，但没有固定的数据模型，通常以标签、键值对等方式表示数据的层次和语义，如XML、JSON等格式的文件。 ③非结构化数据：指数据结构不规则或不完整，没有预定义的数据模型，不方便用数据库二维逻辑表来表现的数据。它通常包括文本、图片、音频、视频、HTML文档等多种类型的信息。 ④其他：除上述选项外其他的数据结构。',
+  dataOtherStructure: '请详细描述除上述选项外的数据结构',
+  dataProvisionFormat:
+    '提示： 指选择“数据资源”或“公共数据产品和服务”的提供方式。 ①JSON：JSON 是一种轻量级的数据交换格式，它通常以文本形式（通常是字符串）存在，当通过 JSON 提供数据时，数据被组织成键值对的形式，并封装在方括号（对于数组）或大括号（对于对象）中。 ②XML：XML 提供了一种类似于 HTML 的结构化方式来表示数据，XML 数据可以通过网络以 HTTP 响应的形式发送，或者作为文件存储在服务器上。 ③Excel：当通过 Excel 提供数据时，数据通常被组织在电子表格的单元格中，并可以包含复杂的公式、图表和格式化选项。 为了通过网络提供 Excel 数据，通常需要将其转换为更易于传输和解析的格式（如 CSV、JSON 或 XML），或者通过特定的 API 将 Excel 文件作为文件下载提供。 ④Word：数据通过Word的方式进行提供。 ⑤其他：除上述选项外其他的数据提供方式。',
+  dataProvisionOtherFormat: '请详细描述除上述选项外的数据提供方式',
+  storageMethod:
+    '提示： ①关系型数据库存储：指采用关系模型来组织数据的数据库，它以行和列的形式存储数据。常见的关系型数据库包括Oracle、MySQL、SQL Server等。 ②键值数据库存储：指非关系型数据库，使用简单的键值对系统存储数据，常见的键值数据库包括Redis、Memcached等。 ③列数据库存储：指一种专门用于处理大规模数据分析的数据库类型，它将数据按列而不是按行存储。 ④图数据库存储：指一种用于存储实体之间关系的数据库类型，它使用图结构来表示数据，常见的图数据库包括Neo4j、ArangoDB等。 ⑤文档数据库存储：指一种以文档作为基本单位进行数据存储和管理的非关系型数据库。常见的文档数据库包括MongoDB、CouchDB等。 ⑥对象数据库存储：指一种使用对象导向模型来设计其数据结构和操作的数据库。 ⑦其他：除了上述选项外，其他的数据库存储方式。',
+  storageOtherMethod: '请详细描述除上述选项外的数据存储方式',
+  storageVolumeInitial: '提示：指“数据资源”在申请登记时所占用的存储空间总量。',
+  updateFrequency: '提示：指“数据资源”进行内容更新的周期频率。',
+  updateMethod: '提示：指“数据资源”进行内容更新的方式，如全量、增量等。',
+  storageVolumeIncrement:
+    '提示：指“数据资源”预计单位周期内新增占用的存储空间量。',
+  isSensitiveInfo: '提示：指“数据资源”中是否包含个人隐私、商业秘密等敏感信息。',
+  relatedSubjects: '提示：指“数据资源”所含敏感信息涉及的主体类型。',
+  dataCoverageCount: '提示：指“数据资源”覆盖的数据记录条数，单位为个。',
+  isDesensitized: '提示：指“数据资源”中所含敏感信息是否已进行脱敏处理。',
+  desensitizationMethod: '提示：指对敏感信息所采取的具体脱敏处理方式。',
+  certificationMethod: '提示：指对“数据资源”真实性、合法性进行证明的方式。',
   // 数据合规性来源及承诺
   dataSourceCommitment:
     '提示：指为确保数据在各个环节中符合相关法律法规、行业标准及企业内部政策规定，而需要提供的证明材料或政策性文件。包括但不限于数据的合法来源证明及承诺、数据处理过程的合规性记录、数据使用授权的合法确认单等。'

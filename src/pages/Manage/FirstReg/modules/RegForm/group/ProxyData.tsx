@@ -67,14 +67,13 @@ const ProxyData: React.FC<ProxyDataProps> = ({
                 rules={rules.proxyData.proxyAgreement}
                 transform={uploadTransform}
                 extra={
-                  <div>
+                  <div style={{ paddingTop: 10 }}>
                     支持上传jpg、png、pdf、jpeg格式的文件，每个文件大小不能超过20M，最多支持1个
                     <a style={{ marginLeft: 16 }}>登记代理委托书.docx</a>
                   </div>
                 }
                 fieldProps={{
                   ...useCustomUpload({
-                    maxCount: 1,
                     maxSizeMB: 20,
                     accept: ['.jpg', '.png', '.pdf', '.jpeg'],
                     setUploadCount,

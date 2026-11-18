@@ -274,6 +274,7 @@ const BaseData: React.FC<BaseDataProps> = ({
                 options={Enum.authOperationStatusEnum}
                 rules={rules.baseData.authOperationStatus}
                 fieldProps={{
+                  multiple: true,
                   onChange: (e) => authOperationStatusChange(e.target.value)
                 }}
               />
@@ -369,12 +370,19 @@ const BaseData: React.FC<BaseDataProps> = ({
                 title='上传'
                 label='产品和服务详情'
                 name='productAndServiceDetails'
-                max={2}
+                max={1}
                 rules={rules.baseData.productAndServiceDetails}
                 transform={uploadTransform}
+                extra={
+                  <div style={{ paddingTop: 10 }}>
+                    支持上传jpg、png、pdf、jpeg格式，文件大小不能超过5M，支持上传1个文件
+                    <a style={{ marginLeft: 16 }}>样例数据.xlsx</a>
+                  </div>
+                }
                 fieldProps={{
                   ...useCustomUpload({
-                    maxCount: 2,
+                    accept: ['.jpg', '.png', '.pdf', '.jpeg'],
+                    maxSizeMB: 5,
                     setUploadCount,
                     extraParams: {
                       dataRegistCode: uploadOnlyId,
@@ -397,14 +405,22 @@ const BaseData: React.FC<BaseDataProps> = ({
       <ProFormUploadButton
         tooltip={tooltips.infoSecurityAssessReport}
         title='上传'
-        max={2}
+        max={5}
         label='数据安全风险评估报告'
         name='infoSecurityAssessReport'
         rules={rules.baseData.infoSecurityAssessReport}
         transform={uploadTransform}
+        extra={
+          <div style={{ paddingTop: 10 }}>
+            支持上传jpg、png、pdf、jpeg格式，每个文件大小不能超过20M，最多支持5个
+            <a style={{ marginLeft: 16 }}>样例数据.xlsx</a>
+          </div>
+        }
         fieldProps={{
           ...useCustomUpload({
-            maxCount: 2,
+            accept: ['.jpg', '.png', '.pdf', '.jpeg'],
+            maxCount: 5,
+            maxSizeMB: 20,
             setUploadCount,
             extraParams: {
               dataRegistCode: uploadOnlyId,

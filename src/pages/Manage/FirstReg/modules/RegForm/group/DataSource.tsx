@@ -30,7 +30,6 @@ const DataSource: React.FC<DataSourceProps> = ({
         }
         fieldProps={{
           ...useCustomUpload({
-            maxCount: 1,
             maxSizeMB: 20,
             accept: ['.jpg', '.png', '.pdf', '.jpeg'],
             setUploadCount,

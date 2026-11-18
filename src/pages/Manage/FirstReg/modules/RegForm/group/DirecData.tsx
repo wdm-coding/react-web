@@ -33,14 +33,13 @@ const DirecData: React.FC<DirecDataProps> = ({
               rules={rules.direcData.demandFile}
               transform={uploadTransform}
               extra={
-                <div>
+                <div style={{ paddingTop: 10 }}>
                   支持上传xlsx格式的文件，文件大小不能超过20M，最多支持1个
                   <a style={{ marginLeft: 16 }}>数据字段项.xlsx</a>
                 </div>
               }
               fieldProps={{
                 ...useCustomUpload({
-                  maxCount: 1,
                   maxSizeMB: 20,
                   accept: ['.xlsx'],
                   setUploadCount,
@@ -59,15 +58,14 @@ const DirecData: React.FC<DirecDataProps> = ({
               rules={rules.direcData.sampleData}
               transform={uploadTransform}
               extra={
-                <div>
+                <div style={{ paddingTop: 10 }}>
                   支持上传xlsx格式的文件，文件大小不能超过50M,最多支持1个
                   <a style={{ marginLeft: 16 }}>样例数据.xlsx</a>
                 </div>
               }
               fieldProps={{
                 ...useCustomUpload({
-                  maxCount: 1,
-                  maxSizeMB: 20,
+                  maxSizeMB: 50,
                   accept: ['.xlsx'],
                   setUploadCount,
                   extraParams: {
