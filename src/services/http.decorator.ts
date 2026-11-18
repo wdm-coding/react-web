@@ -42,7 +42,6 @@ function createRequestFn<T, R>(
     Object.keys(pathParams).forEach((k) => {
       reqUrl = reqUrl.replace(`:${k}`, pathParams[k])
     })
-    console.log('params', params)
     // 剩余参数作为查询参数 / 请求体
     const queryParams: Record<string, any> = {}
     Object.keys(paramObj).forEach((k) => {

@@ -28,3 +28,9 @@
     color: #666 !important;
   }
 }
+.editableProTable {
+  margin-top: -5px !important;
+  .ant-table-wrapper .ant-table-thead > tr > th {
+    color: rgba(0, 0, 0, 0.5) !important;
+  }
+}

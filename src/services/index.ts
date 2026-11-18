@@ -25,7 +25,6 @@ http.interceptors.request.use(
 http.interceptors.response.use(
   async (res: AxiosResponse<BaseResponse>): Promise<any> => {
     const resData = res.data
-    console.log('success', res)
     if (resData.return_code === 20000) {
       return {
         code: 20000,
@@ -53,7 +52,6 @@ http.interceptors.response.use(
     }
   },
   async (err) => {
-    console.log('error', err.response)
     const status = err.response?.status
     let errorMsg = ''
     switch (status) {

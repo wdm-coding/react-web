@@ -29,6 +29,9 @@ const RegForm = () => {
     }
     console.log(values)
   }
+  const onFinishFailed = (error: any) => {
+    console.log(formRef.current?.getFieldsValue())
+  }
   return (
     <ProForm
       layout='horizontal'
@@ -36,6 +39,7 @@ const RegForm = () => {
       wrapperCol={{ span: 20 }}
       formRef={formRef}
       onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
       initialValues={{
         dataRegistType: '1',
         authOperationStatus: '1',
@@ -46,7 +50,6 @@ const RegForm = () => {
       }}
     >
       <ProForm.Group title={groupTitle('数据基本信息')}>
-        {uploadCount}
         <BaseData uploadOnlyId={uploadOnlyId} setUploadCount={setUploadCount} />
       </ProForm.Group>
       <ProForm.Group title={groupTitle('委托代理信息')}>
