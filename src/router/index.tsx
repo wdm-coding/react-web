@@ -18,6 +18,7 @@ export const whitePaths = [
   '/portal/regCheck',
   '/portal/regQuery',
   '/portal/regPolicy',
+  '/portal/regPolicyDetail',
   '/portal/regInstitution',
   '/portal/demandNumbers',
   '/portal/inforDisclosure',
@@ -77,6 +78,13 @@ export const list: RouterItem[] = [
         componentPath: '/Portal/RegPolicy/index.tsx',
         icon: 'reg-policy',
         title: '登记政策'
+      },
+      {
+        path: 'regPolicyDetail',
+        name: 'RegPolicyDetail',
+        componentPath: '/Portal/RegPolicy/Detail/index.tsx',
+        icon: 'reg-policy-detail',
+        title: '政策详情'
       },
       {
         path: 'regInstitution',
