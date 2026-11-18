@@ -124,3 +124,7 @@ export const industryChange = (
     createTreeData(null)
   }
 }
+
+// 上传文件转换为字符串
+export const uploadTransform = (value: any[]) =>
+  value.map((item) => item.response).join(',')

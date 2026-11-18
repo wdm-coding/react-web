@@ -8,12 +8,13 @@ import OpenData from './group/OpenData'
 import ShareData from './group/ShareData'
 import DirecData from './group/DirecData'
 import DataSource from './group/DataSource'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import FileApi from '@/api/file'
 import { useRequest } from '@/hooks/useRequest'
 const RegForm = () => {
   const formRef = useRef<ProFormInstance>(null)
   const { data: uploadOnlyId } = useRequest(FileApi.getFileUploadOnlyId)
+  const [uploadCount, setUploadCount] = useState<number>(0)
   const groupTitle = (title: string) => {
     return (
       <div key={title} className={styles.groupTitle}>
@@ -22,6 +23,10 @@ const RegForm = () => {
     )
   }
   const onFinish = async (values: any) => {
+    if (uploadCount !== 0) {
+      window.$message.warning('请等待文件上传完成')
+      return
+    }
     console.log(values)
   }
   return (
@@ -35,12 +40,14 @@ const RegForm = () => {
         dataRegistType: '1',
         authOperationStatus: '1',
         dataType: '1',
-        dataProductAndServicesType: '11',
-        authResourceDevelop: '1'
+        dataProductAndServicesType: '1',
+        authResourceDevelop: '1',
+        productUsage: '1'
       }}
     >
       <ProForm.Group title={groupTitle('数据基本信息')}>
-        <BaseData uploadOnlyId={uploadOnlyId} />
+        {uploadCount}
+        <BaseData uploadOnlyId={uploadOnlyId} setUploadCount={setUploadCount} />
       </ProForm.Group>
       <ProForm.Group title={groupTitle('委托代理信息')}>
         <ProxyData />

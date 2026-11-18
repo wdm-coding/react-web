@@ -16,13 +16,21 @@ import { useEffect, useState } from 'react'
 import CommonApi from '@/api/common'
 import { Button, Flex, Form } from 'antd'
 import useIndusTree from '../utils/useIndusTree'
-import { industryChange, authOperationStatusChange } from '../config'
+import {
+  industryChange,
+  authOperationStatusChange,
+  uploadTransform
+} from '../config'
 import useCustomUpload from '@/hooks/useCustomUpload'
 
 interface BaseDataProps {
   uploadOnlyId?: string
+  setUploadCount?: any
 }
-const BaseData: React.FC<BaseDataProps> = ({ uploadOnlyId }) => {
+const BaseData: React.FC<BaseDataProps> = ({
+  uploadOnlyId,
+  setUploadCount
+}) => {
   const formIns = Form.useFormInstance()
   const { industryTreeData, createTreeData, industryName } = useIndusTree()
   const [authOperatEditableKeys, setAuthOperatEditableKeys] = useState<any[]>(
@@ -108,13 +116,6 @@ const BaseData: React.FC<BaseDataProps> = ({ uploadOnlyId }) => {
   useEffect(() => {
     formIns?.setFieldValue('industryName', industryName || '')
   }, [industryName])
-  const productAndServiceDetailsUploadProps = useCustomUpload({
-    extraParams: {
-      dataRegistCode: uploadOnlyId,
-      field: 'productAndServiceDetails'
-    }
-  }).props
-  console.log(productAndServiceDetailsUploadProps)
   return (
     <>
       <ProFormCascader
@@ -332,9 +333,18 @@ const BaseData: React.FC<BaseDataProps> = ({ uploadOnlyId }) => {
                 title='上传'
                 label='产品和服务详情'
                 name='productAndServiceDetails'
+                max={2}
                 rules={rules.baseData.productAndServiceDetails}
+                transform={uploadTransform}
                 fieldProps={{
-                  ...productAndServiceDetailsUploadProps
+                  ...useCustomUpload({
+                    maxCount: 2,
+                    setUploadCount,
+                    extraParams: {
+                      dataRegistCode: uploadOnlyId,
+                      field: 'productAndServiceDetails'
+                    }
+                  })
                 }}
               />
               <ProFormRadio.Group
@@ -349,10 +359,21 @@ const BaseData: React.FC<BaseDataProps> = ({ uploadOnlyId }) => {
       </ProFormDependency>
       <ProFormUploadButton
         title='上传'
+        max={2}
         label='数据安全风险评估报告'
         name='infoSecurityAssessReport'
-        action='upload.do'
         rules={rules.baseData.infoSecurityAssessReport}
+        transform={uploadTransform}
+        fieldProps={{
+          ...useCustomUpload({
+            maxCount: 2,
+            setUploadCount,
+            extraParams: {
+              dataRegistCode: uploadOnlyId,
+              field: 'infoSecurityAssessReport'
+            }
+          })
+        }}
       />
       <ProFormRadio.Group
         name='dataType'

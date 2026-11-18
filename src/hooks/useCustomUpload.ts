@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import FileApi from '@/api/file'
 import { UploadListType, UploadProps } from 'antd/es/upload/interface'
 interface Props {
@@ -9,6 +8,7 @@ interface Props {
   uploadApi?: any
   listType?: UploadListType
   extraParams?: Record<string, unknown>
+  setUploadCount?: any
 }
 const useCustomUpload = ({
   fieldName = 'file',
@@ -17,9 +17,9 @@ const useCustomUpload = ({
   accept = [],
   uploadApi = FileApi.uploadFile,
   listType = 'text',
-  extraParams = {}
+  extraParams = {},
+  setUploadCount
 }: Props) => {
-  const [loading, setLoading] = useState(false)
   const customRequest: UploadProps['customRequest'] = async ({
     file,
     onSuccess,
@@ -35,15 +35,15 @@ const useCustomUpload = ({
       })
     }
     try {
-      setLoading(true)
+      setUploadCount?.((prev) => prev + 1)
       const { code, data } = await uploadApi(formData)
       if (code === 20000) {
-        onSuccess?.(data)
+        onSuccess?.(data?.resultUrl)
       }
     } catch (err: any) {
       onError?.(err)
     } finally {
-      setLoading(false)
+      setUploadCount?.((prev) => prev - 1)
     }
   }
   const beforeUpload = (file: File) => {
@@ -64,17 +64,14 @@ const useCustomUpload = ({
     return true
   }
   return {
-    props: {
-      name: fieldName,
-      maxCount,
-      accept: accept.join(','),
-      multiple: maxCount > 1,
-      listType,
-      data: extraParams,
-      beforeUpload,
-      customRequest
-    },
-    loading
+    name: fieldName,
+    maxCount,
+    accept: accept.join(','),
+    multiple: maxCount > 1,
+    listType,
+    data: extraParams,
+    beforeUpload,
+    customRequest
   }
 }
 
