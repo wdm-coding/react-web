@@ -1,0 +1,71 @@
+.dataSection {
+  width: 100%;
+  padding: 0 20px 40px;
+  box-sizing: border-box;
+
+  .tableWrapper {
+    width: 100%;
+    max-width: 1342px;
+    margin: 55px auto 0;
+
+    :global(.ant-table) {
+      color: #333;
+      font-size: 16px;
+    }
+
+    :global(.ant-table-thead > tr > th) {
+      padding: 14px 12px;
+      border-bottom: none;
+      background: #bee1ff !important;
+      color: #333;
+      font-size: 20px;
+      font-weight: 400;
+      text-align: center;
+
+      &::before {
+        display: none !important;
+      }
+    }
+
+    :global(.ant-table-tbody > tr > td) {
+      padding: 9px 12px;
+      border-bottom: 1px solid #edf4fc;
+      color: #333;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    :global(.ant-table-tbody > tr:last-child > td) {
+      border-bottom: none;
+    }
+
+    :global(.ant-table-tbody > tr:hover > td) {
+      background: #f3f9ff !important;
+    }
+
+    :global(.ant-table-body) {
+      scrollbar-width: thin;
+      scrollbar-color: #c7dbf1 transparent;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .dataSection {
+    padding-bottom: 48px;
+
+    .tableWrapper {
+      margin-top: 28px;
+
+      :global(.ant-table-thead > tr > th) {
+        padding: 12px 8px;
+        font-size: 16px;
+      }
+
+      :global(.ant-table-tbody > tr > td) {
+        padding: 8px;
+        font-size: 14px;
+      }
+    }
+  }
+}
