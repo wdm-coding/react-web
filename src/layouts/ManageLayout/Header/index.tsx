@@ -8,12 +8,12 @@ import { BellOutlined, SwapOutlined } from '@ant-design/icons'
 
 const ManageHeader = () => {
   const { siteName } = useModal('global')
-  const {userInfo,useLogout} = useModal('user')
+  const { userInfo, useLogout } = useModal('user')
   const navigate = useNavigate()
   const onDropdownClick = async ({ key }: { key: string }) => {
     switch (key) {
       case 'logout':
-        useLogout().then(()=>{
+        useLogout().then(() => {
           navigate('/portal')
         })
         break
@@ -35,10 +35,12 @@ const ManageHeader = () => {
       </div>
       {/* 右侧用户中心 */}
       <div className={styles.rightSpace}>
-        <BellOutlined style={{marginRight:15,fontSize:18,cursor:'pointer'}}/>
+        <BellOutlined
+          style={{ marginRight: 15, fontSize: 18, cursor: 'pointer' }}
+        />
         <Popover content={<InsSelect />}>
           <div className={styles.currentIns}>
-            <SwapOutlined style={{marginRight:10,fontSize:18}} />
+            <SwapOutlined style={{ marginRight: 10, fontSize: 18 }} />
             当前登记主体：{userInfo?.currentIns?.institutionName}
           </div>
         </Popover>

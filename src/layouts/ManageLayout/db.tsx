@@ -7,12 +7,12 @@ const siderMenus = [
     icon: 'svg-vite'
   },
   {
-    label: <MenuLabel label="登记申请" dot />,
+    label: <MenuLabel label='登记申请' dot />,
     key: '/manage/regApply',
     icon: 'AndroidOutlined',
-    children: [ 
+    children: [
       {
-        label: <MenuLabel label="登记数据申请" badge={10} />,
+        label: <MenuLabel label='登记数据申请' badge={10} />,
         key: '/manage/regApply/regApplyList'
       },
       {
@@ -24,7 +24,7 @@ const siderMenus = [
   {
     label: '确认单管理',
     key: '/manage/certManage',
-    icon: 'AndroidOutlined',
+    icon: 'AndroidOutlined'
   },
   {
     label: '异议申诉管理',
@@ -42,7 +42,7 @@ const siderMenus = [
     ]
   },
   {
-    label:'个人账号管理',
+    label: '个人账号管理',
     key: '/manage/personAccount',
     icon: 'AndroidOutlined',
     children: [
@@ -57,12 +57,12 @@ const siderMenus = [
     ]
   },
   {
-    label:'登记主体信息',
+    label: '登记主体信息',
     key: '/manage/regSubjectInfo',
-    icon: 'AndroidOutlined',
+    icon: 'AndroidOutlined'
   },
   {
-    label:<div>审批待办1</div>,
+    label: <div>审批待办1</div>,
     key: '/manage/approvalManage',
     icon: 'AndroidOutlined',
     children: [
@@ -77,7 +77,7 @@ const siderMenus = [
     ]
   },
   {
-    label:'用户管理',
+    label: '用户管理',
     key: '/manage/userManage',
     icon: 'AndroidOutlined',
     children: [
@@ -92,12 +92,12 @@ const siderMenus = [
     ]
   },
   {
-    label:'用数需求',
+    label: '用数需求',
     key: '/manage/demandNumbersManager',
-    icon: 'AndroidOutlined',
+    icon: 'AndroidOutlined'
   },
   {
-    label:'年度信息披露',
+    label: '年度信息披露',
     key: '/manage/annualDisclosure',
     icon: 'AndroidOutlined',
     children: [
@@ -112,7 +112,7 @@ const siderMenus = [
     ]
   },
   {
-    label:'系统管理',
+    label: '系统管理',
     key: '/manage/systemManage',
     icon: 'AndroidOutlined',
     children: [

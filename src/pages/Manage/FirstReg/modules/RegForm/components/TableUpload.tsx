@@ -10,7 +10,13 @@ interface TableUploadProps {
   value?: any
   onChange?: any
 }
-const TableUpload: React.FC<TableUploadProps> = ({ uploadOnlyId, setUploadCount, fieldName, value, onChange }) => {
+const TableUpload: React.FC<TableUploadProps> = ({
+  uploadOnlyId,
+  setUploadCount,
+  fieldName,
+  value,
+  onChange
+}) => {
   const [fileList, setFileList] = useState<UploadFile[]>([])
   const onInnerChange: UploadProps['onChange'] = (info: any) => {
     setFileList(info.fileList)

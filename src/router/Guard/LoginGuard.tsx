@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import useAuth from '@/hooks/useAuth'
 const LoginGuard = ({ children }) => {
   const navigate = useNavigate()
-  const {isLoggedIn} = useAuth()
+  const { isLoggedIn } = useAuth()
   useEffect(() => {
     if (isLoggedIn) {
       navigate(-1)

@@ -68,7 +68,11 @@ const InsSelect = () => {
   ]
   return (
     <div className={styles.insSelect}>
-      <Table<DataType> pagination={false} columns={columns} dataSource={userInfo?.insList || []} />
+      <Table<DataType>
+        pagination={false}
+        columns={columns}
+        dataSource={userInfo?.insList || []}
+      />
     </div>
   )
 }

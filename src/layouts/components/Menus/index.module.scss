@@ -17,7 +17,11 @@
         display: none;
       }
     }
-    :global(.ant-menu-item:not(.ant-menu-item-selected):not(.ant-menu-submenu-selected):hover) {
+    :global(
+      .ant-menu-item:not(.ant-menu-item-selected):not(
+          .ant-menu-submenu-selected
+        ):hover
+    ) {
       color: #1471ff;
       &::after {
         display: none;

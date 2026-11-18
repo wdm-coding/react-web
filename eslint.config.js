@@ -61,17 +61,8 @@ export default [
       ...pluginJs.configs.recommended.rules,
       ...tseslint.configs.recommended.rules,
       ...prettierConfig.rules,
-      'prettier/prettier': [
-        'error',
-        {
-          printWidth: 180,
-          semi: false,
-          singleQuote: true,
-          trailingComma: 'none',
-          useTabs: false,
-          tabWidth: 2
-        }
-      ],
+      // 不在此处内联 prettier 选项，统一由 .prettierrc 提供，避免与编辑器格式化冲突
+      'prettier/prettier': 'error',
       '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
       'no-redeclare': 'off',

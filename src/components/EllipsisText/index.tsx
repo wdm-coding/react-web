@@ -9,7 +9,12 @@ interface EllipsisTextProps {
   style?: React.CSSProperties
 }
 
-const EllipsisText = ({ text, line = 1, className, style }: EllipsisTextProps) => {
+const EllipsisText = ({
+  text,
+  line = 1,
+  className,
+  style
+}: EllipsisTextProps) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const [isEllipsis, setIsEllipsis] = useState(false)
 

@@ -34,24 +34,24 @@ const Login = () => {
     loading: false,
     captchaImg: ''
   })
-  const getCaptch = async ()=>{
-    setCaptcha({...captcha,loading: true})
+  const getCaptch = async () => {
+    setCaptcha({ ...captcha, loading: true })
     const base64Str = await fetchCaptcha()
-    setCaptcha({...captcha,loading: false,captchaImg: base64Str})
+    setCaptcha({ ...captcha, loading: false, captchaImg: base64Str })
   }
-  useEffect(()=>{
+  useEffect(() => {
     getCaptch()
-  },[])
+  }, [])
   const onFinish = async (values: FieldType) => {
-    const params:any = {
-      "captcha": values.captcha,
-      "password": values.password,
-      "loginAfter": "/portal",
-      "loginMethod": 1,
+    const params: any = {
+      captcha: values.captcha,
+      password: values.password,
+      loginAfter: '/portal',
+      loginMethod: 1
     }
-    if(loginMethod === 'subject'){
+    if (loginMethod === 'subject') {
       params.institutioncode = values.username
-    }else{
+    } else {
       params.idnumber = values.username
     }
     try {
@@ -65,8 +65,8 @@ const Login = () => {
   const handleOk = async () => {
     setModalOpen(false)
     setTokenCookie(tokenCookie)
-    const date = new Date();
-    date.setTime(date.getTime() + 7 * 24 * 60 * 60 * 1000);
+    const date = new Date()
+    date.setTime(date.getTime() + 7 * 24 * 60 * 60 * 1000)
     document.cookie = `token=${tokenCookie}; expires=${date}; path=/`
     document.cookie = `hasToken=hasToken; expires=${date}; path=/`
     window.location.reload()
@@ -78,22 +78,22 @@ const Login = () => {
     document.cookie = 'hasToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'
   }
   const tokenLogin = async () => {
-     const cookie = document.cookie
-      if(cookie.indexOf('hasToken=hasToken') !== -1){
-        try {
-          const redirectUrl = await userLogin({tokenCookie:'1'})
-          navigate(redirectUrl, { replace: true })
-          window.$message.success('登录成功')
-        } catch (error) {
-          console.log('token-登录失败', error)
-        }
+    const cookie = document.cookie
+    if (cookie.indexOf('hasToken=hasToken') !== -1) {
+      try {
+        const redirectUrl = await userLogin({ tokenCookie: '1' })
+        navigate(redirectUrl, { replace: true })
+        window.$message.success('登录成功')
+      } catch (error) {
+        console.log('token-登录失败', error)
       }
+    }
   }
-  useEffect(()=>{
-    if(env === 'dev'){
+  useEffect(() => {
+    if (env === 'dev') {
       tokenLogin()
     }
-  },[env])
+  }, [env])
   return (
     <div className={styles.loginWrapper}>
       {/* 顶部标题 */}
@@ -177,7 +177,10 @@ const Login = () => {
               <div className={styles.captchaContainer}>
                 <Spin size='small' spinning={captcha.loading}>
                   {captcha.loading ? (
-                    <div className={styles.captchaLoading} style={{ width: '9.38vw', height: '50px' }}>
+                    <div
+                      className={styles.captchaLoading}
+                      style={{ width: '9.38vw', height: '50px' }}
+                    >
                       加载中
                     </div>
                   ) : (
@@ -215,11 +218,13 @@ const Login = () => {
           返回上一页
         </div>
       </div>
-      {
-        env === 'dev' && <>
-          <div className={styles.tokenLogin} onClick={() => setModalOpen(true)}>token登录</div>
+      {env === 'dev' && (
+        <>
+          <div className={styles.tokenLogin} onClick={() => setModalOpen(true)}>
+            token登录
+          </div>
           <Modal
-            title="token登录"
+            title='token登录'
             closable={{ 'aria-label': 'Custom Close Button' }}
             okText='登录'
             cancelText='取消'
@@ -227,10 +232,14 @@ const Login = () => {
             onOk={handleOk}
             onCancel={handleCancel}
           >
-            <Input placeholder='请输入token' value={tokenCookie} onChange={(e) => setTokenCookie(e.target.value)} />
+            <Input
+              placeholder='请输入token'
+              value={tokenCookie}
+              onChange={(e) => setTokenCookie(e.target.value)}
+            />
           </Modal>
         </>
-      }
+      )}
     </div>
   )
 }

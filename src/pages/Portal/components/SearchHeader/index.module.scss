@@ -20,23 +20,23 @@
     align-items: center;
     .total_num {
       font-size: 40px;
-      color: #6DD6FF;
+      color: #6dd6ff;
       padding: 0 10px;
     }
   }
-  .search{
+  .search {
     padding-top: 18px;
-    :global(.ant-input-affix-wrapper){
+    :global(.ant-input-affix-wrapper) {
       height: 48px;
     }
-    :global(.ant-input-search-button){
+    :global(.ant-input-search-button) {
       width: 114px;
       height: 48px;
-      background: linear-gradient( 90deg, #00A4EB 0%, #006BD3 100%);
+      background: linear-gradient(90deg, #00a4eb 0%, #006bd3 100%);
       border-radius: 0px 6px 6px 0px;
       border: none;
-      &:hover{
-        background: linear-gradient( 90deg, #00A4EB 0%, #006BD3 100%);
+      &:hover {
+        background: linear-gradient(90deg, #00a4eb 0%, #006bd3 100%);
       }
     }
   }

@@ -14,7 +14,7 @@ const OutletPage = ({
   children,
   onScroll
 }: OutletPageProps) => {
-  const {pathname} = useLocation()
+  const { pathname } = useLocation()
   const scrollableNodeRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
     const node = scrollableNodeRef.current

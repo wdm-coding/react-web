@@ -10,5 +10,22 @@
     "javascriptreact",
     "typescript",
     "typescriptreact"
-  ]
+  ],
+  // 语言级配置优先级高于全局 defaultFormatter，
+  // 必须在此覆盖，防止用户级设置把 .ts 交给内置格式化器
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  // 禁用内置 JS/TS 格式化器，避免它在 Prettier 不可用时悄悄接管
+  "javascript.format.enable": false,
+  "typescript.format.enable": false
 }

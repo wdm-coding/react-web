@@ -1,4 +1,3 @@
-
 .fixedHeader {
   position: fixed;
   top: 0;
@@ -10,15 +9,15 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(0px);
   transition: all 0.2s ease-in-out;
-  .logoSpace{
-    span{
+  .logoSpace {
+    span {
       color: #000 !important;
     }
   }
   :global(.ant-menu-horizontal) {
     :global(.ant-menu-item),
     :global(.ant-menu-submenu-title) {
-      color: #000  !important; // 滚动后变成黑色
+      color: #000 !important; // 滚动后变成黑色
     }
     :global(.ant-menu-item-selected) {
       color: #fff !important; // 选中态也可以单独设
@@ -54,7 +53,7 @@
       white-space: nowrap;
     }
   }
-  .navMenuContainer{
+  .navMenuContainer {
     min-width: 0;
     flex: 1;
     height: 100%;

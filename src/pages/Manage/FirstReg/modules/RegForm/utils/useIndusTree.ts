@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { useState } from 'react'
 import type { Key } from 'react'
 import { Tree } from 'antd'
@@ -50,11 +49,11 @@ const markTreeDisabled = (
       disabled: !selectable,
       children: children?.length
         ? markTreeDisabled(
-          children,
-          enabledKeys,
-          subTreeRootKey,
-          inSubTree || node.key === subTreeRootKey
-        )
+            children,
+            enabledKeys,
+            subTreeRootKey,
+            inSubTree || node.key === subTreeRootKey
+          )
         : []
     }
   })

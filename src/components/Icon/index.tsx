@@ -45,7 +45,7 @@ const Icon: React.FC<IconProps> = ({
     return getAntdIcon(name as AntdIconName)
   }, [name])
 
-  const wrapperStyle: React.CSSProperties = useMemo(()=>{
+  const wrapperStyle: React.CSSProperties = useMemo(() => {
     switch (labelPos) {
       case 'top':
         return {
@@ -77,17 +77,19 @@ const Icon: React.FC<IconProps> = ({
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: gap,
+          gap: gap
         }
       default:
         return {}
     }
-  },[labelPos, gap])
+  }, [labelPos, gap])
   return (
     <>
       {label ? (
         <div style={wrapperStyle}>
-          <span style={{fontSize: labelSize, color: labelColor}}>{label}</span>
+          <span style={{ fontSize: labelSize, color: labelColor }}>
+            {label}
+          </span>
           {componentNode === 'img' ? (
             <img
               src={name}
@@ -127,7 +129,7 @@ const Icon: React.FC<IconProps> = ({
               rotate={rotate}
               style={{
                 fontSize: size,
-                color: color,
+                color: color
               }}
               height={height}
               width={width}

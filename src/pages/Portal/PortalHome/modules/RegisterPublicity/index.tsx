@@ -9,7 +9,8 @@ import SectionHeader from '../../components/SectionHeader'
 import MoreLink from '../../components/MoreLink'
 import styles from './index.module.scss'
 
-const formatDate = (value: string) => (value ? dayjs(value).format('YYYY-MM-DD') : '-')
+const formatDate = (value: string) =>
+  value ? dayjs(value).format('YYYY-MM-DD') : '-'
 
 const RegisterPublicity = () => {
   const navigate = useNavigate()
@@ -52,23 +53,35 @@ const RegisterPublicity = () => {
             <Spin />
           </div>
         ) : loopList.length ? (
-          <div className={styles.marqueeTrack} style={{ animationDuration: `${loopList.length * 9}s` }}>
+          <div
+            className={styles.marqueeTrack}
+            style={{ animationDuration: `${loopList.length * 9}s` }}
+          >
             {loopList.map((item, index) => (
               <div
                 className={styles.cardWrapper}
                 key={`${item.publicityInfoId}-${index}`}
-                onClick={() => navigate(`/portal/regPublicDetail?publiclyInfoId=${item.publicityInfoId}`)}
+                onClick={() =>
+                  navigate(
+                    `/portal/regPublicDetail?publiclyInfoId=${item.publicityInfoId}`
+                  )
+                }
               >
                 <div className={styles.card}>
                   <div className={styles.cardTitle}>
                     <img className={styles.cardIcon} src={rpaIcon} alt='' />
                     <Tooltip title={item.dataRegistName}>
-                      <span className={styles.cardName}>{item.dataRegistName}</span>
+                      <span className={styles.cardName}>
+                        {item.dataRegistName}
+                      </span>
                     </Tooltip>
                   </div>
                   <div className={styles.field}>
                     <span className={styles.label}>登记类型：</span>
-                    <span>{DATA_REGIST_TYPE_MAP[item.dataRegistType] || item.dataRegistType}</span>
+                    <span>
+                      {DATA_REGIST_TYPE_MAP[item.dataRegistType] ||
+                        item.dataRegistType}
+                    </span>
                   </div>
                   <div className={styles.field}>
                     <span className={styles.label}>登记主体：</span>

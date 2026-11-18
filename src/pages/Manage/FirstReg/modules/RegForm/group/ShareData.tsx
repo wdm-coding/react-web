@@ -1,4 +1,10 @@
-import { EditableProTable, ProColumns, ProForm, ProFormDependency, ProFormRadio } from '@ant-design/pro-components'
+import {
+  EditableProTable,
+  ProColumns,
+  ProForm,
+  ProFormDependency,
+  ProFormRadio
+} from '@ant-design/pro-components'
 import { Button, Form } from 'antd'
 import { useState } from 'react'
 import { tooltips, rules, Enum } from '../config'
@@ -9,7 +15,10 @@ interface ShareDataProps {
   uploadOnlyId?: string
   setUploadCount?: any
 }
-const ShareData: React.FC<ShareDataProps> = ({ uploadOnlyId, setUploadCount }) => {
+const ShareData: React.FC<ShareDataProps> = ({
+  uploadOnlyId,
+  setUploadCount
+}) => {
   const formIns = Form.useFormInstance()
   const [shareEditableKeys, setShareEditableKeys] = useState<any[]>([])
   // 共有数据信息列表
@@ -45,7 +54,13 @@ const ShareData: React.FC<ShareDataProps> = ({ uploadOnlyId, setUploadCount }) =
       title: '共有主体授权书',
       dataIndex: 'sharedInstitutionAuthorization',
       tooltip: tooltips.sharedInstitutionAuthorization,
-      formItemRender: () => <TableUpload uploadOnlyId={uploadOnlyId} setUploadCount={setUploadCount} fieldName='sharedInstitutionAuthorization' />
+      formItemRender: () => (
+        <TableUpload
+          uploadOnlyId={uploadOnlyId}
+          setUploadCount={setUploadCount}
+          fieldName='sharedInstitutionAuthorization'
+        />
+      )
     },
     {
       title: '操作',
@@ -67,7 +82,9 @@ const ShareData: React.FC<ShareDataProps> = ({ uploadOnlyId, setUploadCount }) =
               onClick={() => {
                 const currentData = formIns?.getFieldValue('sharedDataList')
                 if (currentData?.length) {
-                  const newData = currentData.filter((item: shareDataItem) => item.id !== row.id)
+                  const newData = currentData.filter(
+                    (item: shareDataItem) => item.id !== row.id
+                  )
                   formIns?.setFieldValue('sharedDataList', newData)
                 }
               }}
@@ -82,11 +99,22 @@ const ShareData: React.FC<ShareDataProps> = ({ uploadOnlyId, setUploadCount }) =
   ]
   return (
     <>
-      <ProFormRadio.Group name='sharedData' label='是否共有数据' tooltip={tooltips.sharedData} initialValue='1' options={Enum.whetherEnum} rules={rules.sharedData.sharedData} />
+      <ProFormRadio.Group
+        name='sharedData'
+        label='是否共有数据'
+        tooltip={tooltips.sharedData}
+        initialValue='1'
+        options={Enum.whetherEnum}
+        rules={rules.sharedData.sharedData}
+      />
       <ProFormDependency name={['sharedData']}>
         {({ sharedData }) =>
           sharedData === '1' ? (
-            <ProForm.Item name='sharedDataList' label='共有数据信息' rules={rules.sharedData.sharedDataList}>
+            <ProForm.Item
+              name='sharedDataList'
+              label='共有数据信息'
+              rules={rules.sharedData.sharedDataList}
+            >
               <EditableProTable<shareDataItem>
                 name='sharedDataList'
                 rowKey='id'

@@ -53,7 +53,10 @@ const RegForm = () => {
         submitter={false}
       >
         <ProForm.Group title={groupTitle('数据基本信息')}>
-          <BaseData uploadOnlyId={uploadOnlyId} setUploadCount={setUploadCount} />
+          <BaseData
+            uploadOnlyId={uploadOnlyId}
+            setUploadCount={setUploadCount}
+          />
         </ProForm.Group>
         <ProForm.Group title={groupTitle('委托代理信息')}>
           <ProxyData />
@@ -68,7 +71,10 @@ const RegForm = () => {
           <OpenData />
         </ProForm.Group>
         <ProForm.Group title={groupTitle('共有数据信息')}>
-          <ShareData uploadOnlyId={uploadOnlyId} setUploadCount={setUploadCount} />
+          <ShareData
+            uploadOnlyId={uploadOnlyId}
+            setUploadCount={setUploadCount}
+          />
         </ProForm.Group>
         <ProForm.Group title={groupTitle('数据目录信息')}>
           <DirecData />

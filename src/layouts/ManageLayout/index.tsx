@@ -15,7 +15,10 @@ const ManageLayout = () => {
       <div className={styles.manageWrapper}>
         <Layout style={{ height: '100%' }}>
           <Sider trigger={null} collapsible collapsed={false} theme='light'>
-            <div className={styles.firstRegBtn} onClick={() => navigate('/manage/firstReg')}>
+            <div
+              className={styles.firstRegBtn}
+              onClick={() => navigate('/manage/firstReg')}
+            >
               <FormOutlined />
               <span style={{ padding: '0 15px 0 5px' }}>首次登记</span>
               <ArrowRightOutlined />

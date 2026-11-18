@@ -34,7 +34,7 @@ export const navMenus = [
   {
     label: '信息披露',
     key: '/portal/inforDisclosure'
-  },
+  }
 ]
 
 export const rightActions = [

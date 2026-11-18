@@ -5,7 +5,7 @@ import bannerBg from '@/assets/images/portal/guide-bg.png'
 const RegInstitution = () => {
   return (
     <div className={styles.wrapper}>
-     <SearchHeader bg={bannerBg}/>s
+      <SearchHeader bg={bannerBg} />s
     </div>
   )
 }
