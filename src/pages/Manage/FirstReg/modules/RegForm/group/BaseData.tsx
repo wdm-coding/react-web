@@ -11,12 +11,11 @@ import {
   ProFormTreeSelect,
   ProFormUploadButton
 } from '@ant-design/pro-components'
-import { rules, Enum } from '../config'
+import { rules, Enum, uploadTransform, tooltips } from '../config'
 import { useEffect, useState } from 'react'
 import CommonApi from '@/api/common'
 import { Button, Flex, Form } from 'antd'
 import useIndusTree from '../utils/useIndusTree'
-import { uploadTransform, tooltips } from '../config'
 import useCustomUpload from '@/hooks/useCustomUpload'
 import { authOperatItem } from '../types'
 interface BaseDataProps {

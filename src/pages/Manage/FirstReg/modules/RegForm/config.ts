@@ -39,7 +39,45 @@ export const rules = {
     productUsage: [{ required: true, message: '请选择产品用途' }]
   },
   proxyData: {
-    name: [{ required: true, message: '请输入项目名称' }]
+    isProxyRegist: [{ required: true, message: '请选择是否委托代理登记' }],
+    proxyEntityName: [{ required: true, message: '请输入委托登记主体名称' }],
+    proxyEntityCode: [{ required: true, message: '请输入委托登记主体代码' }],
+    proxyTimeRange: [{ required: true, message: '请选择委托代理时间' }],
+    proxyAgreement: [{ required: true, message: '请上传委托代理协议书' }]
+  },
+  sceneData: {
+    ableScene: [{ required: true, message: '请输入数据场景' }],
+    disableScene: [{ required: true, message: '请输入禁用场景' }]
+  },
+  sharedData: {
+    sharedData: [{ required: true, message: '请选择是否共有数据' }],
+    sharedDataList: [{ required: true, message: '请填写共有数据信息' }],
+    sharedInstitutionName: [{ required: true, message: '请输入共有主体名称' }],
+    sharedInstitutionCode: [
+      { required: true, message: '请输入统一社会信用代码' }
+    ],
+    sharedInstitutionType: [{ required: true, message: '请选择共有主体性质' }],
+    sharedInstitutionAddress: [
+      { required: true, message: '请输入共有组织机构注册地址' }
+    ]
+  },
+  openData: {
+    sharingType: [{ required: true, message: '请选择共享类型' }],
+    sharingConditions: [{ required: false, message: '请输入共享条件' }],
+    sharingMethod: [{ required: true, message: '请选择共享方式' }],
+    sharingOtherMethod: [{ required: true, message: '请输入其他共享方式' }],
+    socialOpenness: [{ required: true, message: '请选择是否向社会开放' }],
+    opennessConditions: [{ required: true, message: '请输入开放条件' }]
+  },
+  direcData: {
+    basedDataDirectory: [{ required: true, message: '请选择基于数据目录' }],
+    demandFile: [{ required: true, message: '请上传上传数据字段项' }],
+    sampleData: [{ required: true, message: '请上传样例数据' }]
+  },
+  dataSource: {
+    dataSourceCommitment: [
+      { required: true, message: '请上传数据合规性来源及承诺文件' }
+    ]
   }
 }
 
@@ -90,11 +128,43 @@ export const Enum = {
     { label: '公共数据', value: '1' },
     { label: '企业数据', value: '2' },
     { label: '个人数据', value: '3' }
+  ],
+  // 共有主体性质枚举
+  sharedInstitutionTypeEnum: [
+    { label: '政府机构', value: '1' },
+    { label: '国有企业', value: '2' },
+    { label: '集体所有制企业', value: '3' },
+    { label: '联营企业', value: '4' },
+    { label: '私营企业', value: '5' },
+    { label: '股份制企业', value: '6' },
+    { label: '外资企业', value: '7' },
+    { label: '合资企业', value: '8' }
+  ],
+  // 共享类型
+  sharingTypeEnum: [
+    { label: '无条件共享', value: '1' },
+    { label: '有条件共享', value: '2' },
+    { label: '不予共享', value: '3' }
+  ],
+  // 共享方式
+  sharingMethodEnum: [
+    { label: '共享平台获取', value: '1' },
+    { label: '邮件', value: '2' },
+    { label: '拷盘', value: '3' },
+    { label: '介质交换', value: '4' },
+    { label: '其他', value: '5' }
+  ],
+  // 是否基于已有成果填报
+  basedDataDirectoryEnum: [
+    { label: '基于2017年政务信息资源目录', value: '1' },
+    { label: '基于2022年政务数据目录', value: '2' },
+    { label: '不基于已有成果填报', value: '3' }
   ]
 }
 
 // 提示信息
 export const tooltips = {
+  // 数据基本信息
   coverageArea:
     '提示：指“数据资源”收集数据所涵盖的地理区域范围或“公共数据产品和服务”运营所涵盖的地理区域范围。',
   industry:
@@ -126,7 +196,32 @@ export const tooltips = {
     '提示：指被授权运营“数据资源”的唯一标识编码。例如：DA.CN.01.00.11001.2501.33441AZ851',
   authOperatTimeRange2:
     '提示：指“数据资源”被授权给各级党政机关或企事业单位等进行运营、使用的具体时间范围。',
-  productUsage: '提示：根据实际业务情况选择公共数据产品和服务的用途。'
+  productUsage: '提示：根据实际业务情况选择公共数据产品和服务的用途。',
+  // 委托代理信息
+  isProxyRegist: '提示：指是否委托代理机构代为办理本机构的数据登记申请。',
+  proxyEntityName: '提示：指受委托代为办理本机构数据登记申请的主体名称。',
+  proxyEntityCode:
+    '提示：指受委托代为办理本机构数据登记申请主体的统一社会信用代码。',
+  proxyTimeRange: '提示：指委托代理机构代为办理登记的具体时间范围。',
+  proxyAgreement: '提示：指本机构与受托主体签订的委托代理协议书。',
+  // 数据场景
+  ableScene:
+    '提示：指描述当前“数据资源”或“数据产品和服务”可使用的场景。当为“数据资源”时显示数据场景；当为“数据产品和服务”时显示应用场景。',
+  disableScene:
+    '提示：指描述当前“数据资源”或“数据产品和服务”可使用的场景。当为“数据资源”时显示数据场景；当为“数据产品和服务”时显示应用场景。',
+  // 共有数据信息
+  sharedData: '提示：指是否共有数据资源。',
+  sharedInstitutionAuthorization: '提示：指共有数据资源的授权运营情况。',
+  // 数据共享开放信息
+  sharingConditions:
+    '提示：无条件共享类和有条件共享类的政务信息资源，应标明使用要求，包括作为行政依据、工作参考，用于数据校核、业务协同等；有条件共享类的政务信息资源，还应注明共享条件和共享范围；对于不予共享类的政务信息资源，应注明相关的法律、行政法规或党中央、国务院政策依据。',
+  sharingMethod:
+    '提示：无条件共享类和有条件共享类的政务信息资源，应标明使用要求，包括作为行政依据、工作参考，用于数据校核、业务协同等；有条件共享类的政务信息资源，还应注明共享条件和共享范围；对于不予共享类的政务信息资源，应注明相关的法律、行政法规或党中央、国务院政策依据。',
+  sharingOtherMethod: '请详细描述除上述选项外的共享方式',
+  opennessConditions: '提示：描述对数据开放的约束条件',
+  // 数据合规性来源及承诺
+  dataSourceCommitment:
+    '提示：指为确保数据在各个环节中符合相关法律法规、行业标准及企业内部政策规定，而需要提供的证明材料或政策性文件。包括但不限于数据的合法来源证明及承诺、数据处理过程的合规性记录、数据使用授权的合法确认单等。'
 }
 
 // 上传文件转换为字符串
