@@ -20,12 +20,7 @@ const useCustomUpload = ({
   extraParams = {},
   setUploadCount
 }: Props) => {
-  const customRequest: UploadProps['customRequest'] = async ({
-    file,
-    onSuccess,
-    onError,
-    data
-  }) => {
+  const customRequest: UploadProps['customRequest'] = async ({ file, onSuccess, onError, data }) => {
     const formData = new FormData()
     formData.append(fieldName, file as File)
     // 如果 Upload 上配置了 data 额外参数
