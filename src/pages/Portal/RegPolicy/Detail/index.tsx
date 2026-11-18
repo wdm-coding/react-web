@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { Spin } from 'antd'
+import { Breadcrumb, Spin } from 'antd'
 import dayjs from 'dayjs'
-import { useLocation, useSearchParams } from 'react-router-dom'
+import { Link, useLocation, useSearchParams } from 'react-router-dom'
 import HomeApi, { type PolicyItem } from '@/api/front/home.api'
 import styles from './index.module.scss'
 
@@ -51,6 +51,16 @@ const RegPolicyDetail = () => {
 
   return (
     <div className={styles.wrapper}>
+      <Breadcrumb
+        className={styles.breadcrumb}
+        items={[
+          { title: <Link to='/portal/home'>首页</Link> },
+          { title: <Link to='/portal/regPolicy'>登记政策</Link> },
+          {
+            title: <span className={styles.breadcrumbCurrent}>政策详情</span>
+          }
+        ]}
+      />
       <div className={styles.container}>
         {loading ? (
           <div className={styles.placeholder}>

@@ -15,6 +15,7 @@ export const whitePaths = [
   '/portal',
   '/portal/home',
   '/portal/regPublic',
+  '/portal/regPublicDetail',
   '/portal/regCheck',
   '/portal/regQuery',
   '/portal/regPolicy',

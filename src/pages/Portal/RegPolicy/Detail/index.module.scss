@@ -1,8 +1,29 @@
 .wrapper {
-  min-height: 100%;
-  padding: 40px 20px 60px;
+  // 滚动容器内含 10vh 页脚，减去后内容较短时不会出现多余滚动条
+  min-height: calc(100vh - 10vh);
+  // 72px 顶栏高度 + 顶部间距，避免内容被固定顶栏遮挡
+  padding: 90px 20px 60px;
   box-sizing: border-box;
   background: #f5f7fa;
+}
+
+.breadcrumb {
+  max-width: 1200px;
+  margin: 0 auto 16px;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+
+  :global(a) {
+    color: rgba(0, 0, 0, 0.65);
+
+    &:hover {
+      color: #1471ff;
+    }
+  }
+
+  .breadcrumbCurrent {
+    color: #1471ff;
+  }
 }
 
 .container {
@@ -57,49 +78,6 @@
 
     :global(img) {
       max-width: 100%;
-    }
-  }
-}
-
-@media (max-width: 1024px) {
-  .wrapper {
-    padding: 28px 16px 40px;
-  }
-
-  .container {
-    padding: 28px 24px;
-  }
-
-  .article {
-    .title {
-      font-size: 24px;
-    }
-
-    .meta {
-      margin: 16px 0 24px;
-      gap: 20px;
-    }
-  }
-}
-
-@media (max-width: 768px) {
-  .container {
-    padding: 20px 16px;
-  }
-
-  .article {
-    .title {
-      font-size: 20px;
-    }
-
-    .meta {
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .content {
-      font-size: 14px;
-      line-height: 1.8;
     }
   }
 }

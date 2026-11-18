@@ -1,12 +1,13 @@
 import { Button } from 'antd'
 import { ArrowRightOutlined, EditOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import c01 from '@/assets/images/registerHome/c_01.png'
 import c02 from '@/assets/images/registerHome/c_02.png'
 import c03 from '@/assets/images/registerHome/c_03.png'
 import c04 from '@/assets/images/registerHome/c_04.png'
 import useAuth from '@/hooks/useAuth'
+import useModal from '@/hooks/useModal'
 import HomeApi, { type SignInCount } from '@/api/front/home.api'
 import styles from './index.module.scss'
 
@@ -52,6 +53,7 @@ const STAT_LIST: StatItem[] = [
 const Banner = () => {
   const navigate = useNavigate()
   const { isLoggedIn } = useAuth()
+  const { doorTitle } = useModal('system')
   const [counts, setCounts] = useState<SignInCount | null>(null)
 
   useEffect(() => {
@@ -76,9 +78,12 @@ const Banner = () => {
     <section className={styles.bannerSection}>
       <div className={styles.bannerContent}>
         <h1 className={styles.bannerTitle}>
-          建立公共数据资源“一本账”，
-          <br />
-          促进公共数据资源高效开发利用
+          {doorTitle.split('/n').map((line, index) => (
+            <Fragment key={index}>
+              {index > 0 && <br />}
+              {line}
+            </Fragment>
+          ))}
         </h1>
         <Button
           type='primary'
