@@ -12,7 +12,6 @@ const AppRouter = () => {
   window.$modal = staticFunction.modal
   const routes = useMemo(() => {
     const appRoutes = transformRoutes(list)
-    console.log('appRoutes', appRoutes)
     return [
       {
         index: true,

@@ -42,7 +42,6 @@ function createRequestFn<T, R>(
     Object.keys(pathParams).forEach((k) => {
       reqUrl = reqUrl.replace(`:${k}`, pathParams[k])
     })
-
     // 剩余参数作为查询参数 / 请求体
     const queryParams: Record<string, any> = {}
     Object.keys(paramObj).forEach((k) => {
@@ -54,12 +53,21 @@ function createRequestFn<T, R>(
       method: currentMeta.method.toLowerCase(),
       ...currentMeta.options
     }
-    const hasParams = Object.keys(paramObj).length > 0
-    if (hasParams || JSON.stringify(queryParams) === '{}') {
-      if (config.method?.toUpperCase() === 'GET' || config.paramsAsQuery) {
-        config.params = queryParams
-      } else {
-        config.data = queryParams
+    // FormData 等原始请求体直接透传，不能按普通对象拆解键值
+    if (
+      params instanceof FormData ||
+      params instanceof URLSearchParams ||
+      params instanceof Blob
+    ) {
+      config.data = params
+    } else {
+      const hasParams = Object.keys(paramObj).length > 0
+      if (hasParams || JSON.stringify(queryParams) === '{}') {
+        if (config.method?.toUpperCase() === 'GET' || config.paramsAsQuery) {
+          config.params = queryParams
+        } else {
+          config.data = queryParams
+        }
       }
     }
 

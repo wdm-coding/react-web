@@ -1,17 +1,17 @@
-.firstRegWrapper{
+.firstRegWrapper {
   width: 100%;
-  :global(.ant-pro-form-group){
+  :global(.ant-pro-form-group) {
     padding: 15px 10px;
     border-radius: 4px;
     background-color: #fff;
     margin-bottom: 15px;
-    .groupTitle{
+    .groupTitle {
       position: relative;
       font-size: 16px;
       font-weight: 500;
       color: #000;
-      &::after{
-        content: "";
+      &::after {
+        content: '';
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
@@ -22,9 +22,9 @@
         border-radius: 2px;
       }
     }
-    :global(.ant-pro-form-group-container){
+    :global(.ant-pro-form-group-container) {
       width: 100%;
-      :global(.ant-space-item){
+      :global(.ant-space-item) {
         width: 100%;
         padding: 0 20px;
       }

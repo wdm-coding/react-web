@@ -1,5 +1,4 @@
 import styles from '../../index.module.scss'
-
 import { ProForm, ProFormInstance } from '@ant-design/pro-components'
 import BaseData from './group/BaseData'
 import ProxyData from './group/ProxyData'
@@ -9,9 +8,13 @@ import OpenData from './group/OpenData'
 import ShareData from './group/ShareData'
 import DirecData from './group/DirecData'
 import DataSource from './group/DataSource'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
+import FileApi from '@/api/file'
+import { useRequest } from '@/hooks/useRequest'
 const RegForm = () => {
-  const formRef = useRef<ProFormInstance>(null);
+  const formRef = useRef<ProFormInstance>(null)
+  const { data: uploadOnlyId } = useRequest(FileApi.getFileUploadOnlyId)
+  const [uploadCount, setUploadCount] = useState<number>(0)
   const groupTitle = (title: string) => {
     return (
       <div key={title} className={styles.groupTitle}>
@@ -20,7 +23,14 @@ const RegForm = () => {
     )
   }
   const onFinish = async (values: any) => {
+    if (uploadCount !== 0) {
+      window.$message.warning('请等待文件上传完成')
+      return
+    }
     console.log(values)
+  }
+  const onFinishFailed = (error: any) => {
+    console.log(formRef.current?.getFieldsValue())
   }
   return (
     <ProForm
@@ -29,16 +39,18 @@ const RegForm = () => {
       wrapperCol={{ span: 20 }}
       formRef={formRef}
       onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
       initialValues={{
-        dataRegisteType: '1',
-        authOperatType: '1',
-        authResourcDevelop: '1',
-        dataProductAndServicesType: '1',
+        dataRegistType: '1',
+        authOperationStatus: '1',
         dataType: '1',
+        dataProductAndServicesType: '1',
+        authResourceDevelop: '1',
+        productUsage: '1'
       }}
     >
       <ProForm.Group title={groupTitle('数据基本信息')}>
-        <BaseData />
+        <BaseData uploadOnlyId={uploadOnlyId} setUploadCount={setUploadCount} />
       </ProForm.Group>
       <ProForm.Group title={groupTitle('委托代理信息')}>
         <ProxyData />
