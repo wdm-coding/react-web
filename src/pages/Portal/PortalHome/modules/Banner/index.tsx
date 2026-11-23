@@ -8,7 +8,7 @@ import c03 from '@/assets/images/registerHome/c_03.png'
 import c04 from '@/assets/images/registerHome/c_04.png'
 import useAuth from '@/hooks/useAuth'
 import useModal from '@/hooks/useModal'
-import HomeApi, { type SignInCount } from '@/api/front/home.api'
+import HomeApi, { type SignInCount } from '@/api/portal/home.api'
 import styles from './index.module.scss'
 
 interface StatItem {

@@ -18,11 +18,14 @@ export const whitePaths = [
   '/portal/regPublicDetail',
   '/portal/regCheck',
   '/portal/regQuery',
+  '/portal/regQueryDetail',
   '/portal/regPolicy',
   '/portal/regPolicyDetail',
   '/portal/regInstitution',
   '/portal/demandNumbers',
+  '/portal/demandNumbersDetail',
   '/portal/inforDisclosure',
+  '/portal/inforDisclosureDetail',
   '/portal/regGuide'
 ]
 export const list: RouterItem[] = [
@@ -74,6 +77,13 @@ export const list: RouterItem[] = [
         title: '登记查询'
       },
       {
+        path: 'regQueryDetail',
+        name: 'RegQueryDetail',
+        componentPath: '/Portal/RegQuery/Detail/index.tsx',
+        icon: 'reg-query-detail',
+        title: '资源详情'
+      },
+      {
         path: 'regPolicy',
         name: 'RegPolicy',
         componentPath: '/Portal/RegPolicy/index.tsx',
@@ -102,11 +112,25 @@ export const list: RouterItem[] = [
         title: '用数需求'
       },
       {
+        path: 'demandNumbersDetail',
+        name: 'DemandNumbersDetail',
+        componentPath: '/Portal/DemandNumbers/Detail/index.tsx',
+        icon: 'demand-numbers-detail',
+        title: '需求详情'
+      },
+      {
         path: 'inforDisclosure',
         name: 'InforDisclosure',
         componentPath: '/Portal/InforDisclosure/index.tsx',
         icon: 'infor-disclosure',
         title: '信息披露'
+      },
+      {
+        path: 'inforDisclosureDetail',
+        name: 'InforDisclosureDetail',
+        componentPath: '/Portal/InforDisclosure/Detail/index.tsx',
+        icon: 'infor-disclosure-detail',
+        title: '信息披露详情'
       }
     ]
   },
@@ -151,8 +175,22 @@ export const list: RouterItem[] = [
             componentPath: '/Manage/RegApply/RegApplyData/index.tsx',
             icon: 'reg-apply-data',
             title: '登记数据查询'
+          },
+          {
+            path: 'regApplyDetail',
+            name: 'RegApplyDetail',
+            componentPath: '/Manage/RegApply/RegApplyDetail/index.tsx',
+            icon: 'reg-apply-detail',
+            title: '登记申请详情'
           }
         ]
+      },
+      {
+        path: 'demandNumbersManager',
+        name: 'DemandNumbersManager',
+        componentPath: '/Manage/DemandNumbersManager/index.tsx',
+        icon: 'demand-numbers',
+        title: '用数需求'
       }
     ]
   },

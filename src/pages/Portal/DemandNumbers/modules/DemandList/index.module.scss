@@ -1,0 +1,14 @@
+.listBox {
+  display: flex;
+  flex-direction: column;
+  width: min(1280px, calc(100% - 40px));
+  margin-top: 30px;
+}
+
+.listBox :global(.ant-pagination-item-active) {
+  background-color: #1471ff;
+
+  a {
+    color: #fff !important;
+  }
+}

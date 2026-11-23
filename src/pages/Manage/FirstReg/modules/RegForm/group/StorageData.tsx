@@ -7,18 +7,20 @@ import {
   ProFormTextArea,
   ProFormUploadButton
 } from '@ant-design/pro-components'
-import { Checkbox, Col, Flex, Row } from 'antd'
-import { rules, Enum, tooltips, uploadTransform } from '../config'
+import { Button, Checkbox, Col, Flex, Row } from 'antd'
+import { rules, Enum, tooltips, downloadFile } from '../config'
 import useCustomUpload from '@/hooks/useCustomUpload'
 import styles from '../index.module.scss'
 
 interface StorageDataProps {
   uploadOnlyId?: string
   setUploadCount?: any
+  templateFiles?: any
 }
 const StorageData: React.FC<StorageDataProps> = ({
   uploadOnlyId,
-  setUploadCount
+  setUploadCount,
+  templateFiles = null
 }) => {
   return (
     <>
@@ -27,7 +29,6 @@ const StorageData: React.FC<StorageDataProps> = ({
         label='数据产生方式'
         tooltip={tooltips.productionMethod}
         rules={rules.storageData.productionMethod}
-        initialValue={[]}
       >
         <Checkbox.Group
           style={{ width: '680px' }}
@@ -65,7 +66,7 @@ const StorageData: React.FC<StorageDataProps> = ({
           storageMethod
         }) => (
           <>
-            {productionMethod.includes('6') ? (
+            {productionMethod?.includes('6') ? (
               <ProFormText
                 name='productionOtherMethod'
                 label='其他数据产生方式说明'
@@ -83,7 +84,6 @@ const StorageData: React.FC<StorageDataProps> = ({
               label='数据结构'
               rules={rules.storageData.dataStructure}
               options={Enum.dataStructureEnum}
-              initialValue={'1'}
             />
             {dataStructure === '4' ? (
               <ProFormText
@@ -209,7 +209,6 @@ const StorageData: React.FC<StorageDataProps> = ({
         name='sensitiveInformation'
         label='是否包含敏感信息'
         tooltip={tooltips.sensitiveInformation}
-        initialValue='1'
         rules={rules.storageData.sensitiveInformation}
         options={Enum.whetherEnum}
       />
@@ -248,7 +247,6 @@ const StorageData: React.FC<StorageDataProps> = ({
                 name='desensitizationSituation'
                 label='是否脱敏'
                 tooltip={tooltips.desensitizationSituation}
-                initialValue='1'
                 rules={rules.storageData.desensitizationSituation}
                 options={Enum.whetherEnum}
               />
@@ -282,7 +280,6 @@ const StorageData: React.FC<StorageDataProps> = ({
         name='depositMethod'
         label='存证方式'
         tooltip={tooltips.depositMethod}
-        initialValue='1'
         rules={rules.storageData.depositMethod}
         options={Enum.depositMethodEnum}
       />
@@ -304,14 +301,23 @@ const StorageData: React.FC<StorageDataProps> = ({
         max={5}
         tooltip={tooltips.depositProofDocument}
         rules={rules.storageData.depositProofDocument}
-        transform={uploadTransform}
         extra={
-          <Flex vertical gap={4}>
+          <div style={{ paddingTop: 10 }}>
             <span>
               支持上传jpg、png、pdf、jpeg格式，每个文件大小不能超过20M，最多支持5个
             </span>
-            <a>公共数据资源登记存证指南.pdf</a>
-          </Flex>
+            {templateFiles?.depositProofDocument?.value && (
+              <Button
+                onClick={() =>
+                  downloadFile(templateFiles?.depositProofDocument?.value)
+                }
+                type='link'
+                style={{ marginLeft: 16 }}
+              >
+                {templateFiles?.depositProofDocument?.fileName || ''}
+              </Button>
+            )}
+          </div>
         }
         fieldProps={{
           ...useCustomUpload({

@@ -42,7 +42,7 @@ const OutletPage = ({
       style={{ maxHeight: maxHeight }}
       scrollableNodeProps={{ ref: scrollableNodeRef }}
     >
-      <div style={{ minHeight: maxHeight, ...contentStyle }}>
+      <div style={contentStyle}>
         <Outlet />
       </div>
       {children}

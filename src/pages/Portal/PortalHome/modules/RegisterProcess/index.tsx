@@ -4,7 +4,7 @@ import pr03 from '@/assets/images/registerHome/pr_03.png'
 import pr04 from '@/assets/images/registerHome/pr_04.png'
 import pr05 from '@/assets/images/registerHome/pr_05.png'
 import prNext from '@/assets/images/registerHome/pr_next.png'
-import SectionHeader from '../../components/SectionHeader'
+import SectionHeader from '../../../components/SectionHeader'
 import styles from './index.module.scss'
 
 interface FlowStep {

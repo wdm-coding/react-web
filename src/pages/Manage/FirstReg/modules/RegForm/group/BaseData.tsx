@@ -11,27 +11,29 @@ import {
   ProFormTreeSelect,
   ProFormUploadButton
 } from '@ant-design/pro-components'
-import { rules, Enum, uploadTransform, tooltips } from '../config'
+import { rules, Enum, tooltips, dateRangeFormat, downloadFile } from '../config'
 import { useEffect, useState } from 'react'
 import CommonApi from '@/api/common'
 import { Button, Flex, Form } from 'antd'
 import useIndusTree from '../utils/useIndusTree'
 import useCustomUpload from '@/hooks/useCustomUpload'
 import { authOperatItem } from '../types'
+import { uuid } from '@/utils/common'
 interface BaseDataProps {
   uploadOnlyId?: string
   setUploadCount?: any
+  templateFiles?: any
 }
 const BaseData: React.FC<BaseDataProps> = ({
   uploadOnlyId,
-  setUploadCount
+  setUploadCount,
+  templateFiles = null
 }) => {
   const formIns = Form.useFormInstance()
   const { industryTreeData, createTreeData, industryName } = useIndusTree()
   const [authOperatEditableKeys, setAuthOperatEditableKeys] = useState<any[]>(
     []
   )
-
   // 被授权登记数据列表
   const authOperatColumns: ProColumns<authOperatItem>[] = [
     {
@@ -50,12 +52,17 @@ const BaseData: React.FC<BaseDataProps> = ({
     },
     {
       title: '被授权运营时间',
-      tooltip: tooltips.authOperatTimeRange2,
-      dataIndex: 'authOperatTimeRange2',
+      tooltip: tooltips.authOperatTimeRange,
+      dataIndex: 'authOperatTimeRange',
       valueType: 'dateRange',
       formItemProps: {
-        rules: rules.baseData.authOperatTimeRange2
-      }
+        rules: rules.baseData.authOperatTimeRange,
+        normalize: dateRangeFormat
+      },
+      render: (_, row: authOperatItem) =>
+        row.authOperatTimeRange?.length
+          ? row.authOperatTimeRange.join('至')
+          : ''
     },
     {
       title: '操作',
@@ -266,6 +273,7 @@ const BaseData: React.FC<BaseDataProps> = ({
                 name='dataCoverageTimeRange'
                 label='数据覆盖时间'
                 rules={rules.baseData.dataCoverageTimeRange}
+                normalize={dateRangeFormat}
               />
               <ProFormRadio.Group
                 tooltip={tooltips.authOperationStatus}
@@ -305,6 +313,7 @@ const BaseData: React.FC<BaseDataProps> = ({
                     name='authOperatTimeRange'
                     label='授权运营时间'
                     rules={rules.baseData.authOperatTimeRange}
+                    normalize={dateRangeFormat}
                   />
                 </>
               ) : null}
@@ -343,7 +352,6 @@ const BaseData: React.FC<BaseDataProps> = ({
                   rules={rules.baseData.authOperatList}
                 >
                   <EditableProTable<authOperatItem>
-                    name='authOperatList'
                     rowKey='id'
                     columns={authOperatColumns}
                     scroll={{ x: 480 }}
@@ -353,7 +361,7 @@ const BaseData: React.FC<BaseDataProps> = ({
                       position: 'bottom',
                       newRecordType: 'dataSource',
                       record: () => ({
-                        id: new Date().getTime() + Math.random()
+                        id: uuid()
                       }),
                       creatorButtonText: '新增一行'
                     }}
@@ -372,11 +380,23 @@ const BaseData: React.FC<BaseDataProps> = ({
                 name='productAndServiceDetails'
                 max={1}
                 rules={rules.baseData.productAndServiceDetails}
-                transform={uploadTransform}
                 extra={
                   <div style={{ paddingTop: 10 }}>
                     支持上传jpg、png、pdf、jpeg格式，文件大小不能超过5M，支持上传1个文件
-                    <a style={{ marginLeft: 16 }}>样例数据.xlsx</a>
+                    {templateFiles?.productAndServiceDetails?.value && (
+                      <Button
+                        onClick={() =>
+                          downloadFile(
+                            templateFiles?.productAndServiceDetails?.value
+                          )
+                        }
+                        type='link'
+                        style={{ marginLeft: 16 }}
+                      >
+                        {templateFiles?.productAndServiceDetails?.fileName ||
+                          ''}
+                      </Button>
+                    )}
                   </div>
                 }
                 fieldProps={{
@@ -409,11 +429,20 @@ const BaseData: React.FC<BaseDataProps> = ({
         label='数据安全风险评估报告'
         name='infoSecurityAssessReport'
         rules={rules.baseData.infoSecurityAssessReport}
-        transform={uploadTransform}
         extra={
           <div style={{ paddingTop: 10 }}>
             支持上传jpg、png、pdf、jpeg格式，每个文件大小不能超过20M，最多支持5个
-            <a style={{ marginLeft: 16 }}>样例数据.xlsx</a>
+            {templateFiles?.infoSecurityAssessReport?.value && (
+              <Button
+                onClick={() =>
+                  downloadFile(templateFiles?.infoSecurityAssessReport?.value)
+                }
+                type='link'
+                style={{ marginLeft: 16 }}
+              >
+                {templateFiles?.infoSecurityAssessReport?.fileName || ''}
+              </Button>
+            )}
           </div>
         }
         fieldProps={{

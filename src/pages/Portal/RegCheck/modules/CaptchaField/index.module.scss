@@ -1,0 +1,12 @@
+.captcha {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  img {
+    flex-shrink: 0;
+    width: 100px;
+    height: 32px;
+    cursor: pointer;
+  }
+}

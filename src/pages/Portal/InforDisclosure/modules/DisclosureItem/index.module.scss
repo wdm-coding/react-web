@@ -1,0 +1,56 @@
+.listItem {
+  width: 100%;
+  padding: 12px 24px;
+  border: 6px solid #f1efef;
+  background-image: linear-gradient(#e4eefa, #fafcff, #fff);
+  box-sizing: border-box;
+
+  // 让描述列表撑满卡片，“查看详情”按钮才能贴右显示
+  :global(.ant-descriptions) {
+    width: 100%;
+  }
+
+  :global(.ant-descriptions-item-container) {
+    display: flex;
+    align-items: center;
+  }
+
+  :global(.ant-descriptions-item-content) {
+    flex: 1;
+    min-width: 0;
+  }
+
+  :global(.ant-descriptions-item-label) {
+    color: #666;
+  }
+
+  :global(.ant-descriptions-item-content) {
+    color: #333;
+  }
+}
+
+.orgName {
+  margin-bottom: 20px;
+  overflow: hidden;
+  color: rgba(0, 0, 0, 0.88);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.addressRow {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 0;
+}
+
+.detailButton {
+  flex-shrink: 0;
+  padding-inline: 0;
+  font-size: 16px;
+}

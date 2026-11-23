@@ -3,7 +3,7 @@ export type authOperatItem = {
   id: any
   dataRegistName2?: string
   dataRegistCode2?: string
-  authOperatTimeRange2?: string[]
+  authOperatTimeRange?: string[]
 }
 // 共有数据信息列表项
 export type shareDataItem = {

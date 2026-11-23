@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react'
 import { Spin, Tooltip } from 'antd'
 import dayjs from 'dayjs'
 import { useNavigate } from 'react-router-dom'
-import HomeApi, { type PublicityItem } from '@/api/front/home.api'
+import RegPublicApi, { type RegPublicItem } from '@/api/portal/regPublic'
 import { DATA_REGIST_TYPE_MAP } from '@/dict'
 import rpaIcon from '@/assets/images/registerHome/rpa_icon.png'
-import SectionHeader from '../../components/SectionHeader'
-import MoreLink from '../../components/MoreLink'
+import SectionHeader from '../../../components/SectionHeader'
+import MoreLink from '../../../components/MoreLink'
 import styles from './index.module.scss'
 
 const formatDate = (value: string) =>
@@ -14,14 +14,14 @@ const formatDate = (value: string) =>
 
 const RegisterPublicity = () => {
   const navigate = useNavigate()
-  const [list, setList] = useState<PublicityItem[]>([])
+  const [list, setList] = useState<RegPublicItem[]>([])
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const fetchList = async () => {
       setLoading(true)
       try {
-        const { code, data } = await HomeApi.getPublicityList({
+        const { code, data } = await RegPublicApi.getPublicityList({
           pageNum: 1,
           pageSize: 12,
           sortDirection: 'ASC',

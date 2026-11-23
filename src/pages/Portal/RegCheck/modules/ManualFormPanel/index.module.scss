@@ -1,0 +1,16 @@
+.formWrap {
+  margin-top: 10px;
+  background: #fff;
+
+  :global(.ant-btn) {
+    border-radius: 1px;
+  }
+
+  :global(.ant-input) {
+    border-radius: 1px;
+  }
+}
+
+.actions {
+  padding-bottom: 24px;
+}

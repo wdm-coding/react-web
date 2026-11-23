@@ -1,0 +1,7 @@
+.list {
+  width: 100%;
+
+  :global(.ant-list-pagination) {
+    margin-top: 16px;
+  }
+}

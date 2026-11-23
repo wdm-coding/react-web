@@ -65,7 +65,10 @@ const Header = ({ isFixed = false, isScroll = false }: HeaderProps) => {
         }
         break
       case 'logout':
-        useLogout()
+        useLogout().then((redirectUrl) => {
+          window.$message.success('退出登录成功')
+          navigate(redirectUrl)
+        })
         break
       case 'personalRegister':
         if (registerData?.naturalRegisterUrl) {

@@ -1,5 +1,10 @@
 import FileApi from '@/api/file'
-import { UploadListType, UploadProps } from 'antd/es/upload/interface'
+import {
+  UploadFile,
+  UploadListType,
+  UploadProps
+} from 'antd/es/upload/interface'
+import { downloadFile } from '@/utils/files'
 interface Props {
   fieldName?: string
   maxCount?: number
@@ -52,7 +57,6 @@ const useCustomUpload = ({
       return false
     }
     const fileType = file.name.split('.').pop()
-    console.log(fileType)
     if (!fileType) {
       window.$message.error(`文件类型不存在`)
       return false
@@ -63,6 +67,9 @@ const useCustomUpload = ({
     }
     return true
   }
+  const onPreview = (file: UploadFile<any>) => {
+    downloadFile(file.response)
+  }
   return {
     name: fieldName,
     maxCount,
@@ -71,7 +78,8 @@ const useCustomUpload = ({
     listType,
     data: extraParams,
     beforeUpload,
-    customRequest
+    customRequest,
+    onPreview
   }
 }
 

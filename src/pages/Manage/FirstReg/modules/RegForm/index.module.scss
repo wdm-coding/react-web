@@ -48,6 +48,11 @@
     left: 200px;
     right: 0;
     box-shadow: 0 -1px 0px 0px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  :global(.ant-upload-list-item-name) {
+    cursor: pointer;
+    color: #1890ff;
   }
 }
 .productionMethodCheckboxGroup {

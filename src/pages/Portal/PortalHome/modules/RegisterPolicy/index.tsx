@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 import { Spin } from 'antd'
 import dayjs from 'dayjs'
 import { useNavigate } from 'react-router-dom'
-import HomeApi, { type PolicyItem } from '@/api/front/home.api'
-import SectionHeader from '../../components/SectionHeader'
-import MoreLink from '../../components/MoreLink'
+import RegPolicyApi, { type PolicyItem } from '@/api/portal/regPolicy'
+import SectionHeader from '../../../components/SectionHeader'
+import MoreLink from '../../../components/MoreLink'
 import styles from './index.module.scss'
 
 const formatDate = (value: string) =>
@@ -19,7 +19,7 @@ const RegisterPolicy = () => {
     const fetchList = async () => {
       setLoading(true)
       try {
-        const { code, data } = await HomeApi.getPolicyList({
+        const { code, data } = await RegPolicyApi.getPolicyList({
           pageNum: 1,
           pageSize: 9,
           policyStatus: 0
@@ -79,11 +79,7 @@ const RegisterPolicy = () => {
               {displayList.map((item, index) =>
                 item ? (
                   <div
-                    className={`${styles.policyItem} ${
-                      index === visibleList.length - 1
-                        ? styles.policyItemLast
-                        : ''
-                    }`}
+                    className={`${styles.policyItem} ${index === visibleList.length - 1 ? styles.policyItemLast : ''}`}
                     key={item.policyId}
                     onClick={() => goDetail(item)}
                   >

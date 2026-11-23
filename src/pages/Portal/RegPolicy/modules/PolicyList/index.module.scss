@@ -1,0 +1,75 @@
+.list {
+  :global(.ant-list-item) {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 24px 0 18px;
+    font-size: 16px;
+  }
+
+  :global(.ant-list-empty-text) {
+    padding: 40px 0;
+  }
+}
+
+.title {
+  width: 100%;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    color: #1471ff;
+  }
+}
+
+.direction {
+  display: -webkit-box;
+  width: 100%;
+  overflow: hidden;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 1.5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.date {
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.tag {
+  margin: 0;
+}
+
+.detailButton {
+  color: #1471ff;
+}
+
+.pagination {
+  margin-top: 16px;
+  margin-bottom: 24px;
+
+  :global(.ant-pagination-item-active) {
+    background: #1471ff;
+    border-color: #1471ff;
+
+    a {
+      color: #fff;
+    }
+  }
+}

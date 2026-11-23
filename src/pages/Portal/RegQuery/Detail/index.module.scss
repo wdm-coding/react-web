@@ -1,0 +1,50 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  // 滚动容器内还包含 10vh 高的页脚，减去后页面正好占满一屏
+  min-height: calc(100vh - 10vh);
+  padding: 70px 20px 102px;
+  box-sizing: border-box;
+  background-color: #f4f5f9;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 1280px;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 400px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 4px;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .back {
+    width: 122px;
+    height: 32px;
+    padding: 0 16px;
+    background: #1471ff;
+    border-radius: 2px;
+    font-size: 14px;
+  }
+}
+
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 16px;
+}

@@ -1,0 +1,18 @@
+.breadcrumb {
+  height: 54px;
+  padding: 20px 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+
+  :global(a) {
+    color: rgba(0, 0, 0, 0.45);
+
+    &:hover {
+      color: #1471ff;
+    }
+  }
+
+  .current {
+    color: #1471ff;
+  }
+}

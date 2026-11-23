@@ -12,5 +12,9 @@ class FileApi {
   // 获取系统配置模版文件
   @Post('systemConfig/page')
   static getTemplateFiles: RequestFn<any, any>
+
+  // 下载文件
+  @Post('/file/download')
+  static downloadFile: RequestFn<any, any>
 }
 export default FileApi

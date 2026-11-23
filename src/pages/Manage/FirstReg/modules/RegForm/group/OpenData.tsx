@@ -13,7 +13,6 @@ const OpenData = () => {
       <ProFormRadio.Group
         name='sharingType'
         label='共享类型'
-        initialValue='1'
         rules={rules.openData.sharingType}
         options={Enum.sharingTypeEnum}
       />
@@ -44,7 +43,6 @@ const OpenData = () => {
               fieldProps={{
                 mode: 'multiple'
               }}
-              initialValue={['1']}
             />
             {sharingMethod?.includes('5') ? (
               <ProFormText
@@ -57,7 +55,6 @@ const OpenData = () => {
             <ProFormRadio.Group
               name='socialOpenness'
               label='是否向社会开放'
-              initialValue='1'
               rules={rules.openData.socialOpenness}
               options={Enum.whetherEnum}
             />

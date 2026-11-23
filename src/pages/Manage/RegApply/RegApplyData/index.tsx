@@ -1,7 +1,7 @@
 const RegApplyData = () => {
   return (
     <div>
-      <h1>RegApplyData</h1>
+      <h1>RegApplyData1</h1>
     </div>
   )
 }

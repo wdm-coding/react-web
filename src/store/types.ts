@@ -1,10 +1,14 @@
 // 全局状态类型
+import type { ReactNode } from 'react'
+
 export interface GlobalSlice {
   siteName: string // 站点名称
   env: 'test' | 'prod' | 'dev' // 环境 测试/生产/开发
+  loginType: 'local' | 'third' // 登录类型 本地/第三方登录
   authModal: {
     isOpen: boolean // 是否打开登录弹窗
-    open: () => void // 打开登录弹窗
+    content: ReactNode // 自定义提示内容，为空时使用默认文案
+    open: (content?: ReactNode) => void // 打开登录弹窗，可传入自定义提示内容
     close: () => void // 关闭登录弹窗
   }
   storage: Record<string, any> // 本地存储
@@ -25,7 +29,7 @@ export interface UserSlice {
   captchaId: string // 图片验证码id
   fetchSecret: () => Promise<any> // 获取加密公钥
   randomId: string // 加密随机数id
-  useLogout: () => Promise<boolean> // 退出登录
+  useLogout: () => Promise<string> // 退出登录
   checkLogin: () => Promise<void> // 检查是否已登录
   clearCache: () => void // 清除登录缓存
 }

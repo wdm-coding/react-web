@@ -1,11 +1,23 @@
 .wrapper {
+  background: #fff;
+
   .pageTitle {
     position: absolute;
     top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 44px;
+    font-size: 58px;
     color: #fff;
     font-weight: 600;
   }
+}
+
+.content {
+  padding: 40px 0;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding: 120px 0;
 }

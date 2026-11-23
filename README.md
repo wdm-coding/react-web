@@ -212,3 +212,18 @@ const { run, data, loading } = useRequest(fetcher, options)
 import { useAuth } from '@/hooks/useAuth'
 const { isLoggedIn } = useAuth()
 ```
+
+## 登录认证-账号密码登录
+
+朝阳公安局
+账号：19R56Q489744351478
+密码：123456
+甘肃品牌主体
+账号：916200000000000000
+密码：Admin123#$
+甘肃品牌个人
+账号：620423199012142813
+密码：find.888
+甘肃城市大数据
+账号：91620000MA74W8AH20
+密码：Admin123#$

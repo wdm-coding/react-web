@@ -17,7 +17,9 @@ const ClientLayout = () => {
         maxHeight={isFixed ? '100vh' : 'calc(100vh - 75px)'}
         // 页脚固定占 10vh，详情页内容较短时扣除页脚高度，避免出现多余的竖向滚动条
         contentStyle={
-          isDetailPage ? { minHeight: 'calc(100vh - 10vh)' } : undefined
+          isDetailPage
+            ? { minHeight: 'calc(100vh - 10vh)' }
+            : { minHeight: isFixed ? '100vh' : 'calc(100vh - 75px)' }
         }
         onScroll={(e) => {
           setIsScroll((e.target as HTMLElement).scrollTop > 10 ? true : false)

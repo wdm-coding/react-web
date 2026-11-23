@@ -24,7 +24,7 @@ const AuthModal = () => {
       okText='去登录'
       cancelText='取消'
     >
-      <p>当前未登录，登录后才能继续操作。</p>
+      {authModal.content ?? <p>当前未登录，登录后才能继续操作。</p>}
     </Modal>
   )
 }

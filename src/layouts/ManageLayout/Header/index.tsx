@@ -13,8 +13,9 @@ const ManageHeader = () => {
   const onDropdownClick = async ({ key }: { key: string }) => {
     switch (key) {
       case 'logout':
-        useLogout().then(() => {
-          navigate('/portal')
+        useLogout().then((redirectUrl) => {
+          window.$message.success('退出登录成功')
+          navigate(redirectUrl)
         })
         break
       default:

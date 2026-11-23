@@ -45,10 +45,12 @@ const sliceSelectors: {
     setItem,
     getItem,
     removeItem,
-    clearStorage
+    clearStorage,
+    loginType
   }) => ({
     siteName,
     env,
+    loginType,
     storage,
     authModal,
     setItem,

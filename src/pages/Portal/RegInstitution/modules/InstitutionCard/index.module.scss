@@ -1,0 +1,27 @@
+.descriptions {
+  width: 100%;
+
+  :global(.ant-descriptions-header) {
+    margin-bottom: 12px;
+  }
+
+  :global(.ant-descriptions-title) {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  :global(.ant-descriptions-item-label) {
+    color: #666;
+  }
+
+  :global(.ant-descriptions-item-content) {
+    color: #333;
+  }
+
+  // 固定三等分列宽，保证“联系电话”占 2/3、“联系地址”占 1/3，与门户原型一致
+  :global(.ant-descriptions-view table) {
+    width: 100%;
+    table-layout: fixed;
+  }
+}

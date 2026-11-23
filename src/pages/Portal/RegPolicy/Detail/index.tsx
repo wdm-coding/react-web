@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Breadcrumb, Spin } from 'antd'
 import dayjs from 'dayjs'
 import { Link, useLocation, useSearchParams } from 'react-router-dom'
-import HomeApi, { type PolicyItem } from '@/api/front/home.api'
+import RegPolicyApi, { type PolicyItem } from '@/api/portal/regPolicy'
 import styles from './index.module.scss'
 
 interface LocationState {
@@ -30,7 +30,7 @@ const RegPolicyDetail = () => {
     }
     const fetchDetail = async () => {
       try {
-        const { code, data } = await HomeApi.getPolicyList({
+        const { code, data } = await RegPolicyApi.getPolicyList({
           pageNum: 1,
           pageSize: 50,
           policyStatus: 0

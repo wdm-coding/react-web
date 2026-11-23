@@ -5,71 +5,83 @@ import {
   ProFormText,
   ProFormUploadButton
 } from '@ant-design/pro-components'
-import { Enum, uploadTransform, tooltips, rules } from '../config'
+import { Enum, tooltips, rules, dateRangeFormat, downloadFile } from '../config'
 import useCustomUpload from '@/hooks/useCustomUpload'
+import { Button } from 'antd'
 
 interface ProxyDataProps {
   uploadOnlyId?: string
   setUploadCount?: any
+  templateFiles?: any
 }
 const ProxyData: React.FC<ProxyDataProps> = ({
   uploadOnlyId,
-  setUploadCount
+  setUploadCount,
+  templateFiles = null
 }) => {
   return (
     <>
       <ProFormRadio.Group
-        name='isProxyRegist'
+        name='entrustedAgent'
         label='是否委托代理登记'
-        tooltip={tooltips.isProxyRegist}
-        initialValue='1'
-        rules={rules.proxyData.isProxyRegist}
+        tooltip={tooltips.entrustedAgent}
+        rules={rules.proxyData.entrustedAgent}
         options={Enum.whetherEnum}
       />
-      <ProFormDependency name={['isProxyRegist']}>
-        {({ isProxyRegist }) =>
-          isProxyRegist === '1' ? (
+      <ProFormDependency name={['entrustedAgent']}>
+        {({ entrustedAgent }) =>
+          entrustedAgent === '1' ? (
             <>
               <ProFormText
-                name='proxyEntityName'
+                name='entrustedAgentName'
                 label='委托登记主体名称'
-                tooltip={tooltips.proxyEntityName}
-                rules={rules.proxyData.proxyEntityName}
+                tooltip={tooltips.entrustedAgentName}
+                rules={rules.proxyData.entrustedAgentName}
                 fieldProps={{
                   maxLength: 150,
-                  showCount: true,
-                  placeholder: '请输入委托登记主体名称'
+                  showCount: true
                 }}
               />
               <ProFormText
-                name='proxyEntityCode'
+                name='entrustedAgentCode'
                 label='委托登记主体代码'
-                tooltip={tooltips.proxyEntityCode}
-                rules={rules.proxyData.proxyEntityCode}
+                tooltip={tooltips.entrustedAgentCode}
+                rules={rules.proxyData.entrustedAgentCode}
                 fieldProps={{
                   maxLength: 64,
-                  showCount: true,
-                  placeholder: '请输入'
+                  showCount: true
                 }}
               />
               <ProFormDateRangePicker
-                name='proxyTimeRange'
+                name='entrustedAgentTime'
                 label='委托代理时间'
-                tooltip={tooltips.proxyTimeRange}
-                rules={rules.proxyData.proxyTimeRange}
+                tooltip={tooltips.entrustedAgentTime}
+                rules={rules.proxyData.entrustedAgentTime}
+                normalize={dateRangeFormat}
               />
               <ProFormUploadButton
                 title='上传'
                 label='委托代理协议书'
-                name='proxyAgreement'
+                name='entrustedAgentAgree'
                 max={1}
-                tooltip={tooltips.proxyAgreement}
-                rules={rules.proxyData.proxyAgreement}
-                transform={uploadTransform}
+                tooltip={tooltips.entrustedAgentAgree}
+                rules={rules.proxyData.entrustedAgentAgree}
                 extra={
                   <div style={{ paddingTop: 10 }}>
                     支持上传jpg、png、pdf、jpeg格式的文件，每个文件大小不能超过20M，最多支持1个
-                    <a style={{ marginLeft: 16 }}>登记代理委托书.docx</a>
+                    {templateFiles?.entrustedAgentAgree?.value && (
+                      <Button
+                        onClick={() =>
+                          downloadFile(
+                            templateFiles?.entrustedAgentAgree?.value
+                          )
+                        }
+                        type='link'
+                        style={{ marginLeft: 16 }}
+                      >
+                        {templateFiles?.entrustedAgentAgree?.fileName || ''}
+                      </Button>
+                    )}
                   </div>
                 }
                 fieldProps={{
@@ -79,7 +91,7 @@ const ProxyData: React.FC<ProxyDataProps> = ({
                     setUploadCount,
                     extraParams: {
                       dataRegistCode: uploadOnlyId,
-                      field: 'proxyAgreement'
+                      field: 'entrustedAgentAgree'
                     }
                   })
                 }}

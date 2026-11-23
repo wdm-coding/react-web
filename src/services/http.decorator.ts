@@ -22,7 +22,7 @@ function createRequestFn<T, R>(
   propertyKey: string | symbol,
   meta: HttpMeta
 ): RequestFn<T, R> {
-  return async function (params?: T): Promise<R> {
+  return async function (params?: T, extraParams?: any): Promise<R> {
     // 每次调用时重新读取元数据，避免热更新/重复装饰时出现陈旧数据
     const currentMeta: HttpMeta =
       Reflect.getMetadata(HTTP_META_KEY, target, propertyKey) ?? meta
@@ -52,6 +52,9 @@ function createRequestFn<T, R>(
       url: reqUrl,
       method: currentMeta.method.toLowerCase(),
       ...currentMeta.options
+    }
+    if (extraParams) {
+      config.extraParams = extraParams
     }
     // FormData 等原始请求体直接透传，不能按普通对象拆解键值
     if (

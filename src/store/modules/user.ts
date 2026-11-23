@@ -3,6 +3,7 @@ import type { UserSlice } from '../types'
 import AuthApi from '@/api/auth'
 import UserApi from '@/api/user'
 import Encrypt from '@/utils/encrypt'
+import { getEnvConfig } from '@/utils/common'
 
 const createUserSlice: StateCreator<
   UserSlice,
@@ -86,7 +87,19 @@ const createUserSlice: StateCreator<
       }
       const { random, publicKey } = await get().fetchSecret()
       const password = Encrypt({ random, publicKey }, params.password)
-      await AuthApi.Login(authCode ? { authCode } : { ...params, password })
+      if (authCode) {
+        await AuthApi.Login(authCode)
+      } else {
+        await AuthApi.Login(
+          { ...params, password },
+          {
+            headers: {
+              randomid: `${get().randomId}`,
+              captchaId: get().captchaId
+            }
+          }
+        )
+      }
       await get().fetchCurrentUser()
       set((state) => {
         state.isLoggedIn = true
@@ -106,20 +119,27 @@ const createUserSlice: StateCreator<
   },
   // 用户退出登录
   useLogout: async () => {
-    const res = await AuthApi.Logout()
-    if (res.code === 20000) {
-      document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'
-      document.cookie =
-        'hasToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'
-      get().clearCache()
-      return new Promise((resolve) => {
-        resolve(true)
-      })
+    try {
+      const { code, data } = await AuthApi.Logout(
+        getEnvConfig().loginType === 'local' ? { redirectUri: '/' } : {}
+      )
+      if (code === 20000) {
+        get().clearCache()
+        return Promise.resolve(data?.redirectUrl || '/portal')
+      }
+    } catch (error) {
+      throw error
     }
   },
-  // 检查是否已登录
+  // 检查是否已登录 (账号密码登录需要传redirectUrl)
   checkLogin: async () => {
-    const { code, data } = await AuthApi.checkLogin()
+    const redirectUri = new URL(
+      window.location.pathname,
+      window.location.origin
+    ).href
+    const { code, data } = await AuthApi.checkLogin(
+      getEnvConfig().loginType === 'local' ? { redirectUri } : null
+    )
     if (code === 20000) {
       if (data?.login) {
         await get().fetchCurrentUser()
@@ -131,6 +151,8 @@ const createUserSlice: StateCreator<
   },
   // 清除登录缓存
   clearCache: () => {
+    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'
+    document.cookie = 'hasToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'
     set((state) => {
       state.isLoggedIn = false
       state.userInfo = null

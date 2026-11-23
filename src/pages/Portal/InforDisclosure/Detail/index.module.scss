@@ -1,0 +1,59 @@
+.wrapper {
+  // 滚动容器内含 10vh 页脚，减去后内容较短时不会出现多余滚动条
+  min-height: calc(100vh - 10vh);
+  // 72px 固定顶栏 + 间距
+  padding: 90px 0 60px;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+.container {
+  width: min(1280px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.breadcrumb {
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+
+  :global(a) {
+    color: rgba(0, 0, 0, 0.65);
+
+    &:hover {
+      color: #1471ff;
+    }
+  }
+}
+
+.breadcrumbCurrent {
+  color: #1471ff;
+}
+
+.mainPage {
+  margin-top: 30px;
+  padding: 20px;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.bar {
+  flex: 1;
+  height: 14px;
+  border-radius: 2px;
+  background-color: #cceaf4;
+}
+
+.titleText {
+  margin: 0 20px;
+  color: #333;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+}

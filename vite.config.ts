@@ -38,7 +38,7 @@ export default defineConfig(({ mode }) => {
       open: true,
       proxy: {
         '/api': {
-          target: 'https://sjdj.gansu.gov.cn/register-client',
+          target: env.VITE_API_URL,
           changeOrigin: true,
           secure: false,
           rewrite: (path) => path.replace(/^\/api/, '/api') // 重写路径

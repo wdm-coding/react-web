@@ -128,6 +128,10 @@ const Login = () => {
           style={{ width: 400 }}
           onFinish={onFinish}
           autoComplete='off'
+          initialValues={{
+            username: '91620000MA74W8AH20',
+            password: 'Admin123#$'
+          }}
         >
           <Form.Item<FieldType>
             label='Username'

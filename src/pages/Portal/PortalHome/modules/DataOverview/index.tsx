@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Table, type TableColumnsType } from 'antd'
-import HomeApi, { type AreaRegisterStatistic } from '@/api/front/home.api'
-import SectionHeader from '../../components/SectionHeader'
+import HomeApi, { type AreaRegisterStatistic } from '@/api/portal/home.api'
+import SectionHeader from '../../../components/SectionHeader'
 import styles from './index.module.scss'
 
 const COLUMNS: TableColumnsType<AreaRegisterStatistic> = [

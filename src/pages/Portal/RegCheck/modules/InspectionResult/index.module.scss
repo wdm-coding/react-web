@@ -1,0 +1,31 @@
+.container {
+  .header {
+    background-color: #05477e;
+  }
+
+  .title {
+    color: #fff;
+  }
+
+  :global(.ant-modal-close).close {
+    color: #fff;
+    background: transparent;
+    border: none;
+
+    &:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.15);
+    }
+  }
+}
+
+.subTitle {
+  margin-left: 16px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.tip {
+  margin-top: 20px;
+  color: #f00;
+}

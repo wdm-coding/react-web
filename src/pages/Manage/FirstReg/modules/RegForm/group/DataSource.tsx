@@ -1,13 +1,16 @@
 import { ProFormUploadButton } from '@ant-design/pro-components'
-import { rules, uploadTransform, tooltips } from '../config'
+import { downloadFile, rules, tooltips } from '../config'
 import useCustomUpload from '@/hooks/useCustomUpload'
+import { Button } from 'antd'
 interface DataSourceProps {
   uploadOnlyId?: string
   setUploadCount?: any
+  templateFiles?: any
 }
 const DataSource: React.FC<DataSourceProps> = ({
   uploadOnlyId,
-  setUploadCount
+  setUploadCount,
+  templateFiles = null
 }) => {
   return (
     <>
@@ -18,11 +21,20 @@ const DataSource: React.FC<DataSourceProps> = ({
         max={1}
         tooltip={tooltips.dataSourceCommitment}
         rules={rules.dataSource.dataSourceCommitment}
-        transform={uploadTransform}
         extra={
           <div style={{ paddingTop: 10 }}>
             支持上传jpg、png、pdf、jpeg格式的文件，每个文件大小不能超过20M，最多支持1个
-            <a style={{ marginLeft: 16 }}>登记承偌书模版.jpg</a>
+            {templateFiles?.dataSourceCommitment?.value && (
+              <Button
+                type='link'
+                onClick={() =>
+                  downloadFile(templateFiles?.dataSourceCommitment?.value)
+                }
+                style={{ marginLeft: 16 }}
+              >
+                {templateFiles?.dataSourceCommitment?.fileName}
+              </Button>
+            )}
             <p style={{ color: 'red' }}>
               温馨提醒：为确保信息安全与合规，请严格避免上传任何涉密文件。一旦发生违规上传，相关责任将由您自行承担，请务必谨慎操作。
             </p>

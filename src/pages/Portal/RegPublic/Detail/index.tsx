@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Breadcrumb, Button, Descriptions, Spin, Tag, Tooltip } from 'antd'
 import dayjs from 'dayjs'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
-import HomeApi, { type PublicityDetail } from '@/api/front/home.api'
+import RegPublicApi, { type PublicityDetail } from '@/api/portal/regPublic'
 import useAuth from '@/hooks/useAuth'
 import useModal from '@/hooks/useModal'
 import resourceIcon from '@/assets/images/portal/resource-title-icon.png'
@@ -32,7 +32,7 @@ const RegPublicDetail = () => {
     let ignore = false
     const fetchDetail = async () => {
       try {
-        const res = await HomeApi.getPublicityDetail({ publiclyInfoId })
+        const res = await RegPublicApi.getPublicityDetail({ publiclyInfoId })
         if (!ignore && res?.code === 20000) {
           setDetail(res.data)
         }

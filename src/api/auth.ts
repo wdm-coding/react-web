@@ -1,5 +1,4 @@
 import { Post, Get, type RequestFn } from '@/services/http.decorator'
-
 class AuthApi {
   // 获取注册跳转地址
   @Get('/auth/register')
@@ -11,7 +10,7 @@ class AuthApi {
 
   // 账号密码登录 第三方登录传authCode,账号密码登录传username,password
   @Post('/auth/login')
-  static Login: RequestFn<any, any>
+  static Login: (params: any, extraParams?: any) => RequestFn<any, any>
 
   // 获取图片验证码
   @Post('/auth/captcha')
@@ -21,7 +20,7 @@ class AuthApi {
   @Post('/auth/alreadyLogin')
   static getThirdLoginUrl: RequestFn<any, any>
 
-  // 检查是否已登录
+  // 检查是否已登录 (账号密码登录需要传redirectUrl)
   @Post('/auth/alreadyLogin')
   static checkLogin: RequestFn<any, any>
 

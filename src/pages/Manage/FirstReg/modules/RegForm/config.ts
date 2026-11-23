@@ -1,5 +1,27 @@
+import { downloadFile as downloadFileUtils } from '@/utils/files'
+// 表单默认值
+export const initialValues = {
+  dataRegistType: '1', //登记数据类型
+  authOperationStatus: '1', //授权运营情况
+  dataProductAndServicesType: '1', //公共数据产品或服务类型
+  authResourceDevelop: '1', //是否基于被授权资源开发
+  productUsage: '1', //产品用途
+  dataType: '1', //数据分类
+  entrustedAgent: '1', //是否委托代理登记
+  productionMethod: [], //数据产生方式
+  dataStructure: '1', //数据结构
+  sensitiveInformation: '1', //是否包含敏感信息
+  desensitizationSituation: '1', //是否脱敏
+  depositMethod: '1', //存证方式
+  sharingType: '1', //共享类型
+  sharingMethod: ['1'], //共享方式
+  socialOpenness: '1', //是否向社会开放
+  sharedData: '1', //是否共有数据
+  basedDataDirectory: '1' //是否基于已有成果填报数据目录
+}
 // 表单校验规则
 export const rules = {
+  // 数据基本信息
   baseData: {
     coverageArea: [{ required: true, message: '请选择资源覆盖地区' }],
     industry: [{ required: true, message: '请选择行业分类' }],
@@ -38,12 +60,13 @@ export const rules = {
     ],
     productUsage: [{ required: true, message: '请选择产品用途' }]
   },
+  // 委托代理信息
   proxyData: {
-    isProxyRegist: [{ required: true, message: '请选择是否委托代理登记' }],
-    proxyEntityName: [{ required: true, message: '请输入委托登记主体名称' }],
-    proxyEntityCode: [{ required: true, message: '请输入委托登记主体代码' }],
-    proxyTimeRange: [{ required: true, message: '请选择委托代理时间' }],
-    proxyAgreement: [{ required: true, message: '请上传委托代理协议书' }]
+    entrustedAgent: [{ required: true, message: '请选择是否委托代理登记' }],
+    entrustedAgentName: [{ required: true, message: '请输入委托登记主体名称' }],
+    entrustedAgentCode: [{ required: true, message: '请输入委托登记主体代码' }],
+    entrustedAgentTime: [{ required: true, message: '请选择委托代理时间' }],
+    entrustedAgentAgree: [{ required: true, message: '请上传委托代理协议书' }]
   },
   sceneData: {
     ableScene: [{ required: true, message: '请输入数据场景' }],
@@ -335,25 +358,28 @@ export const tooltips = {
     '提示：指“数据资源”被授权给各级党政机关或企事业单位等进行运营、使用的具体时间范围。',
   productUsage: '提示：根据实际业务情况选择公共数据产品和服务的用途。',
   // 委托代理信息
-  isProxyRegist: '提示：指是否委托代理机构代为办理本机构的数据登记申请。',
-  proxyEntityName: '提示：指受委托代为办理本机构数据登记申请的主体名称。',
-  proxyEntityCode:
-    '提示：指受委托代为办理本机构数据登记申请主体的统一社会信用代码。',
-  proxyTimeRange: '提示：指委托代理机构代为办理登记的具体时间范围。',
-  proxyAgreement: '提示：指本机构与受托主体签订的委托代理协议书。',
+  entrustedAgent:
+    '提示：指当前机构是否在本平台已获委托机构登记申请权限的代理。若当前机构为“数据资源”或“公共数据产品和服务”的原始所有者，则选择“否”；若当前机构非“数据资源”或“公共数据产品和服务”的原始所有者，为被授权方且从所有权方处获得了进行登记申请的明确许可，则选择“是”。',
+  entrustedAgentName:
+    '提示：指委托当前机构对数据进行登记申请的机构或单位名称。',
+  entrustedAgentCode: '提示：指委托机构的统一社会信用代码',
+  entrustedAgentTime: '提示：指委托当前机构对数据进行登记申请的委托代理日期。',
+  entrustedAgentAgree:
+    '提示：指委托当前机构对数据进行登记申请的委托代理法律文书。',
   // 数据场景
   ableScene:
     '提示：指描述当前“数据资源”或“数据产品和服务”可使用的场景。当为“数据资源”时显示数据场景；当为“数据产品和服务”时显示应用场景。',
-  disableScene:
-    '提示：指描述当前“数据资源”或“数据产品和服务”可使用的场景。当为“数据资源”时显示数据场景；当为“数据产品和服务”时显示应用场景。',
+  disableScene: '提示：指描述当前“数据资源”或“数据产品和服务”的禁用场景。',
   // 共有数据信息
-  sharedData: '提示：指是否共有数据资源。',
-  sharedInstitutionAuthorization: '提示：指共有数据资源的授权运营情况。',
+  sharedData:
+    '提示：指当前申请的“数据资源”或“公共数据产品和服务”是否为多个机构的共同所属权。选择“是”后可填写多个共有机构的信息。',
+  sharedInstitutionAuthorization:
+    '支持上传jpg、jpeg、png、webp、pdf、doc、docx格式，每个文件大小不能超过5M，最多支持1个文件',
   // 数据共享开放信息
   sharingConditions:
     '提示：无条件共享类和有条件共享类的政务信息资源，应标明使用要求，包括作为行政依据、工作参考，用于数据校核、业务协同等；有条件共享类的政务信息资源，还应注明共享条件和共享范围；对于不予共享类的政务信息资源，应注明相关的法律、行政法规或党中央、国务院政策依据。',
   sharingMethod:
-    '提示：无条件共享类和有条件共享类的政务信息资源，应标明使用要求，包括作为行政依据、工作参考，用于数据校核、业务协同等；有条件共享类的政务信息资源，还应注明共享条件和共享范围；对于不予共享类的政务信息资源，应注明相关的法律、行政法规或党中央、国务院政策依据。',
+    '提示：获取信息资源的方式。原则上通过共享平台方式获取；确因条件所限可采用其他方式，如邮件、拷盘、介质交换（纸质报表、电子文档等）等方式。',
   sharingOtherMethod: '请详细描述除上述选项外的共享方式',
   opennessConditions: '提示：描述对数据开放的约束条件',
   // 数据存储信息
@@ -398,3 +424,36 @@ export const tooltips = {
 // 上传文件转换为字符串
 export const uploadTransform = (value: any[]) =>
   value?.map((item) => item.response).join(',') || ''
+
+// 日期范围格式化
+export const dateRangeFormat = (value: any[]) =>
+  value?.map((item) => item?.format('YYYY-MM-DD')) || null
+
+// 模板文件提取
+const templateFilekeyName = [
+  'productAndServiceDetails', // 产品和服务详情
+  'infoSecurityAssessReport', // 数据安全评估报告
+  'entrustedAgentAgree', // 委托代理协议书
+  'depositProofDocument', // 存证证明文件
+  'demandFile2017', // 2017年上传数据字段项
+  'demandFile2022', // 2022年上传数据字段项
+  'demandFile', // 不基于上传数据字段项
+  'sampleData', // 样例数据
+  'dataSourceCommitment' // 数据合规性来源及承诺
+]
+export const templateFileExtract = (list: any[]) => {
+  const templateFileList =
+    list
+      ?.filter((item) => templateFilekeyName?.includes(item?.keyName))
+      .map((item) => ({
+        ...item,
+        fileName: item?.value?.split('/').pop() || ''
+      })) || []
+  const result = Object.fromEntries(
+    templateFileList.map((item) => [item.keyName, item])
+  )
+  return result
+}
+
+// 下载文件
+export const downloadFile = downloadFileUtils

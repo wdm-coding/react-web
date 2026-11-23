@@ -54,6 +54,11 @@ const ShareData: React.FC<ShareDataProps> = ({
       title: '共有主体授权书',
       dataIndex: 'sharedInstitutionAuthorization',
       tooltip: tooltips.sharedInstitutionAuthorization,
+      className: 'uploadColumn',
+      // 只读态展示文件名，避免直接显示存储路径
+      render: (_, row: any) =>
+        row?.sharedInstitutionAuthorization?.[0]?.response.split('/').pop() ||
+        '-',
       formItemRender: () => (
         <TableUpload
           uploadOnlyId={uploadOnlyId}
@@ -103,7 +108,6 @@ const ShareData: React.FC<ShareDataProps> = ({
         name='sharedData'
         label='是否共有数据'
         tooltip={tooltips.sharedData}
-        initialValue='1'
         options={Enum.whetherEnum}
         rules={rules.sharedData.sharedData}
       />

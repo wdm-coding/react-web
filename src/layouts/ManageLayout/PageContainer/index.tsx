@@ -12,7 +12,7 @@ interface Props {
   contentStyle?: React.CSSProperties
   onScroll?: (e: Event) => void
 }
-const pageContainer: React.FC<Props> = ({
+const PageContainer: React.FC<Props> = ({
   title,
   extra,
   showBack = true,
@@ -52,6 +52,7 @@ const pageContainer: React.FC<Props> = ({
               onClick={() => {
                 window.history.back()
               }}
+              style={{ cursor: 'pointer' }}
             >
               <Icon name='RollbackOutlined' size={20} color='#1471ff' />
             </span>
@@ -69,4 +70,4 @@ const pageContainer: React.FC<Props> = ({
     </div>
   )
 }
-export default pageContainer
+export default PageContainer

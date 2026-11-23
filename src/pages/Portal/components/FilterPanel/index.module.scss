@@ -1,0 +1,104 @@
+.categoryBox {
+  position: relative;
+  width: min(1280px, calc(100% - 40px));
+  min-height: 150px;
+  margin-top: 40px;
+  padding: 18px 16px 24px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0 2px 15px rgba(0, 32, 88, 0.15);
+}
+
+.category {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  gap: 12px;
+  min-height: 26px;
+  max-height: 68px;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 24px;
+
+  &:not(:first-child) {
+    margin-top: 14px;
+  }
+}
+
+.expanded .row {
+  max-height: none;
+}
+
+.left {
+  flex-shrink: 0;
+  width: 84px;
+  font-size: 14px;
+  line-height: 26px;
+  color: rgba(0, 0, 0, 0.65);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.right {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  gap: 14px 16px;
+  overflow-y: auto;
+  color: rgba(0, 0, 0, 0.45);
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.item {
+  display: inline-block;
+  padding: 0 8px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 24px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.selected {
+  color: #1471ff;
+  border-color: #1471ff;
+}
+
+.unselect {
+  color: rgba(0, 0, 0, 0.45);
+  border-color: rgba(0, 0, 0, 0.45);
+
+  &:hover {
+    color: #1471ff;
+    border-color: #1471ff;
+  }
+}
+
+.expandBtn {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 48px;
+  height: 18px;
+  border-radius: 4px 4px 0 0;
+  font-size: 14px;
+  line-height: 18px;
+  color: rgba(0, 0, 0, 0.45);
+  text-align: center;
+  background: #f5f5f5;
+  cursor: pointer;
+  transform: translateX(-50%);
+
+  &:hover {
+    color: #1471ff;
+  }
+}

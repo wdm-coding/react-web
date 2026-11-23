@@ -1,3 +1,5 @@
+import { AxiosRequestHeaders } from 'axios'
+
 /** 请求方法类型 */
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
 /** 接口统一返回格式 */
@@ -19,4 +21,5 @@ export interface RequestOpt {
   contentType?: ContentType // 自定义请求头Content-Type
   responseType?: 'blob' | 'json' | 'text' // 自定义响应类型
   paramsAsQuery?: boolean // 参数拼接到URL query上（用于POST等非GET请求）
+  extraParams?: any // 自定义请求头
 }

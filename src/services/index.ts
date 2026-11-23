@@ -14,8 +14,15 @@ const http = axios.create({
 // 请求拦截
 http.interceptors.request.use(
   (config: InternalAxiosRequestConfig & RequestOpt) => {
+    const { userInfo } = useBoundStore.getState()
+    config.headers['institutioncode'] =
+      userInfo?.currentIns?.institutionCode || ''
     if (config.contentType) {
       config.headers['Content-Type'] = config.contentType
+    }
+    if (config.extraParams) {
+      const { headers } = config.extraParams
+      config.headers = { ...config.headers, ...headers }
     }
     return config
   }
