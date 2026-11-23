@@ -51,7 +51,16 @@ const RegForm = () => {
       window.$message.warning('请等待文件上传完成')
       return
     }
-    const afterValues = await submitTransform(values, false)
+    const baseParams = {
+      ...values,
+      registerSubjectId: userInfo?.currentIns?.subjectRegistrationId || '',
+      dataRegistCode,
+      ...extraParams
+    }
+    if (dataRegistId) {
+      baseParams.dataRegistId = dataRegistId
+    }
+    const afterValues = await submitTransform(baseParams, false)
     console.log('onFinish', afterValues)
     const { code, data } =
       await regApplyApi.submitOrSaveRegApplyDraft(afterValues)

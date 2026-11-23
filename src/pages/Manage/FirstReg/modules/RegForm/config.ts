@@ -425,8 +425,12 @@ export const tooltips = {
 }
 
 // 上传文件转换为字符串
-export const uploadTransform = (value: any[]) =>
-  value?.map((item) => item.response).join(',') || ''
+export const uploadTransform = (value: any[]) => {
+  if (!value?.length) {
+    return ''
+  }
+  return value?.map((item) => item.response).join(',') || ''
+}
 
 // 日期范围格式化
 export const dateRangeFormat = (value: any[]) =>
