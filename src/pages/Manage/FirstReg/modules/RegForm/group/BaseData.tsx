@@ -12,13 +12,14 @@ import {
   ProFormUploadButton
 } from '@ant-design/pro-components'
 import { rules, Enum, tooltips, dateRangeFormat, downloadFile } from '../config'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import CommonApi from '@/api/common'
 import { Button, Flex, Form } from 'antd'
 import useIndusTree from '../utils/useIndusTree'
 import useCustomUpload from '@/hooks/useCustomUpload'
 import { authOperatItem } from '../types'
 import { uuid } from '@/utils/common'
+import { FormContext } from '../index.tsx'
 interface BaseDataProps {
   uploadOnlyId?: string
   setUploadCount?: any
@@ -29,8 +30,15 @@ const BaseData: React.FC<BaseDataProps> = ({
   setUploadCount,
   templateFiles = null
 }) => {
+  const { detail, setExtraParams } = useContext(FormContext)
   const formIns = Form.useFormInstance()
-  const { industryTreeData, createTreeData, industryName } = useIndusTree()
+  const {
+    industryTreeData,
+    createTreeData,
+    industryName,
+    industryList,
+    getLastLevelIndustryIds
+  } = useIndusTree()
   const [authOperatEditableKeys, setAuthOperatEditableKeys] = useState<any[]>(
     []
   )
@@ -119,18 +127,12 @@ const BaseData: React.FC<BaseDataProps> = ({
 
   // 行业分类改变时
   const industryChange = (value: any[]) => {
-    console.log(value)
     if (value.length > 0) {
-      createTreeData(value[0]?.value)
+      createTreeData(value)
     } else {
       createTreeData(null)
     }
   }
-
-  // 初始化授权运营情况
-  useEffect(() => {
-    authOperationStatusChange(formIns?.getFieldValue('authOperationStatus'))
-  }, [])
 
   // 覆盖地区改变时
   const coverageAreaChange = async (value: any[], selectedOptions: any[]) => {
@@ -148,6 +150,17 @@ const BaseData: React.FC<BaseDataProps> = ({
   useEffect(() => {
     formIns?.setFieldValue('industryName', industryName || '')
   }, [industryName])
+  // 行业分类改变时
+  useEffect(() => {
+    setExtraParams({ industryList })
+  }, [industryList])
+  useEffect(() => {
+    if (detail?.industryList?.length) {
+      const ids = getLastLevelIndustryIds(detail?.industryList)
+      createTreeData(ids)
+    }
+    console.log('detail', detail)
+  }, [detail])
   return (
     <>
       <ProFormCascader
@@ -189,9 +202,7 @@ const BaseData: React.FC<BaseDataProps> = ({
         secondary
         rules={rules.baseData.industry}
         fieldProps={{
-          onChange: (value) => {
-            industryChange(value)
-          },
+          onChange: industryChange,
           popupClassName: 'industryTreeSelectPopup',
           treeData: industryTreeData,
           filterTreeNode: true,

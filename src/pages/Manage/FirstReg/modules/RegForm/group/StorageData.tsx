@@ -284,7 +284,7 @@ const StorageData: React.FC<StorageDataProps> = ({
         options={Enum.depositMethodEnum}
       />
       <ProFormTextArea
-        name='certificationDescription'
+        name='depositDescription'
         label='存证方式说明'
         tooltip={tooltips.depositDescription}
         rules={rules.storageData.depositDescription}

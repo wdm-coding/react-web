@@ -10,6 +10,7 @@ import { useState } from 'react'
 import { tooltips, rules, Enum } from '../config'
 import { shareDataItem } from '../types'
 import TableUpload from '../components/TableUpload'
+import { uuid } from '@/utils/common'
 
 interface ShareDataProps {
   uploadOnlyId?: string
@@ -120,7 +121,6 @@ const ShareData: React.FC<ShareDataProps> = ({
               rules={rules.sharedData.sharedDataList}
             >
               <EditableProTable<shareDataItem>
-                name='sharedDataList'
                 rowKey='id'
                 columns={shareDataColumns}
                 scroll={{ x: 1200 }}
@@ -130,7 +130,7 @@ const ShareData: React.FC<ShareDataProps> = ({
                   position: 'bottom',
                   newRecordType: 'dataSource',
                   record: () => ({
-                    id: new Date().getTime() + Math.random()
+                    id: uuid()
                   }),
                   creatorButtonText: '添加一行数据'
                 }}

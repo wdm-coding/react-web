@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 import { uploadTransform } from '../config'
 import { uuid } from '@/utils/common'
 
-// 找出industryList数据中levelType为3的industryId
+// 找出industryList数据中levelType为3的行业,并返回label和value
 export const getIndustryIds = (industryList: any[]) => {
   let result = []
   industryList.forEach((item) => {
@@ -51,7 +51,7 @@ export const splitStorageValue = (str?: string) => {
 export const setUploadFileList = (fileStr: string) => {
   const list = fileStr?.split(',').filter(Boolean) || []
   return list.map((item: any) => ({
-    uid: new Date().getTime() + Math.random().toString(),
+    uid: uuid(),
     name: item.split('/').pop(),
     path: item,
     status: 'done',
@@ -61,7 +61,6 @@ export const setUploadFileList = (fileStr: string) => {
 }
 // 回显被授权资源信息
 export const setAuthOperatList = (authOperatList: any[]) => {
-  console.log('回显时authOperatList', authOperatList)
   if (!authOperatList?.length) {
     return []
   }
@@ -75,15 +74,14 @@ export const setAuthOperatList = (authOperatList: any[]) => {
     )
   }))
 }
-
-// 转换日期范围
+// 设置日期范围提交参数
 export const transformDateRange = (dateRange: string[]) => {
   if (dateRange?.length !== 2) {
     return ['', '']
   }
   return dateRange
 }
-// 转换dataRegistName
+// 设置dataRegistName提交参数
 export const transformDataRegistName = (params: any) => {
   if (
     !params?.coverageAreaName ||
@@ -94,9 +92,8 @@ export const transformDataRegistName = (params: any) => {
   }
   return `${params?.coverageAreaName || ''}-${params?.industryName || ''}-${params?.dataRegistName || ''}`
 }
-// 设置authOperatList参数
+// 设置authOperatList提交参数
 export const getAuthOperatList = (authOperatList: any[]) => {
-  console.log('保存时authOperatList', authOperatList)
   if (!authOperatList?.length) {
     return []
   }
@@ -111,6 +108,7 @@ export const getAuthOperatList = (authOperatList: any[]) => {
 
 // 回显表单数据
 export const getFullFieldParams = (originData: any) => {
+  // 获取行业名称、区域名称 、登记数据名称
   const [coverageAreaName, industryName, dataRegistName] = getRegistName(
     originData?.industryList || [],
     originData?.coverageAreaList || [],
@@ -155,7 +153,7 @@ export const getFullFieldParams = (originData: any) => {
   }
   // 委托代理信息
   const proxyData = {
-    entrustedAgent: originData?.entrustedAgent,
+    entrustedAgent: originData?.entrustedAgent || '1',
     entrustedAgentName: originData?.entrustedAgentName,
     entrustedAgentCode: originData?.entrustedAgentCode,
     entrustedAgentTime: getDateRange(
@@ -192,7 +190,7 @@ export const getFullFieldParams = (originData: any) => {
     desensitizationMethod: originData?.desensitizationMethod,
     desensitizationOtherMethod: originData?.desensitizationOtherMethod,
     depositMethod: originData?.depositMethod,
-    certificationDescription: originData?.depositDescription,
+    depositDescription: originData?.depositDescription,
     depositProofDocument: setUploadFileList(
       originData?.depositProofDocument || ''
     ),
@@ -205,8 +203,8 @@ export const getFullFieldParams = (originData: any) => {
   }
   // 数据共享开放信息
   const openData = {
-    sharingType: originData?.sharingType,
-    sharingConditions: originData?.sharingConditions,
+    sharingType: originData?.sharingType || '1',
+    sharingConditions: originData?.sharingConditions || '',
     // 接口返回逗号分隔字符串，如 '3,4,5'，表单为多选需转数组
     sharingMethod: originData?.sharingMethod
       ? originData.sharingMethod.split(',')
@@ -233,7 +231,7 @@ export const getFullFieldParams = (originData: any) => {
   }
   // 数据目录信息
   const direcData = {
-    basedDataDirectory: originData?.basedDataDirectory,
+    basedDataDirectory: originData?.basedDataDirectory || '1',
     demandFile: setUploadFileList(originData?.demandFile || ''),
     sampleData: setUploadFileList(originData?.sampleData || '')
   }
@@ -257,6 +255,7 @@ export const getFullFieldParams = (originData: any) => {
 // 提交时转换字段
 export const submitTransform = (params: any, draft: boolean) => {
   console.log('submitTransform', params)
+  // 基础数据
   const baseData: any = {
     draft,
     registerSubjectId: params?.registerSubjectId || '', // 登记主体ID
@@ -266,30 +265,7 @@ export const submitTransform = (params: any, draft: boolean) => {
       : [], // 数据覆盖区域
     orgArea: params?.orgArea || '兰州市大数据中心', // 登记机构
     industry: params?.industry?.map((item: any) => item?.value || '') || [], // 行业类型
-    industryList: [
-      {
-        name: '煤炭开采和洗选业',
-        industryId: '06',
-        levelType: 1,
-        parentId: 'B',
-        children: [
-          {
-            name: '烟煤和无烟煤开采洗选',
-            industryId: '061',
-            levelType: 2,
-            parentId: '06',
-            children: [
-              {
-                name: '烟煤和无烟煤开采洗选',
-                industryId: '0610',
-                levelType: 3,
-                parentId: '061'
-              }
-            ]
-          }
-        ]
-      }
-    ], // 行业分类
+    industryList: params?.industryList || [], // 行业分类
     dataRegistName: transformDataRegistName(params), // 登记数据名称
     dataRegistType: params?.dataRegistType || '', // 登记数据类型
     dataProductAndServicesType: params?.dataProductAndServicesType, // 公共数据产品和服务类型
@@ -318,11 +294,100 @@ export const submitTransform = (params: any, draft: boolean) => {
     dataContentIntroduction: params?.dataContentIntroduction || '', // 数据内容简介
     dataLabel: params?.dataLabel || '' // 数据标签
   }
-  if (params?.dataRegistId) {
-    baseData.dataRegistId = params?.dataRegistId
+  // 代理数据
+  const proxyData = {
+    entrustedAgent: params?.entrustedAgent || null,
+    entrustedAgentName: params?.entrustedAgentName || '',
+    entrustedAgentCode: params?.entrustedAgentCode || '',
+    entrustedAgentStartTime: transformDateRange(
+      params?.entrustedAgentTime || []
+    )[0],
+    entrustedAgentEndTime: transformDateRange(
+      params?.entrustedAgentTime || []
+    )[1],
+    entrustedAgentAgree: uploadTransform(params?.entrustedAgentAgree || '')
   }
-  return {
+  // 存储数据
+  const storageData = {
+    productionMethod: params?.productionMethod || [],
+    productionOtherMethod: params?.productionOtherMethod || null,
+    dataStructure: params?.dataStructure || null,
+    dataOtherStructure: params?.dataOtherStructure || null,
+    dataProvisionFormat: params?.dataProvisionFormat || null,
+    dataProvisionOtherFormat: params?.dataProvisionOtherFormat || null,
+    storageMethod: params?.storageMethod || null,
+    storageOtherMethod: params?.storageOtherMethod || null,
+    dataStorage: `${params?.dataStorage || ''}${params?.dataStorageUnit || ''}`,
+    updateFrequency: params?.updateFrequency || null,
+    updateOtherFrequency: params?.updateOtherFrequency || null,
+    updateMethod: params?.updateMethod || null,
+    dataStorageIncrease: `${params?.dataStorageIncrease || ''}${params?.dataStorageIncreaseUnit || ''}`,
+    sensitiveInformation: params?.sensitiveInformation || null,
+    sensitiveInvolvingSubject: params?.sensitiveInvolvingSubject || null,
+    sensitiveDataCoverageNumber: params?.sensitiveDataCoverageNumber || null,
+    desensitizationSituation: params?.desensitizationSituation || null,
+    desensitizationMethod: params?.desensitizationMethod || null,
+    desensitizationOtherMethod: params?.desensitizationOtherMethod || null,
+    depositMethod: params?.depositMethod || null,
+    depositDescription: params?.depositDescription || null,
+    depositProofDocument: uploadTransform(params?.depositProofDocument || ''),
+    depositDataPath: params?.depositDataPath || null
+  }
+  // 数据场景说明
+  const sceneData = {
+    ableScene: params?.ableScene || null,
+    disableScene: params?.disableScene || null
+  }
+  // 数据共享开放信息
+  const openData = {
+    sharingType: params?.sharingType || null,
+    sharingConditions: params?.sharingConditions || null,
+    // 接口返回逗号分隔字符串，如 '3,4,5'，表单为多选需转数组
+    sharingMethod: params?.sharingMethod?.join(',') || '',
+    sharingOtherMethod: params?.sharingOtherMethod || null,
+    socialOpenness: params?.socialOpenness || null,
+    opennessConditions: params?.opennessConditions || null
+  }
+  // 共用数据信息
+  const shareData = {
+    sharedData: params?.sharedData || null,
+    // 表格 rowKey 为 id，接口返回数据无 id，回显时补充
+    sharedDataList:
+      params?.sharedDataList?.map((item: any) => ({
+        id: item?.id || uuid(),
+        sharedInstitutionName: item?.sharedInstitutionName,
+        sharedInstitutionCode: item?.sharedInstitutionCode,
+        sharedInstitutionType: item?.sharedInstitutionType,
+        sharedInstitutionAddress: item?.sharedInstitutionAddress,
+        sharedInstitutionAuthorization: uploadTransform(
+          item?.sharedInstitutionAuthorization || ''
+        )
+      })) || []
+  }
+  // 数据目录信息
+  const direcData = {
+    basedDataDirectory: params?.basedDataDirectory || '1',
+    demandFile: uploadTransform(params?.demandFile || ''),
+    sampleData: uploadTransform(params?.sampleData || '')
+  }
+  // 数据合规性来源及承诺
+  const dataSource = {
+    dataSourceCommitment: uploadTransform(params?.dataSourceCommitment || '')
+  }
+
+  const submitData = {
     ...baseData,
-    sharingMethod: '' // 数据共享方式
+    ...proxyData,
+    ...storageData,
+    ...sceneData,
+    ...openData,
+    ...shareData,
+    ...direcData,
+    ...dataSource
   }
+  if (params?.dataRegistId) {
+    submitData.dataRegistId = params?.dataRegistId
+  }
+  console.log('submitData', submitData)
+  return submitData
 }

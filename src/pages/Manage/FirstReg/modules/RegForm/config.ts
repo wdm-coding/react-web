@@ -3,6 +3,9 @@ import { downloadFile as downloadFileUtils } from '@/utils/files'
 export const initialValues = {
   dataRegistType: '1', //登记数据类型
   authOperationStatus: '1', //授权运营情况
+  authOperatEntityName: '丝绸之路信息港股份有限公司', //运营机构名称
+  authOperatEntityCode: '91620100MA73UAR56E', //运营机构代码
+  authOperatTimeRange: ['2026-11-17', '2028-04-16'], //授权运营时间
   dataProductAndServicesType: '1', //公共数据产品或服务类型
   authResourceDevelop: '1', //是否基于被授权资源开发
   productUsage: '1', //产品用途
