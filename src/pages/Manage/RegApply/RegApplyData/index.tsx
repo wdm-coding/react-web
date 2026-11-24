@@ -31,7 +31,7 @@ const RegApplyData = () => {
   // 查询登记数据列表
   const fetchRegQueryData = async (params: any) => {
     const {
-      pageNum = 1,
+      current = 1,
       pageSize = 10,
       dataRegistName,
       dataRegistType,
@@ -43,7 +43,7 @@ const RegApplyData = () => {
     } = params
 
     const { code, data } = await RegApplyApi.getRegQueryData({
-      pageNum,
+      pageNum: current,
       pageSize,
       sortField: 'updatedTime',
       sortDirection: updatedTime === 'descend' ? 'DESC' : 'ASC',
