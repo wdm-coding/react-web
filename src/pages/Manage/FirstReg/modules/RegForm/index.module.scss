@@ -77,3 +77,9 @@
     background-color: rgba(24, 144, 255, 0.1);
   }
 }
+.descriptions {
+  :global(.ant-descriptions-item-label) {
+    width: 150px;
+    background-color: rgba(0, 0, 0, 0.02) !important;
+  }
+}

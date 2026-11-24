@@ -1,7 +1,16 @@
+import { useState } from 'react'
 import styles from './index.module.scss'
 import RegForm from './modules/RegForm'
 import PageContainer from '@/layouts/ManageLayout/PageContainer'
+import RegMatters from './modules/RegMatters'
+import { useLocation } from 'react-router-dom'
 const FirstReg = () => {
+  const location = useLocation()
+  const { dataRegistId, regApproType } = location?.state || {}
+  // regApproType 不存在时弹出登记须知
+  const [mattersOpen, setMattersOpen] = useState(
+    regApproType === '1' || !regApproType
+  )
   return (
     <PageContainer
       title='登记申请'
@@ -13,7 +22,8 @@ const FirstReg = () => {
       }
     >
       <div className={styles.firstRegWrapper}>
-        <RegForm />
+        <RegForm dataRegistId={dataRegistId} regApproType={regApproType} />
+        <RegMatters open={mattersOpen} onClose={() => setMattersOpen(false)} />
       </div>
     </PageContainer>
   )

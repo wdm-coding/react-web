@@ -1,0 +1,33 @@
+.detailCard {
+  margin-bottom: 15px;
+  :global(.ant-card-head-title) {
+    display: flex;
+    align-items: center;
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 16px;
+      background-color: #0270d7;
+      margin-right: 8px;
+    }
+  }
+  .title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #999;
+    white-space: nowrap;
+  }
+  .content {
+    width: 100%;
+    font-size: 14px;
+    font-weight: 400;
+    color: #333;
+  }
+  .empty {
+    font-size: 14px;
+    font-weight: 400;
+    color: #999;
+    text-align: center;
+  }
+}

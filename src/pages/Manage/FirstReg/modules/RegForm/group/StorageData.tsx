@@ -11,6 +11,7 @@ import { Button, Checkbox, Col, Flex, Row } from 'antd'
 import { rules, Enum, tooltips, downloadFile } from '../config'
 import useCustomUpload from '@/hooks/useCustomUpload'
 import styles from '../index.module.scss'
+import { normalizeText } from '../utils/index.ts'
 
 interface StorageDataProps {
   uploadOnlyId?: string
@@ -70,6 +71,7 @@ const StorageData: React.FC<StorageDataProps> = ({
               <ProFormText
                 name='productionOtherMethod'
                 label='其他数据产生方式说明'
+                normalize={normalizeText}
                 tooltip={tooltips.productionOtherMethod}
                 rules={rules.storageData.productionOtherMethod}
                 fieldProps={{
@@ -89,6 +91,7 @@ const StorageData: React.FC<StorageDataProps> = ({
               <ProFormText
                 name='dataOtherStructure'
                 label='其他数据结构'
+                normalize={normalizeText}
                 tooltip={tooltips.dataOtherStructure}
                 rules={rules.storageData.dataOtherStructure}
                 fieldProps={{
@@ -109,6 +112,7 @@ const StorageData: React.FC<StorageDataProps> = ({
               <ProFormText
                 name='dataProvisionOtherFormat'
                 label='其他数据提供格式'
+                normalize={normalizeText}
                 tooltip={tooltips.dataProvisionOtherFormat}
                 rules={rules.storageData.dataProvisionOtherFormat}
                 fieldProps={{
@@ -129,6 +133,7 @@ const StorageData: React.FC<StorageDataProps> = ({
               <ProFormText
                 name='storageOtherMethod'
                 label='其他数据存储方式'
+                normalize={normalizeText}
                 tooltip={tooltips.storageOtherMethod}
                 rules={rules.storageData.storageOtherMethod}
                 fieldProps={{
@@ -144,6 +149,7 @@ const StorageData: React.FC<StorageDataProps> = ({
         label='数据存储量(初始)'
         name='dataStorage'
         rules={rules.storageData.dataStorage}
+        normalize={normalizeText}
         fieldProps={{
           maxLength: 10,
           showCount: true,
@@ -170,6 +176,7 @@ const StorageData: React.FC<StorageDataProps> = ({
             <ProFormText
               name='updateOtherFrequency'
               label='其他更新频率'
+              normalize={normalizeText}
               tooltip={tooltips.updateOtherFrequency}
               rules={rules.storageData.updateOtherFrequency}
               fieldProps={{
@@ -191,6 +198,7 @@ const StorageData: React.FC<StorageDataProps> = ({
       <ProFormText
         label='数据存储量(增长)'
         name='dataStorageIncrease'
+        normalize={normalizeText}
         tooltip={tooltips.dataStorageIncrease}
         rules={rules.storageData.dataStorageIncrease}
         fieldProps={{
@@ -236,6 +244,7 @@ const StorageData: React.FC<StorageDataProps> = ({
               <ProFormText
                 name='sensitiveDataCoverageNumber'
                 label='数据覆盖数量'
+                normalize={normalizeText}
                 tooltip={tooltips.sensitiveDataCoverageNumber}
                 rules={rules.storageData.sensitiveDataCoverageNumber}
                 fieldProps={{
@@ -264,6 +273,7 @@ const StorageData: React.FC<StorageDataProps> = ({
                 <ProFormText
                   name='desensitizationOtherMethod'
                   label='其他脱敏方式'
+                  normalize={normalizeText}
                   tooltip={tooltips.desensitizationOtherMethod}
                   rules={rules.storageData.desensitizationOtherMethod}
                   fieldProps={{
@@ -286,6 +296,7 @@ const StorageData: React.FC<StorageDataProps> = ({
       <ProFormTextArea
         name='depositDescription'
         label='存证方式说明'
+        normalize={normalizeText}
         tooltip={tooltips.depositDescription}
         rules={rules.storageData.depositDescription}
         fieldProps={{
@@ -335,6 +346,7 @@ const StorageData: React.FC<StorageDataProps> = ({
       <ProFormText
         name='depositDataPath'
         label='存证数据存放路径'
+        normalize={normalizeText}
         rules={rules.storageData.depositDataPath}
         fieldProps={{
           maxLength: 200,

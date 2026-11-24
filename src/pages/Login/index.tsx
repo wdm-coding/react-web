@@ -59,6 +59,7 @@ const Login = () => {
       navigate(redirectUrl, { replace: true })
       window.$message.success('登录成功')
     } catch (error) {
+      getCaptch()
       console.log('账号密码-登录失败', error)
     }
   }
@@ -171,7 +172,7 @@ const Login = () => {
             <div className='flex items-center gap-8'>
               <Input
                 placeholder='请输入验证码'
-                style={{ width: '17.66vw', height: '50px' }}
+                style={{ width: 250, height: '50px' }}
                 prefix={
                   <SafetyOutlined
                     style={{ fontSize: '16px', color: '#006BD3' }}

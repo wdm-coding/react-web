@@ -20,6 +20,7 @@ import useCustomUpload from '@/hooks/useCustomUpload'
 import { authOperatItem } from '../types'
 import { uuid } from '@/utils/common'
 import { FormContext } from '../index.tsx'
+import { normalizeText } from '../utils/index'
 interface BaseDataProps {
   uploadOnlyId?: string
   setUploadCount?: any
@@ -50,13 +51,23 @@ const BaseData: React.FC<BaseDataProps> = ({
       tooltip: tooltips.dataRegistName2,
       formItemProps: {
         rules: rules.baseData.dataRegistName2
+      },
+      fieldProps: {
+        normalize: normalizeText,
+        showSearch: true,
+        maxLength: 150
       }
     },
     {
       title: '被授权数据登记编码',
       dataIndex: 'dataRegistCode2',
       tooltip: tooltips.dataRegistCode2,
-      formItemProps: { rules: rules.baseData.dataRegistCode2 }
+      formItemProps: { rules: rules.baseData.dataRegistCode2 },
+      fieldProps: {
+        normalize: normalizeText,
+        showSearch: true,
+        maxLength: 64
+      }
     },
     {
       title: '被授权运营时间',
@@ -159,7 +170,6 @@ const BaseData: React.FC<BaseDataProps> = ({
       const ids = getLastLevelIndustryIds(detail?.industryList)
       createTreeData(ids)
     }
-    console.log('detail', detail)
   }, [detail])
   return (
     <>
@@ -223,7 +233,6 @@ const BaseData: React.FC<BaseDataProps> = ({
         label='登记数据名称'
         tooltip={tooltips.dataRegistName}
         name='dataRegistName'
-        rules={rules.baseData.dataRegistName}
       >
         <ProFormDependency name={['industryName', 'coverageAreaName']}>
           {({ industryName, coverageAreaName }) => {
@@ -249,7 +258,12 @@ const BaseData: React.FC<BaseDataProps> = ({
                 <ProFormText
                   name='dataRegistName'
                   style={{ minWidth: 0, flex: 1, marginBottom: 0 }}
-                  fieldProps={{ maxLength, showCount: true }}
+                  rules={rules.baseData.dataRegistName}
+                  normalize={normalizeText}
+                  fieldProps={{
+                    maxLength,
+                    showCount: true
+                  }}
                 />
               </Flex>
             )
@@ -304,6 +318,7 @@ const BaseData: React.FC<BaseDataProps> = ({
                     name='authOperatEntityName'
                     label='运营机构名称'
                     rules={rules.baseData.authOperatEntityName}
+                    normalize={normalizeText}
                     fieldProps={{
                       maxLength: 50,
                       showCount: true
@@ -313,6 +328,7 @@ const BaseData: React.FC<BaseDataProps> = ({
                     tooltip={tooltips.authOperatEntityCode}
                     name='authOperatEntityCode'
                     label='运营机构代码'
+                    normalize={normalizeText}
                     rules={rules.baseData.authOperatEntityCode}
                     fieldProps={{
                       maxLength: 20,
@@ -343,6 +359,7 @@ const BaseData: React.FC<BaseDataProps> = ({
                   name='dataProductsAndServicesOtherType'
                   label='其他数据产品或服务类型'
                   rules={rules.baseData.dataProductsAndServicesOtherType}
+                  normalize={normalizeText}
                   fieldProps={{
                     maxLength: 100,
                     showCount: true
@@ -479,21 +496,33 @@ const BaseData: React.FC<BaseDataProps> = ({
         tooltip={tooltips.dataContentIntroduction}
         name='dataContentIntroduction'
         label='数据内容简介'
+        normalize={normalizeText}
         rules={rules.baseData.dataContentIntroduction}
         fieldProps={{
           maxLength: 100,
           showCount: true
         }}
+        extra={
+          <div style={{ paddingTop: 10 }}>
+            数据内容简介不能超过100个字符，不能包含特殊字符
+          </div>
+        }
       />
       <ProFormText
         tooltip={tooltips.dataLabel}
         name='dataLabel'
         label='数据标签'
+        normalize={normalizeText}
         rules={rules.baseData.dataLabel}
         fieldProps={{
           maxLength: 60,
           showCount: true
         }}
+        extra={
+          <div style={{ paddingTop: 10 }}>
+            数据内容简介不能超过100个字符，不能包含特殊字符数据内容简介不能超过100个字符，不能包含特殊字符数据内容简介不能超过100个字符，不能包含特殊字符数据内容简介不能超过100个字符，不能包含特殊字符
+          </div>
+        }
       />
     </>
   )

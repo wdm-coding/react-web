@@ -1,4 +1,5 @@
 import { downloadFile as downloadFileUtils } from '@/utils/files'
+import dayjs from 'dayjs'
 // 表单默认值
 export const initialValues = {
   dataRegistType: '1', //登记数据类型
@@ -28,7 +29,7 @@ export const rules = {
   baseData: {
     coverageArea: [{ required: true, message: '请选择资源覆盖地区' }],
     industry: [{ required: true, message: '请选择行业分类' }],
-    dataRegistName: [{ required: true, message: '请输入项目名称' }],
+    dataRegistName: [{ required: true, message: '请输入登记数据名称' }],
     dataRegistType: [{ required: true, message: '请选择登记数据类型' }],
     dataCoverageTimeRange: [
       { required: true, message: '请选择数据覆盖时间范围' }
@@ -36,7 +37,21 @@ export const rules = {
     authOperationStatus: [{ required: true, message: '请选择授权运营情况' }],
     authOperatEntityName: [{ required: true, message: '请输入运营机构名称' }],
     authOperatEntityCode: [{ required: true, message: '请输入运营机构代码' }],
-    authOperatTimeRange: [{ required: true, message: '请输入授权运营时间' }],
+    authOperatTimeRange: [
+      { required: true, message: '请输入授权运营时间' },
+      {
+        validator: (_, value) => {
+          if (!value || !Array.isArray(value) || value.length !== 2) {
+            return Promise.resolve()
+          }
+          const endTime = dayjs(value[1])
+          if (endTime.isBefore(dayjs()) || endTime.isSame(dayjs(), 'day')) {
+            return Promise.reject(new Error('结束时间必须晚于当前时间'))
+          }
+          return Promise.resolve()
+        }
+      }
+    ],
     infoSecurityAssessReport: [
       { required: false, message: '请上传数据安全风险评估报告' }
     ],
@@ -56,7 +71,21 @@ export const rules = {
     ],
     authOperatList: [{ required: true, message: '请输入被授权资源信息' }],
     dataRegistName2: [{ required: true, message: '请输入被授权登记数据名称' }],
-    dataRegistCode2: [{ required: true, message: '请输入被授权数据登记编码' }],
+    dataRegistCode2: [
+      { required: true, message: '请输入被授权数据登记编码' },
+      {
+        validator: (_, value) => {
+          if (!value || !Array.isArray(value) || value.length !== 2) {
+            return Promise.resolve()
+          }
+          const endTime = dayjs(value[1])
+          if (endTime.isBefore(dayjs()) || endTime.isSame(dayjs(), 'day')) {
+            return Promise.reject(new Error('结束时间必须晚于当前时间'))
+          }
+          return Promise.resolve()
+        }
+      }
+    ],
     authOperatTimeRange2: [{ required: true, message: '请输入被授权运营时间' }],
     productAndServiceDetails: [
       { required: true, message: '请上传产品和服务详情' }
@@ -68,7 +97,21 @@ export const rules = {
     entrustedAgent: [{ required: true, message: '请选择是否委托代理登记' }],
     entrustedAgentName: [{ required: true, message: '请输入委托登记主体名称' }],
     entrustedAgentCode: [{ required: true, message: '请输入委托登记主体代码' }],
-    entrustedAgentTime: [{ required: true, message: '请选择委托代理时间' }],
+    entrustedAgentTime: [
+      { required: true, message: '请选择委托代理时间' },
+      {
+        validator: (_, value) => {
+          if (!value || !Array.isArray(value) || value.length !== 2) {
+            return Promise.resolve()
+          }
+          const endTime = dayjs(value[1])
+          if (endTime.isBefore(dayjs()) || endTime.isSame(dayjs(), 'day')) {
+            return Promise.reject(new Error('结束时间必须晚于当前时间'))
+          }
+          return Promise.resolve()
+        }
+      }
+    ],
     entrustedAgentAgree: [{ required: true, message: '请上传委托代理协议书' }]
   },
   sceneData: {
@@ -108,7 +151,13 @@ export const rules = {
     ],
     storageMethod: [{ required: true, message: '请选择数据存储方式' }],
     storageOtherMethod: [{ required: true, message: '请输入其他数据存储方式' }],
-    dataStorage: [{ required: true, message: '请输入数据存储量(初始)' }],
+    dataStorage: [
+      { required: true, message: '请输入数据存储量(初始)' },
+      {
+        pattern: /^\d*$/,
+        message: '请输入数字'
+      }
+    ],
     dataStorageUnit: [{ required: true, message: '请选择单位' }],
     updateFrequency: [{ required: true, message: '请选择更新频率' }],
     updateOtherFrequency: [
@@ -116,14 +165,22 @@ export const rules = {
     ],
     updateMethod: [{ required: true, message: '请选择更新方式' }],
     dataStorageIncrease: [
-      { required: true, message: '请输入数据存储量(增长)' }
+      { required: true, message: '请输入数据存储量(增长)' },
+      {
+        pattern: /^\d*$/,
+        message: '请输入数字'
+      }
     ],
     sensitiveInformation: [
       { required: true, message: '请选择是否包含敏感信息' }
     ],
     sensitiveInvolvingSubject: [{ required: true, message: '请选择涉及主体' }],
     sensitiveDataCoverageNumber: [
-      { required: true, message: '请输入数据覆盖数量' }
+      { required: true, message: '请输入数据覆盖数量' },
+      {
+        pattern: /^\d*$/,
+        message: '请输入数字'
+      }
     ],
     desensitizationSituation: [{ required: true, message: '请选择是否脱敏' }],
     desensitizationMethod: [{ required: true, message: '请选择脱敏方式' }],
@@ -197,14 +254,19 @@ export const Enum = {
   ],
   // 共有主体性质枚举
   sharedInstitutionTypeEnum: [
-    { label: '政府机构', value: '1' },
-    { label: '国有企业', value: '2' },
-    { label: '集体所有制企业', value: '3' },
-    { label: '联营企业', value: '4' },
-    { label: '私营企业', value: '5' },
-    { label: '股份制企业', value: '6' },
-    { label: '外资企业', value: '7' },
-    { label: '合资企业', value: '8' }
+    { value: '000', label: '政府机构' },
+    { value: '001', label: '国有企业' },
+    { value: '002', label: '集体所有制企业' },
+    { value: '003', label: '联营企业' },
+    { value: '004', label: '私营企业' },
+    { value: '005', label: '股份制企业' },
+    { value: '006', label: '外资企业' },
+    { value: '007', label: '合资企业' },
+    { value: '008', label: '事业单位' },
+    { value: '009', label: '社会团体' },
+    { value: '010', label: '基金会' },
+    { value: '011', label: '民办非企业单位' },
+    { value: '012', label: '其他' }
   ],
   // 共享类型
   sharingTypeEnum: [

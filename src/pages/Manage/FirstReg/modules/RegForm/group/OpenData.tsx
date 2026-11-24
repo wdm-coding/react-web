@@ -6,6 +6,7 @@ import {
   ProFormTextArea
 } from '@ant-design/pro-components'
 import { rules, Enum, tooltips } from '../config'
+import { normalizeText } from '../utils/index'
 
 const OpenData = () => {
   return (
@@ -25,6 +26,7 @@ const OpenData = () => {
               <ProFormTextArea
                 name='sharingConditions'
                 label='共享条件'
+                normalize={normalizeText}
                 tooltip={tooltips.sharingConditions}
                 rules={rules.openData.sharingConditions}
                 fieldProps={{
@@ -48,6 +50,7 @@ const OpenData = () => {
               <ProFormText
                 name='sharingOtherMethod'
                 label='其他共享方式'
+                normalize={normalizeText}
                 tooltip={tooltips.sharingOtherMethod}
                 rules={rules.openData.sharingOtherMethod}
               />
@@ -62,6 +65,7 @@ const OpenData = () => {
               <ProFormText
                 name='opennessConditions'
                 label='开放条件'
+                normalize={normalizeText}
                 tooltip={tooltips.opennessConditions}
                 rules={rules.openData.opennessConditions}
                 fieldProps={{

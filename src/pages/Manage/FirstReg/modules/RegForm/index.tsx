@@ -12,17 +12,24 @@ import { useEffect, useMemo, useRef, useState, createContext } from 'react'
 import FileApi from '@/api/file'
 import regApplyApi from '@/api/regApply'
 import { useRequest } from '@/hooks/useRequest'
-import { Button, Flex } from 'antd'
+import { Button, Descriptions, Flex } from 'antd'
 import { templateFileExtract, initialValues } from './config'
 import { submitTransform, getFullFieldParams } from './utils/index'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import useModal from '@/hooks/useModal'
+import { regApproTypeEnum } from '@/pages/Manage/Enum'
+import UpdateReason from './group/UpdateReason'
+import UpdateInfo from './group/UpdateInfo'
 export const FormContext = createContext(null)
-const RegForm = () => {
+const RegForm = ({
+  dataRegistId,
+  regApproType
+}: {
+  dataRegistId: string
+  regApproType: string
+}) => {
   const navigate = useNavigate()
   const { userInfo } = useModal('user')
-  const location = useLocation()
-  const { dataRegistId } = location?.state || {}
   const [detail, setDetail] = useState<any>(null)
   const [extraParams, setExtraParams] = useState<any>(null)
   const formRef = useRef<ProFormInstance>(null)
@@ -71,11 +78,24 @@ const RegForm = () => {
   }
   // 保存草稿
   const onSaveDraft = async () => {
+    const values = formRef.current?.getFieldsValue()
+    if (!values?.coverageArea) {
+      window.$message.error('请选择覆盖区域')
+      return
+    }
+    if (!values?.industry) {
+      window.$message.error('请选择行业')
+      return
+    }
+    if (!values?.dataRegistName) {
+      window.$message.error('请输入数据登记名称')
+      return
+    }
     const baseParams = {
-      ...formRef.current?.getFieldsValue(),
+      ...values,
+      ...extraParams,
       registerSubjectId: userInfo?.currentIns?.subjectRegistrationId || '',
-      dataRegistCode,
-      ...extraParams
+      dataRegistCode
     }
     if (dataRegistId) {
       baseParams.dataRegistId = dataRegistId
@@ -105,6 +125,12 @@ const RegForm = () => {
       fillForm()
     }
   }, [dataRegistId])
+  const regApproTypeSubTitle = useMemo(
+    () =>
+      regApproTypeEnum.find((item) => item.value === regApproType)?.subTitle ||
+      '',
+    [regApproType]
+  )
   return (
     <FormContext.Provider value={{ detail, extraParams, setExtraParams }}>
       <div className={styles.regFormContainer}>
@@ -121,69 +147,94 @@ const RegForm = () => {
           initialValues={initialValues}
           submitter={false}
         >
-          <ProForm.Group title={groupTitle('数据基本信息')}>
-            <BaseData
-              uploadOnlyId={uploadOnlyId}
-              setUploadCount={setUploadCount}
-              templateFiles={{
-                productAndServiceDetails:
-                  templateFileRecord?.productAndServiceDetails,
-                infoSecurityAssessReport:
-                  templateFileRecord?.infoSecurityAssessReport
-              }}
-            />
-          </ProForm.Group>
-          <ProForm.Group title={groupTitle('委托代理信息')}>
-            <ProxyData
-              uploadOnlyId={uploadOnlyId}
-              setUploadCount={setUploadCount}
-              templateFiles={{
-                entrustedAgentAgree: templateFileRecord?.entrustedAgentAgree
-              }}
-            />
-          </ProForm.Group>
-          <ProForm.Group title={groupTitle('数据存储信息')}>
-            <StorageData
-              uploadOnlyId={uploadOnlyId}
-              setUploadCount={setUploadCount}
-              templateFiles={{
-                depositProofDocument: templateFileRecord?.depositProofDocument
-              }}
-            />
-          </ProForm.Group>
-          <ProForm.Group title={groupTitle('数据场景说明')}>
-            <SceneData />
-          </ProForm.Group>
-          <ProForm.Group title={groupTitle('数据共享开放信息')}>
-            <OpenData />
-          </ProForm.Group>
-          <ProForm.Group title={groupTitle('共有数据信息')}>
-            <ShareData
-              uploadOnlyId={uploadOnlyId}
-              setUploadCount={setUploadCount}
-            />
-          </ProForm.Group>
-          <ProForm.Group title={groupTitle('数据目录信息')}>
-            <DirecData
-              uploadOnlyId={uploadOnlyId}
-              setUploadCount={setUploadCount}
-              templateFiles={{
-                demandFile2017: templateFileRecord?.demandFile2017,
-                demandFile2022: templateFileRecord?.demandFile2022,
-                demandFile: templateFileRecord?.demandFile,
-                sampleData: templateFileRecord?.sampleData
-              }}
-            />
-          </ProForm.Group>
-          <ProForm.Group title={groupTitle('数据合规性来源及承诺')}>
-            <DataSource
-              uploadOnlyId={uploadOnlyId}
-              setUploadCount={setUploadCount}
-              templateFiles={{
-                dataSourceCommitment: templateFileRecord?.dataSourceCommitment
-              }}
-            />
-          </ProForm.Group>
+          {['2', '3', '4', '5'].includes(regApproType) ? (
+            <>
+              <ProForm.Group title={groupTitle(`${regApproTypeSubTitle}数据`)}>
+                <UpdateInfo />
+              </ProForm.Group>
+              <ProForm.Group title={groupTitle(`${regApproTypeSubTitle}原因`)}>
+                <UpdateReason
+                  uploadOnlyId={uploadOnlyId}
+                  setUploadCount={setUploadCount}
+                  templateFiles={{
+                    productAndServiceDetails:
+                      templateFileRecord?.productAndServiceDetails,
+                    infoSecurityAssessReport:
+                      templateFileRecord?.infoSecurityAssessReport
+                  }}
+                />
+              </ProForm.Group>
+            </>
+          ) : null}
+          {['1', '2', '3'].includes(regApproType) || !regApproType ? (
+            <>
+              <ProForm.Group title={groupTitle('数据基本信息')}>
+                <BaseData
+                  uploadOnlyId={uploadOnlyId}
+                  setUploadCount={setUploadCount}
+                  templateFiles={{
+                    productAndServiceDetails:
+                      templateFileRecord?.productAndServiceDetails,
+                    infoSecurityAssessReport:
+                      templateFileRecord?.infoSecurityAssessReport
+                  }}
+                />
+              </ProForm.Group>
+              <ProForm.Group title={groupTitle('委托代理信息')}>
+                <ProxyData
+                  uploadOnlyId={uploadOnlyId}
+                  setUploadCount={setUploadCount}
+                  templateFiles={{
+                    entrustedAgentAgree: templateFileRecord?.entrustedAgentAgree
+                  }}
+                />
+              </ProForm.Group>
+              <ProForm.Group title={groupTitle('数据存储信息')}>
+                <StorageData
+                  uploadOnlyId={uploadOnlyId}
+                  setUploadCount={setUploadCount}
+                  templateFiles={{
+                    depositProofDocument:
+                      templateFileRecord?.depositProofDocument
+                  }}
+                />
+              </ProForm.Group>
+              <ProForm.Group title={groupTitle('数据场景说明')}>
+                <SceneData />
+              </ProForm.Group>
+              <ProForm.Group title={groupTitle('数据共享开放信息')}>
+                <OpenData />
+              </ProForm.Group>
+              <ProForm.Group title={groupTitle('共有数据信息')}>
+                <ShareData
+                  uploadOnlyId={uploadOnlyId}
+                  setUploadCount={setUploadCount}
+                />
+              </ProForm.Group>
+              <ProForm.Group title={groupTitle('数据目录信息')}>
+                <DirecData
+                  uploadOnlyId={uploadOnlyId}
+                  setUploadCount={setUploadCount}
+                  templateFiles={{
+                    demandFile2017: templateFileRecord?.demandFile2017,
+                    demandFile2022: templateFileRecord?.demandFile2022,
+                    demandFile: templateFileRecord?.demandFile,
+                    sampleData: templateFileRecord?.sampleData
+                  }}
+                />
+              </ProForm.Group>
+              <ProForm.Group title={groupTitle('数据合规性来源及承诺')}>
+                <DataSource
+                  uploadOnlyId={uploadOnlyId}
+                  setUploadCount={setUploadCount}
+                  templateFiles={{
+                    dataSourceCommitment:
+                      templateFileRecord?.dataSourceCommitment
+                  }}
+                />
+              </ProForm.Group>
+            </>
+          ) : null}
         </ProForm>
         <div style={{ height: 40 }}></div>
         <div className={styles.customSubmitter}>
@@ -194,7 +245,12 @@ const RegForm = () => {
             >
               重置
             </Button>
-            <Button type='primary' onClick={() => formRef.current?.submit()}>
+            <Button
+              type='primary'
+              onClick={() => {
+                formRef.current?.submit()
+              }}
+            >
               提交
             </Button>
             <Button type='default' onClick={onSaveDraft}>

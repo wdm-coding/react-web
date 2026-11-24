@@ -11,6 +11,7 @@ import { tooltips, rules, Enum } from '../config'
 import { shareDataItem } from '../types'
 import TableUpload from '../components/TableUpload'
 import { uuid } from '@/utils/common'
+import { normalizeText } from '../utils/index'
 
 interface ShareDataProps {
   uploadOnlyId?: string
@@ -28,13 +29,21 @@ const ShareData: React.FC<ShareDataProps> = ({
       title: '共有主体名称',
       dataIndex: 'sharedInstitutionName',
       formItemProps: { rules: rules.sharedData.sharedInstitutionName },
-      fieldProps: { maxLength: 300, showCount: true }
+      fieldProps: {
+        normalize: normalizeText,
+        maxLength: 300,
+        showCount: true
+      }
     },
     {
       title: '统一社会信用代码',
       dataIndex: 'sharedInstitutionCode',
       formItemProps: { rules: rules.sharedData.sharedInstitutionCode },
-      fieldProps: { maxLength: 20, showCount: true }
+      fieldProps: {
+        normalize: normalizeText,
+        maxLength: 20,
+        showCount: true
+      }
     },
     {
       title: '共有主体性质',
@@ -49,7 +58,11 @@ const ShareData: React.FC<ShareDataProps> = ({
       title: '共有组织机构注册地址',
       dataIndex: 'sharedInstitutionAddress',
       formItemProps: { rules: rules.sharedData.sharedInstitutionAddress },
-      fieldProps: { maxLength: 100, showCount: true }
+      fieldProps: {
+        normalize: normalizeText,
+        maxLength: 100,
+        showCount: true
+      }
     },
     {
       title: '共有主体授权书',

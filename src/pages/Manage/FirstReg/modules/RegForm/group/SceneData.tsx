@@ -1,5 +1,6 @@
 import { ProFormTextArea } from '@ant-design/pro-components'
 import { tooltips, rules } from '../config'
+import { normalizeText } from '../utils/index'
 const SceneData = () => {
   return (
     <>
@@ -7,6 +8,7 @@ const SceneData = () => {
         name='ableScene'
         label='数据场景'
         placeholder='请输入数据场景'
+        normalize={normalizeText}
         tooltip={tooltips.ableScene}
         rules={rules.sceneData.ableScene}
         fieldProps={{
@@ -18,6 +20,7 @@ const SceneData = () => {
         name='disableScene'
         label='禁用场景'
         placeholder='请输入禁用场景'
+        normalize={normalizeText}
         tooltip={tooltips.disableScene}
         rules={rules.sceneData.disableScene}
         fieldProps={{

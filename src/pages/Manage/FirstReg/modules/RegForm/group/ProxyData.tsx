@@ -8,6 +8,7 @@ import {
 import { Enum, tooltips, rules, dateRangeFormat, downloadFile } from '../config'
 import useCustomUpload from '@/hooks/useCustomUpload'
 import { Button } from 'antd'
+import { normalizeText } from '../utils/index'
 
 interface ProxyDataProps {
   uploadOnlyId?: string
@@ -35,6 +36,7 @@ const ProxyData: React.FC<ProxyDataProps> = ({
               <ProFormText
                 name='entrustedAgentName'
                 label='委托登记主体名称'
+                normalize={normalizeText}
                 tooltip={tooltips.entrustedAgentName}
                 rules={rules.proxyData.entrustedAgentName}
                 fieldProps={{
@@ -45,6 +47,7 @@ const ProxyData: React.FC<ProxyDataProps> = ({
               <ProFormText
                 name='entrustedAgentCode'
                 label='委托登记主体代码'
+                normalize={normalizeText}
                 tooltip={tooltips.entrustedAgentCode}
                 rules={rules.proxyData.entrustedAgentCode}
                 fieldProps={{

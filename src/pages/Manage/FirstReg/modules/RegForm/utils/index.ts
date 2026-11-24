@@ -1,6 +1,8 @@
 import dayjs from 'dayjs'
 import { uploadTransform } from '../config'
 import { uuid } from '@/utils/common'
+// 输入性文本去空格
+export const normalizeText = (value: string) => value.replace(/\s/g, '')
 
 // 找出industryList数据中levelType为3的行业,并返回label和value
 export const getIndustryIds = (industryList: any[]) => {

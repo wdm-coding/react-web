@@ -1,40 +1,35 @@
 import PageContainer from '@/layouts/ManageLayout/PageContainer'
 import styles from './index.module.scss'
 import { Button, Tabs } from 'antd'
-import { ProTable, type ProColumns } from '@ant-design/pro-components'
+import {
+  ActionType,
+  ProTable,
+  type ProColumns
+} from '@ant-design/pro-components'
 import {
   regApproTypeEnum,
   dataRegistTypeEnum,
-  getEnumLabel
+  getEnumLabel,
+  regApplyTypeEnum
 } from '@/pages/Manage/Enum/index'
-import RegApplyApi, { type RegApplyItem } from '@/api/regApply'
+import RegApplyApi from '@/api/regApply'
+import { RegApplyItem } from '@/api/types/regApply'
 import Icon from '@/components/Icon'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import icon1 from '@/assets/images/manage/icon1.png'
 import icon2 from '@/assets/images/manage/icon2.png'
 import EllipsisText from '@/components/EllipsisText'
 import useTableScroll from '@/hooks/useTableScroll'
+import Action from './Action'
 
 const RegApplyList = () => {
+  const actionRef = useRef<ActionType>(null)
   const { scroll, updateScrollY } = useTableScroll()
   const navigate = useNavigate()
   const [activeKey, setActiveKey] = useState('0')
   const onChangeTab = (key: string) => {
     setActiveKey(key)
-  }
-  // TODO: 待编辑接口/页面就绪后接入
-  const handleEdit = (row: RegApplyItem) => {
-    navigate(`/manage/firstReg`, {
-      state: {
-        dataRegistId: row.dataRegistId,
-        regApproType: row.regApproType
-      }
-    })
-  }
-  // TODO: 待删除接口就绪后接入
-  const handleDelete = (row: RegApplyItem) => {
-    void row
   }
   // TODO: 待导入接口就绪后接入
   const handleImport = () => {}
@@ -69,6 +64,18 @@ const RegApplyList = () => {
       total: Number(data?.totalElements) || 0
     }
   }
+  // 审核状态
+  const CheckStatus = ({ statusName }: { statusName: string }) => {
+    const color =
+      regApplyTypeEnum?.find((item) => item.label === statusName)?.color ||
+      '#000'
+    return (
+      <span className={styles.statusCell} style={{ color }}>
+        <i className={styles.dot} />
+        {statusName || '-'}
+      </span>
+    )
+  }
   const regApplyColumns: ProColumns<RegApplyItem>[] = [
     {
       title: '序号',
@@ -91,6 +98,13 @@ const RegApplyList = () => {
           <EllipsisText text={row.dataRegistName} />
         </div>
       )
+    },
+    {
+      title: '操作类型',
+      dataIndex: 'regApproType',
+      width: 100,
+      search: false,
+      render: (_, row) => getEnumLabel('regApproTypeEnum', row.regApproType)
     },
     {
       title: '登记数据类型',
@@ -116,12 +130,7 @@ const RegApplyList = () => {
       dataIndex: 'status',
       width: 80,
       search: false,
-      render: (_, row) => (
-        <span className={styles.statusCell}>
-          <i className={styles.dot} />
-          {row.status || '-'}
-        </span>
-      )
+      render: (_, row) => <CheckStatus statusName={row.status}></CheckStatus>
     },
     {
       title: '更新时间',
@@ -135,25 +144,17 @@ const RegApplyList = () => {
       valueType: 'option',
       width: 120,
       fixed: 'right',
-      render: (_, row) => [
-        <Button
-          key='edit'
-          type='link'
-          size='small'
-          onClick={() => handleEdit(row)}
-        >
-          编辑
-        </Button>,
-        <Button
-          key='delete'
-          type='link'
-          size='small'
-          danger
-          onClick={() => handleDelete(row)}
-        >
-          删除
-        </Button>
-      ]
+      render: (_, row) => {
+        const btn =
+          regApplyTypeEnum?.find((item) => item.label === row.status)?.btn || []
+        return (
+          <Action
+            row={row}
+            btn={btn}
+            onReloadList={() => actionRef.current?.reload()}
+          />
+        )
+      }
     }
   ]
   const tabItems = regApproTypeEnum.map((item) => ({
@@ -166,6 +167,7 @@ const RegApplyList = () => {
         <Tabs activeKey={activeKey} items={tabItems} onChange={onChangeTab} />
         <div className={styles.content}>
           <ProTable<RegApplyItem>
+            actionRef={actionRef}
             name='regApplyList'
             rowKey='dataRegistId'
             columns={regApplyColumns}
@@ -185,21 +187,33 @@ const RegApplyList = () => {
               defaultPageSize: 10,
               totalBoundaryShowSizeChanger: 10
             }}
-            toolBarRender={() => [
-              <Button
-                key='create'
-                type='primary'
-                onClick={() => navigate('/manage/firstReg')}
-              >
-                申请首次登记
-              </Button>,
-              <Button key='import' onClick={handleImport}>
-                导入
-              </Button>,
-              <Button key='export' onClick={handleExport}>
-                导出
-              </Button>
-            ]}
+            toolBarRender={() =>
+              activeKey !== '0'
+                ? [
+                    <Button
+                      key='create'
+                      type='primary'
+                      onClick={() =>
+                        navigate('/manage/firstReg', {
+                          state: { regApproType: activeKey }
+                        })
+                      }
+                    >
+                      申请{getEnumLabel('regApproTypeEnum', activeKey)}
+                    </Button>,
+                    ...(activeKey === '1'
+                      ? [
+                          <Button key='import' onClick={handleImport}>
+                            导入
+                          </Button>,
+                          <Button key='export' onClick={handleExport}>
+                            导出
+                          </Button>
+                        ]
+                      : [])
+                  ]
+                : []
+            }
           />
         </div>
       </div>
