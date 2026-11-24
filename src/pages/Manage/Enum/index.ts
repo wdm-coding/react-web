@@ -284,6 +284,12 @@ export const regApplyTypeEnum = [
     color: '#52C41A'
   }
 ]
+// 异议状态
+export const examineStatusEnum = [
+  { label: '待审核', value: '1' },
+  { label: '审核通过', value: '2' },
+  { label: '审核不通过', value: '3' }
+]
 // 确认单状态
 export const certificateStatusEnum = [
   { label: '有效', value: '1' },
@@ -316,7 +322,8 @@ const EnumMap = {
   productUsageEnum,
   desensitizationMethodEnum,
   changeStatusEnum,
-  certificateStatusEnum
+  certificateStatusEnum,
+  examineStatusEnum
 }
 // 将字典转换为枚举
 export const dictToEnum = (enumKey: EnumKey) => {

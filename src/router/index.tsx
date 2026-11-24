@@ -193,6 +193,29 @@ export const list: RouterItem[] = [
         title: '确认单管理'
       },
       {
+        path: 'objection',
+        name: 'Objection',
+        componentPath: 'Outlet',
+        icon: 'objection',
+        title: '异议申诉管理',
+        children: [
+          {
+            path: 'mySubmit',
+            name: 'MySubmit',
+            componentPath: '/Manage/Objection/MySubmit/index.tsx',
+            icon: 'my-submit',
+            title: '我提交的'
+          },
+          {
+            path: 'myReceive',
+            name: 'MyReceive',
+            componentPath: '/Manage/Objection/MyReceive/index.tsx',
+            icon: 'my-receive',
+            title: '我接收的'
+          }
+        ]
+      },
+      {
         path: 'demandNumbersManager',
         name: 'DemandNumbersManager',
         componentPath: '/Manage/DemandNumbersManager/index.tsx',

@@ -28,16 +28,16 @@ const siderMenus = [
   },
   {
     label: '异议申诉管理',
-    key: '/manage/diffAppealManage',
+    key: '/manage/objection',
     icon: 'AndroidOutlined',
     children: [
       {
         label: '我提交的',
-        key: '/manage/diffAppealManage/submitDiffAppeal'
+        key: '/manage/objection/mySubmit'
       },
       {
-        label: '我收到的',
-        key: '/manage/diffAppealManage/receiveDiffAppeal'
+        label: '我接收的',
+        key: '/manage/objection/myReceive'
       }
     ]
   },
