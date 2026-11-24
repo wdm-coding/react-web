@@ -186,6 +186,13 @@ export const list: RouterItem[] = [
         ]
       },
       {
+        path: 'certManage',
+        name: 'CertManage',
+        componentPath: '/Manage/CertManage/index.tsx',
+        icon: 'certificate-manage',
+        title: '确认单管理'
+      },
+      {
         path: 'demandNumbersManager',
         name: 'DemandNumbersManager',
         componentPath: '/Manage/DemandNumbersManager/index.tsx',

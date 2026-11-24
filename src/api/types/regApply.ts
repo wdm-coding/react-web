@@ -79,3 +79,13 @@ export interface RegDataItem {
   /** 登记机构 */
   organizationName?: string
 }
+
+/** 获取可操作的登记数据列表查询参数 */
+export interface RegScreeningQuery {
+  pageNum: number
+  pageSize: number
+  // 是否个人用户
+  personage?: boolean
+  // 登记申请类型
+  regApproType?: string
+}

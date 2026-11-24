@@ -3,7 +3,8 @@ import {
   RegApplyItem,
   RegApplyListQuery,
   RegDataItem,
-  RegDataListQuery
+  RegDataListQuery,
+  RegScreeningQuery
 } from '@/api/types/regApply'
 import { Response, PageListResult } from '@/api/types/common'
 
@@ -33,7 +34,7 @@ class RegApplyApi {
 
   // 获取可操作的登记数据
   @Post('registration/screeningData')
-  static getScreeningData: RequestFn<any, Response<any>>
+  static getScreeningData: RequestFn<RegScreeningQuery, Response<any>>
 
   // 获取登记数据查询列表
   @Post('registration/registrationList')
