@@ -1,5 +1,3 @@
-import { Color } from 'antd/es/color-picker'
-
 // 字典key联合类型
 export type EnumKey = keyof typeof EnumMap
 // 是否
@@ -286,6 +284,13 @@ export const regApplyTypeEnum = [
     color: '#52C41A'
   }
 ]
+// 登记状态
+export const changeStatusEnum = [
+  { label: '申请中', value: '1' },
+  { label: '已登记', value: '2' },
+  { label: '登记不通过', value: '3' },
+  { label: '已注销', value: '4' }
+]
 const EnumMap = {
   whetherEnum,
   regApproTypeEnum,
@@ -303,7 +308,8 @@ const EnumMap = {
   sharingMethodEnum,
   basedDataDirectoryEnum,
   productUsageEnum,
-  desensitizationMethodEnum
+  desensitizationMethodEnum,
+  changeStatusEnum
 }
 // 将字典转换为枚举
 export const dictToEnum = (enumKey: EnumKey) => {
