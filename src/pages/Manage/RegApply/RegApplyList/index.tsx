@@ -142,7 +142,7 @@ const RegApplyList = () => {
     {
       title: '操作',
       valueType: 'option',
-      width: 120,
+      width: 150,
       fixed: 'right',
       render: (_, row) => {
         const btn =

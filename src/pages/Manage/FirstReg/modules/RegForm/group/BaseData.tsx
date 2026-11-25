@@ -503,8 +503,8 @@ const BaseData: React.FC<BaseDataProps> = ({
           showCount: true
         }}
         extra={
-          <div style={{ paddingTop: 10 }}>
-            数据内容简介不能超过100个字符，不能包含特殊字符
+          <div style={{ paddingTop: 10, color: '#666' }}>
+            样例：该数据资源为XX地区/部门/机构在履行XX职权/提供XX公共服务过程中产生，包含…、…等具体信息，可用于……
           </div>
         }
       />
@@ -519,8 +519,8 @@ const BaseData: React.FC<BaseDataProps> = ({
           showCount: true
         }}
         extra={
-          <div style={{ paddingTop: 10 }}>
-            数据内容简介不能超过100个字符，不能包含特殊字符数据内容简介不能超过100个字符，不能包含特殊字符数据内容简介不能超过100个字符，不能包含特殊字符数据内容简介不能超过100个字符，不能包含特殊字符
+          <div style={{ paddingTop: 10, color: '#666' }}>
+            样例：【北京市统计局】，【企业取水量】
           </div>
         }
       />

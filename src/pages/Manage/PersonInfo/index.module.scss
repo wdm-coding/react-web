@@ -1,3 +1,69 @@
-.personInfo {
+.wrapper {
   padding: 20px;
+  :global(.ant-card-head) {
+    padding-top: 20px;
+    min-height: 0;
+    border-bottom: none;
+    font-size: 18px;
+  }
+  :global(.ant-card-body) {
+    padding: 0 20px;
+  }
+  .companyInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 60px;
+    padding-left: 20px;
+  }
+  .fielditem {
+    height: 68px;
+    display: flex;
+    align-items: flex-end;
+  }
+  .accountHead {
+    margin-bottom: 20px;
+  }
+  .avatar {
+    background-color: #fde3cf;
+    color: #fa8c16;
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .idcard {
+    background-color: #1471ff;
+    border-radius: 8px;
+    font-size: 28px;
+  }
+  // 已认证印章
+  .stamp {
+    position: relative;
+    flex-shrink: 0;
+    width: 96px;
+    height: 96px;
+    border: 3px solid #35b06a;
+    border-radius: 50%;
+    color: #35b06a;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(-15deg);
+    opacity: 0.85;
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border: 1px solid #35b06a;
+      border-radius: 50%;
+    }
+    .stars {
+      font-size: 10px;
+      letter-spacing: 2px;
+      margin-top: 2px;
+    }
+  }
 }

@@ -284,6 +284,26 @@ export const regApplyTypeEnum = [
     color: '#52C41A'
   }
 ]
+// 主体性质
+export const institutionTypeEnum = [
+  { value: '000', label: '政府机构' },
+  { value: '001', label: '国有企业' },
+  { value: '002', label: '集体所有制企业' },
+  { value: '003', label: '联营企业' },
+  { value: '004', label: '私营企业' },
+  { value: '005', label: '股份制企业' },
+  { value: '006', label: '外资企业' },
+  { value: '007', label: '合资企业' },
+  { value: '008', label: '事业单位' },
+  { value: '009', label: '社会团体' },
+  { value: '010', label: '基金会' },
+  { value: '011', label: '民办非企业单位' },
+  { value: '012', label: '其他' }
+]
+// 证件类型
+export const idTypeEnum = [{ label: '身份证', value: '1' }]
+// 国家
+export const countryEnum = [{ label: '中国', value: 'CHN' }]
 // 异议状态
 export const examineStatusEnum = [
   { label: '待审核', value: '1' },
@@ -332,7 +352,10 @@ const EnumMap = {
   changeStatusEnum,
   certificateStatusEnum,
   examineStatusEnum,
-  approvalStatusEnum
+  approvalStatusEnum,
+  institutionTypeEnum,
+  idTypeEnum,
+  countryEnum
 }
 // 将字典转换为枚举
 export const dictToEnum = (enumKey: EnumKey) => {
