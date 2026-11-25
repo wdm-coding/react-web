@@ -34,7 +34,7 @@ const Action = ({ row, btn, onReloadList }: ActionProps) => {
         label: '编辑',
         danger: false,
         onClick: () => {
-          navigate(`/manage/firstReg`, {
+          navigate(`/manage/firstReg/edit`, {
             state: {
               dataRegistId: row?.dataRegistId || null,
               regApproType: row?.regApproType || null

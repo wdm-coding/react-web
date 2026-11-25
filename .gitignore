@@ -14,3 +14,4 @@ PROJECT_ARCHITECTURE.md
 
 .env.local
 .env.development.local
+.workbuddy/

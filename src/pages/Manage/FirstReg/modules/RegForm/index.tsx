@@ -12,7 +12,7 @@ import { useEffect, useMemo, useRef, useState, createContext } from 'react'
 import FileApi from '@/api/file'
 import regApplyApi from '@/api/regApply'
 import { useRequest } from '@/hooks/useRequest'
-import { Button, Descriptions, Flex } from 'antd'
+import { Button, Descriptions, Flex, Spin } from 'antd'
 import { templateFileExtract, initialValues } from './config'
 import { submitTransform, getFullFieldParams } from './utils/index'
 import { useNavigate } from 'react-router-dom'
@@ -29,6 +29,7 @@ const RegForm = ({
   regApproType: string
 }) => {
   const navigate = useNavigate()
+  const [loading, setLoading] = useState<boolean>(false)
   const { userInfo } = useModal('user')
   const [detail, setDetail] = useState<any>(null)
   const [extraParams, setExtraParams] = useState<any>(null)
@@ -117,11 +118,13 @@ const RegForm = ({
       setDetail(data)
       setTimeout(() => {
         formRef.current?.setFieldsValue(getFullFieldParams(data))
-      }, 1000)
+      }, 500)
     }
+    setLoading(false)
   }
   useEffect(() => {
     if (dataRegistId) {
+      setLoading(true)
       fillForm()
     }
   }, [dataRegistId])
@@ -133,132 +136,140 @@ const RegForm = ({
   )
   return (
     <FormContext.Provider value={{ detail, extraParams, setExtraParams }}>
-      <div className={styles.regFormContainer}>
-        <ProForm
-          style={{ padding: 20 }}
-          layout='horizontal'
-          labelCol={{ span: 4 }}
-          wrapperCol={{ span: 20 }}
-          formRef={formRef}
-          onFinish={onFinish}
-          onFinishFailed={() => {
-            console.log('onFinishFailed', formRef.current?.getFieldsValue())
-          }}
-          initialValues={initialValues}
-          submitter={false}
-        >
-          {['2', '3', '4', '5'].includes(regApproType) ? (
-            <>
-              <ProForm.Group title={groupTitle(`${regApproTypeSubTitle}数据`)}>
-                <UpdateInfo />
-              </ProForm.Group>
-              <ProForm.Group title={groupTitle(`${regApproTypeSubTitle}原因`)}>
-                <UpdateReason
-                  uploadOnlyId={uploadOnlyId}
-                  setUploadCount={setUploadCount}
-                  templateFiles={{
-                    productAndServiceDetails:
-                      templateFileRecord?.productAndServiceDetails,
-                    infoSecurityAssessReport:
-                      templateFileRecord?.infoSecurityAssessReport
-                  }}
-                />
-              </ProForm.Group>
-            </>
-          ) : null}
-          {['1', '2', '3'].includes(regApproType) || !regApproType ? (
-            <>
-              <ProForm.Group title={groupTitle('数据基本信息')}>
-                <BaseData
-                  uploadOnlyId={uploadOnlyId}
-                  setUploadCount={setUploadCount}
-                  templateFiles={{
-                    productAndServiceDetails:
-                      templateFileRecord?.productAndServiceDetails,
-                    infoSecurityAssessReport:
-                      templateFileRecord?.infoSecurityAssessReport
-                  }}
-                />
-              </ProForm.Group>
-              <ProForm.Group title={groupTitle('委托代理信息')}>
-                <ProxyData
-                  uploadOnlyId={uploadOnlyId}
-                  setUploadCount={setUploadCount}
-                  templateFiles={{
-                    entrustedAgentAgree: templateFileRecord?.entrustedAgentAgree
-                  }}
-                />
-              </ProForm.Group>
-              <ProForm.Group title={groupTitle('数据存储信息')}>
-                <StorageData
-                  uploadOnlyId={uploadOnlyId}
-                  setUploadCount={setUploadCount}
-                  templateFiles={{
-                    depositProofDocument:
-                      templateFileRecord?.depositProofDocument
-                  }}
-                />
-              </ProForm.Group>
-              <ProForm.Group title={groupTitle('数据场景说明')}>
-                <SceneData />
-              </ProForm.Group>
-              <ProForm.Group title={groupTitle('数据共享开放信息')}>
-                <OpenData />
-              </ProForm.Group>
-              <ProForm.Group title={groupTitle('共有数据信息')}>
-                <ShareData
-                  uploadOnlyId={uploadOnlyId}
-                  setUploadCount={setUploadCount}
-                />
-              </ProForm.Group>
-              <ProForm.Group title={groupTitle('数据目录信息')}>
-                <DirecData
-                  uploadOnlyId={uploadOnlyId}
-                  setUploadCount={setUploadCount}
-                  templateFiles={{
-                    demandFile2017: templateFileRecord?.demandFile2017,
-                    demandFile2022: templateFileRecord?.demandFile2022,
-                    demandFile: templateFileRecord?.demandFile,
-                    sampleData: templateFileRecord?.sampleData
-                  }}
-                />
-              </ProForm.Group>
-              <ProForm.Group title={groupTitle('数据合规性来源及承诺')}>
-                <DataSource
-                  uploadOnlyId={uploadOnlyId}
-                  setUploadCount={setUploadCount}
-                  templateFiles={{
-                    dataSourceCommitment:
-                      templateFileRecord?.dataSourceCommitment
-                  }}
-                />
-              </ProForm.Group>
-            </>
-          ) : null}
-        </ProForm>
-        <div style={{ height: 40 }}></div>
-        <div className={styles.customSubmitter}>
-          <Flex justify='flex-end' gap={10}>
-            <Button
-              type='default'
-              onClick={() => formRef.current?.resetFields()}
-            >
-              重置
-            </Button>
-            <Button
-              type='primary'
-              onClick={() => {
-                formRef.current?.submit()
-              }}
-            >
-              提交
-            </Button>
-            <Button type='default' onClick={onSaveDraft}>
-              保存
-            </Button>
-          </Flex>
+      <Spin spinning={loading}>
+        <div className={styles.regFormContainer}>
+          <ProForm
+            style={{ padding: 20 }}
+            layout='horizontal'
+            labelCol={{ span: 4 }}
+            wrapperCol={{ span: 20 }}
+            formRef={formRef}
+            onFinish={onFinish}
+            onFinishFailed={() => {
+              console.log('onFinishFailed', formRef.current?.getFieldsValue())
+            }}
+            initialValues={initialValues}
+            submitter={false}
+          >
+            {['2', '3', '4', '5'].includes(regApproType) ? (
+              <>
+                <ProForm.Group
+                  title={groupTitle(`${regApproTypeSubTitle}数据`)}
+                >
+                  <UpdateInfo />
+                </ProForm.Group>
+                <ProForm.Group
+                  title={groupTitle(`${regApproTypeSubTitle}原因`)}
+                >
+                  <UpdateReason
+                    uploadOnlyId={uploadOnlyId}
+                    setUploadCount={setUploadCount}
+                    templateFiles={{
+                      productAndServiceDetails:
+                        templateFileRecord?.productAndServiceDetails,
+                      infoSecurityAssessReport:
+                        templateFileRecord?.infoSecurityAssessReport
+                    }}
+                  />
+                </ProForm.Group>
+              </>
+            ) : null}
+            {['1', '2', '3'].includes(regApproType) || !regApproType ? (
+              <>
+                <ProForm.Group title={groupTitle('数据基本信息')}>
+                  <BaseData
+                    uploadOnlyId={uploadOnlyId}
+                    setUploadCount={setUploadCount}
+                    templateFiles={{
+                      productAndServiceDetails:
+                        templateFileRecord?.productAndServiceDetails,
+                      infoSecurityAssessReport:
+                        templateFileRecord?.infoSecurityAssessReport
+                    }}
+                  />
+                </ProForm.Group>
+                <ProForm.Group title={groupTitle('委托代理信息')}>
+                  <ProxyData
+                    uploadOnlyId={uploadOnlyId}
+                    setUploadCount={setUploadCount}
+                    templateFiles={{
+                      entrustedAgentAgree:
+                        templateFileRecord?.entrustedAgentAgree
+                    }}
+                  />
+                </ProForm.Group>
+                <ProForm.Group title={groupTitle('数据存储信息')}>
+                  <StorageData
+                    uploadOnlyId={uploadOnlyId}
+                    setUploadCount={setUploadCount}
+                    templateFiles={{
+                      depositProofDocument:
+                        templateFileRecord?.depositProofDocument
+                    }}
+                  />
+                </ProForm.Group>
+                <ProForm.Group title={groupTitle('数据场景说明')}>
+                  <SceneData />
+                </ProForm.Group>
+                <ProForm.Group title={groupTitle('数据共享开放信息')}>
+                  <OpenData />
+                </ProForm.Group>
+                <ProForm.Group title={groupTitle('共有数据信息')}>
+                  <ShareData
+                    uploadOnlyId={uploadOnlyId}
+                    setUploadCount={setUploadCount}
+                  />
+                </ProForm.Group>
+                <ProForm.Group title={groupTitle('数据目录信息')}>
+                  <DirecData
+                    uploadOnlyId={uploadOnlyId}
+                    setUploadCount={setUploadCount}
+                    templateFiles={{
+                      demandFile2017: templateFileRecord?.demandFile2017,
+                      demandFile2022: templateFileRecord?.demandFile2022,
+                      demandFile: templateFileRecord?.demandFile,
+                      sampleData: templateFileRecord?.sampleData
+                    }}
+                  />
+                </ProForm.Group>
+                <ProForm.Group title={groupTitle('数据合规性来源及承诺')}>
+                  <DataSource
+                    uploadOnlyId={uploadOnlyId}
+                    setUploadCount={setUploadCount}
+                    templateFiles={{
+                      dataSourceCommitment:
+                        templateFileRecord?.dataSourceCommitment
+                    }}
+                  />
+                </ProForm.Group>
+              </>
+            ) : null}
+          </ProForm>
+          <div style={{ height: 40 }}></div>
+          <div className={styles.customSubmitter}>
+            <Flex justify='flex-end' gap={10}>
+              <Button
+                type='default'
+                onClick={() => formRef.current?.resetFields()}
+              >
+                重置
+              </Button>
+              <Button
+                type='primary'
+                loading={loading}
+                onClick={() => {
+                  formRef.current?.submit()
+                }}
+              >
+                提交
+              </Button>
+              <Button type='default' onClick={onSaveDraft} loading={loading}>
+                保存
+              </Button>
+            </Flex>
+          </div>
         </div>
-      </div>
+      </Spin>
     </FormContext.Provider>
   )
 }

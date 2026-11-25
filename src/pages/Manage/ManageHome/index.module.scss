@@ -1,0 +1,30 @@
+.manageHomeWrapper {
+  width: 100%;
+  padding: 20px;
+  min-height: 100vh;
+  .manageGuide {
+    position: relative;
+    width: 100%;
+    max-height: 200px;
+    padding: 16px;
+    background-image: url('@/assets/images/manage/guide-background.png');
+    background-size: cover;
+    transition: max-height 0.3s ease-in-out;
+    overflow: hidden;
+    &.collapsed {
+      max-height: 60px;
+    }
+    .manageGuideTitle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+    }
+    .manageGuideContent {
+      min-height: 200px;
+    }
+  }
+  .subjectInfo {
+    margin-top: 20px;
+  }
+}

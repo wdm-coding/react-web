@@ -71,7 +71,7 @@ const Banner = () => {
   }, [])
 
   const handleApply = () => {
-    navigate(isLoggedIn ? '/manage/firstReg' : '/login')
+    navigate(isLoggedIn ? '/manage/firstReg/add' : '/login')
   }
 
   return (

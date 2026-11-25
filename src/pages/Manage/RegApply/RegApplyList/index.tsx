@@ -109,7 +109,7 @@ const RegApplyList = () => {
     {
       title: '登记数据类型',
       dataIndex: 'dataRegistType',
-      width: 160,
+      width: 180,
       valueType: 'select',
       fieldProps: {
         options: dataRegistTypeEnum
@@ -194,7 +194,7 @@ const RegApplyList = () => {
                       key='create'
                       type='primary'
                       onClick={() =>
-                        navigate('/manage/firstReg', {
+                        navigate('/manage/firstReg/add', {
                           state: { regApproType: activeKey }
                         })
                       }

@@ -149,7 +149,7 @@ export const list: RouterItem[] = [
         title: '首页'
       },
       {
-        path: 'firstReg',
+        path: 'firstReg/:type',
         name: 'FirstReg',
         componentPath: '/Manage/FirstReg/index.tsx',
         icon: 'first-reg',
@@ -170,10 +170,10 @@ export const list: RouterItem[] = [
             title: '登记数据申请'
           },
           {
-            path: 'regApplyData',
-            name: 'RegApplyData',
-            componentPath: '/Manage/RegApply/RegApplyData/index.tsx',
-            icon: 'reg-apply-data',
+            path: 'regDataQuery',
+            name: 'RegDataQuery',
+            componentPath: '/Manage/RegApply/RegDataQuery/index.tsx',
+            icon: 'reg-query',
             title: '登记数据查询'
           },
           {
@@ -212,6 +212,82 @@ export const list: RouterItem[] = [
             componentPath: '/Manage/Objection/MyReceive/index.tsx',
             icon: 'my-receive',
             title: '我接收的'
+          }
+        ]
+      },
+      {
+        path: 'personAccount',
+        name: 'PersonAccount',
+        componentPath: 'Outlet',
+        icon: 'person-info',
+        title: '个人信息',
+        children: [
+          {
+            path: 'personInfo',
+            name: 'PersonInfo',
+            componentPath: '/Manage/PersonInfo/index.tsx',
+            icon: 'person-info',
+            title: '个人信息'
+          },
+          {
+            path: 'personApplyRecord',
+            name: 'PersonApplyRecord',
+            componentPath: '/Manage/UserManage/ApplyRecord/index.tsx',
+            icon: 'apply-record',
+            title: '申请邀请记录'
+          }
+        ]
+      },
+      {
+        path: 'regSubjectInfo',
+        name: 'RegSubjectInfo',
+        componentPath: '/Manage/RegSubjectInfo/index.tsx',
+        icon: 'reg-subject-info',
+        title: '登记主体信息'
+      },
+      {
+        path: 'approvalManage',
+        name: 'ApprovalManage',
+        componentPath: 'Outlet',
+        icon: 'approval-manage',
+        title: '审批待办',
+        children: [
+          {
+            path: 'todoApproval',
+            name: 'TodoApproval',
+            componentPath: '/Manage/ApprovalManage/TodoApproval/index.tsx',
+            icon: 'todo-approval',
+            title: '我的待办'
+          },
+          {
+            path: 'completeApproval',
+            name: 'CompleteApproval',
+            componentPath: '/Manage/ApprovalManage/CompleteApproval/index.tsx',
+            icon: 'complete-approval',
+            title: '我的办结'
+          }
+        ]
+      },
+      {
+        path: 'userManage',
+        name: 'UserManage',
+        componentPath: 'Outlet',
+        icon: 'user-manage',
+        title: '用户管理',
+        children: [
+          {
+            path: 'instUserList',
+            name: 'InstUserList',
+            componentPath: '/Manage/UserManage/InstUserList/index.tsx',
+            icon: 'inst-user-list',
+            title: '机构用户管理'
+          },
+          {
+            path: 'applyRecord',
+            name: 'ApplyRecord',
+            componentPath: '/Manage/UserManage/ApplyRecord/index.tsx',
+            icon: 'apply-record',
+            title: '申请邀请记录'
           }
         ]
       },

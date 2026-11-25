@@ -17,7 +17,9 @@ const ManageLayout = () => {
           <Sider trigger={null} collapsible collapsed={false} theme='light'>
             <div
               className={styles.firstRegBtn}
-              onClick={() => navigate('/manage/firstReg')}
+              onClick={() =>
+                navigate(`/manage/firstReg/add`, { state: null, replace: true })
+              }
             >
               <FormOutlined />
               <span style={{ padding: '0 15px 0 5px' }}>首次登记</span>

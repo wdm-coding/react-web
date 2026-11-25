@@ -1,0 +1,72 @@
+.regDataQueryWrapper {
+  width: 100%;
+  .content {
+    padding: 15px;
+    :global {
+      .ant-pro-table {
+        background-color: #fff;
+        padding: 20px;
+        // 查询区
+        .ant-pro-table-search {
+          background-color: #f8f8f8;
+          margin-bottom: 0;
+        }
+        // 工具栏（操作栏）：表体内部滚动时保持可见
+        .ant-pro-table-list-toolbar {
+          background-color: #fff;
+          .ant-pro-table-list-toolbar-container {
+            padding: 16px 20px;
+            .ant-btn {
+              border-radius: 0;
+            }
+          }
+        }
+        // 表格
+        .ant-table-wrapper {
+          padding: 0;
+          .ant-table {
+            .ant-table-thead > tr > th {
+              background-color: #f0f0f0;
+              color: rgba(0, 0, 0, 0.45);
+              font-weight: 400;
+            }
+          }
+          // 分页
+          .ant-table-pagination {
+            margin: 0;
+            padding: 16px 0;
+            .ant-pagination-item,
+            .ant-pagination-prev,
+            .ant-pagination-next,
+            .ant-pagination-jump-prev,
+            .ant-pagination-jump-next {
+              border-radius: 0;
+            }
+          }
+        }
+        .ant-pro-table-list-toolbar-container {
+          padding: 16px 0px !important;
+        }
+        .ant-pro-table-list-toolbar-right {
+          justify-content: flex-start;
+        }
+      }
+    }
+    .typeCell {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .statusCell {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: #000;
+      }
+    }
+  }
+}

@@ -1,18 +1,25 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styles from './index.module.scss'
 import RegForm from './modules/RegForm'
 import PageContainer from '@/layouts/ManageLayout/PageContainer'
 import RegMatters from './modules/RegMatters'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 const FirstReg = () => {
   const location = useLocation()
+  const { type } = useParams()
   const { dataRegistId, regApproType } = location?.state || {}
   // regApproType 不存在时弹出登记须知
   const [mattersOpen, setMattersOpen] = useState(
-    regApproType === '1' || !regApproType
+    (regApproType === '1' || !regApproType) && !dataRegistId
   )
+  useEffect(() => {
+    if (type === 'add') {
+      setMattersOpen((regApproType === '1' || !regApproType) && !dataRegistId)
+    }
+  }, [type, regApproType, dataRegistId])
   return (
     <PageContainer
+      key={type}
       title='登记申请'
       extra={
         <span>

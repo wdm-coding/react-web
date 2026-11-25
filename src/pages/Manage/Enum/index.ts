@@ -303,6 +303,14 @@ export const changeStatusEnum = [
   { label: '登记不通过', value: '3' },
   { label: '已注销', value: '4' }
 ]
+// 审核待办-审核状态
+export const approvalStatusEnum = [
+  { label: '同意', value: '5' },
+  { label: '拒绝', value: '-2' },
+  { label: '解绑', value: '-3' },
+  { label: '撤销', value: '-4' },
+  { label: '拒绝', value: '-1' }
+]
 const EnumMap = {
   whetherEnum,
   regApproTypeEnum,
@@ -323,7 +331,8 @@ const EnumMap = {
   desensitizationMethodEnum,
   changeStatusEnum,
   certificateStatusEnum,
-  examineStatusEnum
+  examineStatusEnum,
+  approvalStatusEnum
 }
 // 将字典转换为枚举
 export const dictToEnum = (enumKey: EnumKey) => {

@@ -7,17 +7,17 @@ const siderMenus = [
     icon: 'svg-vite'
   },
   {
-    label: <MenuLabel label='登记申请' dot />,
+    label: '登记申请',
     key: '/manage/regApply',
     icon: 'AndroidOutlined',
     children: [
       {
-        label: <MenuLabel label='登记数据申请' badge={10} />,
+        label: '登记数据申请',
         key: '/manage/regApply/regApplyList'
       },
       {
         label: '登记数据查询',
-        key: '/manage/regApply/regApplyData'
+        key: '/manage/regApply/regDataQuery'
       }
     ]
   },
@@ -27,16 +27,16 @@ const siderMenus = [
     icon: 'AndroidOutlined'
   },
   {
-    label: '异议申诉管理',
+    label: <MenuLabel label='异议申诉管理' dot />,
     key: '/manage/objection',
     icon: 'AndroidOutlined',
     children: [
       {
-        label: '我提交的',
+        label: <MenuLabel label='我提交的' badge={10} />,
         key: '/manage/objection/mySubmit'
       },
       {
-        label: '我接收的',
+        label: <MenuLabel label='我接收的' badge={10} />,
         key: '/manage/objection/myReceive'
       }
     ]
@@ -48,11 +48,11 @@ const siderMenus = [
     children: [
       {
         label: '个人基本信息',
-        key: '/manage/personAccount/personBasicInfo'
+        key: '/manage/personAccount/personInfo'
       },
       {
         label: '申请邀请记录',
-        key: '/manage/personAccount/applyInviteRecord'
+        key: '/manage/personAccount/personApplyRecord'
       }
     ]
   },
@@ -62,16 +62,16 @@ const siderMenus = [
     icon: 'AndroidOutlined'
   },
   {
-    label: <div>审批待办1</div>,
+    label: <MenuLabel label='审批待办' dot />,
     key: '/manage/approvalManage',
     icon: 'AndroidOutlined',
     children: [
       {
-        label: '我的待办',
+        label: <MenuLabel label='我的待办' badge={10} />,
         key: '/manage/approvalManage/todoApproval'
       },
       {
-        label: '我的办结',
+        label: <MenuLabel label='我的办结' badge={10} />,
         key: '/manage/approvalManage/completeApproval'
       }
     ]
@@ -87,7 +87,7 @@ const siderMenus = [
       },
       {
         label: '申请邀请记录',
-        key: '/manage/userManage/applyInviteRecord'
+        key: '/manage/userManage/applyRecord'
       }
     ]
   },
