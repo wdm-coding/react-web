@@ -21,6 +21,7 @@ import icon1 from '@/assets/images/manage/icon1.png'
 import icon2 from '@/assets/images/manage/icon2.png'
 import EllipsisText from '@/components/EllipsisText'
 import useTableScroll from '@/hooks/useTableScroll'
+import StatusView from '@/components/StatusView'
 
 const RegDataQuery = () => {
   const actionRef = useRef<ActionType>(null)
@@ -67,15 +68,6 @@ const RegDataQuery = () => {
       total: Number(data?.totalElements) || 0
     }
   }
-  // 登记状态
-  const ChangeStatus = ({ changeStatus }: { changeStatus: string }) => {
-    return (
-      <span className={styles.statusCell}>
-        <i className={styles.dot} style={{ backgroundColor: '#1577ff' }} />
-        {getEnumLabel('changeStatusEnum', changeStatus)}
-      </span>
-    )
-  }
   const regDataColumns: ProColumns<RegDataItem>[] = [
     {
       title: '序号',
@@ -121,7 +113,13 @@ const RegDataQuery = () => {
         options: changeStatusEnum
       },
       render: (_, row) => (
-        <ChangeStatus changeStatus={row?.changeStatus || ''} />
+        <StatusView
+          statusName={getEnumLabel('changeStatusEnum', row.changeStatus)}
+          color={
+            changeStatusEnum.find((item) => item.value === row.changeStatus)
+              ?.color || '#000'
+          }
+        />
       )
     },
     {
@@ -155,8 +153,8 @@ const RegDataQuery = () => {
     },
     {
       title: '确认单编号',
-      dataIndex: 'confirmNumber',
-      width: 160,
+      dataIndex: 'certificateCode',
+      width: 280,
       search: false
     },
     {

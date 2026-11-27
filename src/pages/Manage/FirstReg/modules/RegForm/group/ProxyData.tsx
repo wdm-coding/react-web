@@ -5,7 +5,8 @@ import {
   ProFormText,
   ProFormUploadButton
 } from '@ant-design/pro-components'
-import { Enum, tooltips, rules, dateRangeFormat, downloadFile } from '../config'
+import { Enum, tooltips, rules } from '../config'
+import { downloadFile, dateRangeFormat } from '../utils/index'
 import useCustomUpload from '@/hooks/useCustomUpload'
 import { Button } from 'antd'
 import { normalizeText } from '../utils/index'

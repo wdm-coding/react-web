@@ -1,4 +1,3 @@
-import { downloadFile as downloadFileUtils } from '@/utils/files'
 import dayjs from 'dayjs'
 // 表单默认值
 export const initialValues = {
@@ -114,10 +113,12 @@ export const rules = {
     ],
     entrustedAgentAgree: [{ required: true, message: '请上传委托代理协议书' }]
   },
+  // 数据场景
   sceneData: {
     ableScene: [{ required: true, message: '请输入数据场景' }],
     disableScene: [{ required: true, message: '请输入禁用场景' }]
   },
+  // 共有数据
   sharedData: {
     sharedData: [{ required: true, message: '请选择是否共有数据' }],
     sharedDataList: [{ required: true, message: '请填写共有数据信息' }],
@@ -130,6 +131,7 @@ export const rules = {
       { required: true, message: '请输入共有组织机构注册地址' }
     ]
   },
+  // 开放数据
   openData: {
     sharingType: [{ required: true, message: '请选择共享类型' }],
     sharingConditions: [{ required: false, message: '请输入共享条件' }],
@@ -138,6 +140,7 @@ export const rules = {
     socialOpenness: [{ required: true, message: '请选择是否向社会开放' }],
     opennessConditions: [{ required: true, message: '请输入开放条件' }]
   },
+  // 数据存储
   storageData: {
     productionMethod: [{ required: true, message: '请选择数据产生方式' }],
     productionOtherMethod: [
@@ -192,15 +195,24 @@ export const rules = {
     depositProofDocument: [{ required: false, message: '请上传存证证明文件' }],
     depositDataPath: [{ required: false, message: '请输入存证数据存放路径' }]
   },
+  // 数据目录
   direcData: {
     basedDataDirectory: [{ required: true, message: '请选择基于数据目录' }],
     demandFile: [{ required: true, message: '请上传上传数据字段项' }],
     sampleData: [{ required: true, message: '请上传样例数据' }]
   },
+  // 数据来源
   dataSource: {
     dataSourceCommitment: [
       { required: true, message: '请上传数据合规性来源及承诺文件' }
     ]
+  },
+  // 变更/更正/注销/续展数据
+  changeData: {
+    supplement: [{ required: true, message: '请输入' }],
+    proofMaterials: [{ required: true, message: '请上传证明材料' }],
+    applyForProof: [{ required: true, message: '请上传申请承诺函' }],
+    otherProofMaterials: [{ required: true, message: '请上传其他证明材料' }]
   }
 }
 
@@ -485,44 +497,3 @@ export const tooltips = {
   dataSourceCommitment:
     '提示：指为确保数据在各个环节中符合相关法律法规、行业标准及企业内部政策规定，而需要提供的证明材料或政策性文件。包括但不限于数据的合法来源证明及承诺、数据处理过程的合规性记录、数据使用授权的合法确认单等。'
 }
-
-// 上传文件转换为字符串
-export const uploadTransform = (value: any[]) => {
-  if (!value?.length) {
-    return ''
-  }
-  return value?.map((item) => item.response).join(',') || ''
-}
-
-// 日期范围格式化
-export const dateRangeFormat = (value: any[]) =>
-  value?.map((item) => item?.format('YYYY-MM-DD')) || null
-
-// 模板文件提取
-const templateFilekeyName = [
-  'productAndServiceDetails', // 产品和服务详情
-  'infoSecurityAssessReport', // 数据安全评估报告
-  'entrustedAgentAgree', // 委托代理协议书
-  'depositProofDocument', // 存证证明文件
-  'demandFile2017', // 2017年上传数据字段项
-  'demandFile2022', // 2022年上传数据字段项
-  'demandFile', // 不基于上传数据字段项
-  'sampleData', // 样例数据
-  'dataSourceCommitment' // 数据合规性来源及承诺
-]
-export const templateFileExtract = (list: any[]) => {
-  const templateFileList =
-    list
-      ?.filter((item) => templateFilekeyName?.includes(item?.keyName))
-      .map((item) => ({
-        ...item,
-        fileName: item?.value?.split('/').pop() || ''
-      })) || []
-  const result = Object.fromEntries(
-    templateFileList.map((item) => [item.keyName, item])
-  )
-  return result
-}
-
-// 下载文件
-export const downloadFile = downloadFileUtils

@@ -172,7 +172,7 @@ export const regApplyTypeEnum = [
   {
     label: '登记通过',
     value: 9,
-    btn: ['detail', 'seeConfim'],
+    btn: ['detail', 'viewConfirm'],
     color: '#52C41A'
   },
   {
@@ -312,16 +312,24 @@ export const examineStatusEnum = [
 ]
 // 确认单状态
 export const certificateStatusEnum = [
-  { label: '有效', value: '1' },
-  { label: '已过期', value: '2' },
-  { label: '已作废', value: '3' }
+  { label: '代签发', value: '000', color: '#1471FF' },
+  { label: '正常', value: '001', color: '#52C41A' },
+  { label: '注销', value: '002', color: '#FF4D4F' },
+  { label: '过期', value: '003', color: '#FF4D4F' },
+  { label: '已作废', value: '004', color: '#FF4D4F' },
+  { label: '已换证', value: '005', color: '#FF4D4F' }
 ]
 // 登记状态
 export const changeStatusEnum = [
-  { label: '申请中', value: '1' },
-  { label: '已登记', value: '2' },
-  { label: '登记不通过', value: '3' },
-  { label: '已注销', value: '4' }
+  { label: '申请中', value: '1', color: '#1677FF' },
+  { label: '变更中', value: '2', color: '#52C41A' },
+  { label: '更正中', value: '3', color: '#52C41A' },
+  { label: '注销中', value: '4', color: '#FF4D4F' },
+  { label: '续展中', value: '5', color: '#52C41A' },
+  { label: '拒绝登记', value: '-4', color: '#FF4D4F' },
+  { label: '正常', value: '9', color: '#52C41A' },
+  { label: '已撤销', value: '-3', color: '#FF4D4F' },
+  { label: '拒绝登记', value: '-4', color: '#FF4D4F' }
 ]
 // 审核待办-审核状态
 export const approvalStatusEnum = [

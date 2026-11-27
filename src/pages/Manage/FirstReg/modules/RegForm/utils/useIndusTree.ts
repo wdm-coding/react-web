@@ -58,16 +58,6 @@ const markTreeDisabled = (
     }
   })
 
-// 获取industryIds中的二级，三级行业id
-const getIndustryIds = (list: any[], getPath: any) => {
-  const path = getPath(list[list.length - 1]?.value)
-  const filters =
-    path[path.length - 1]?.nodes?.filter(
-      (item) => item.levelType === 2 || item.levelType === 3
-    ) || []
-  return filters.map((item) => item.key)
-}
-
 // 获取树结构最后一级行业id数组
 const getLastLevelIndustryIds = (tree: any[]) => {
   const ids = []
@@ -172,13 +162,32 @@ function buildTreeByIds(source, ids) {
   roots.forEach(finalize)
   return roots
 }
-
+// 获取所有叶子节点的路径，返回所有路径上的 industryId 集合
+function getPathIdsFromLevel1(leaves: any[], getPath: any): string[] {
+  if (!Array.isArray(leaves) || leaves.length === 0) return []
+  const idSet = new Set<string>()
+  for (const leaf of leaves) {
+    // 获取从根到该叶子的完整路径
+    const path = getPath(leaf.value) || []
+    // 找到 levelType=1（大类）在路径中的起始位置
+    const startIndex = path.findIndex(
+      (p: any) => p.node?.levelType === 1 || p.level === 1
+    )
+    // 如果没找到大类（异常情况），跳过；正常数据一定有
+    if (startIndex === -1) continue
+    // 从大类开始，把路径上所有节点的 industryId 加入集合
+    for (let i = startIndex; i < path.length; i++) {
+      const id = path[i].key || path[i].node?.industryId
+      if (id) idSet.add(id)
+    }
+  }
+  return [...idSet]
+}
 const useIndusTree = () => {
   const [industryTree, setIndustryTree] = useState<any[]>([]) // 行业树数据
   const [treeData, setTreeData] = useState<any[]>([]) // 处理后的树数据
   const [levelTwo, setLevelTwo] = useState<any>(null) // 选中的二级行业
-  const [industryIds, setIndustryIds] = useState<any[]>([]) // 选中的二级，三级行业id
-  const [industryList, setIndustryList] = useState<any[]>([]) // 选中的二级，三级行业
+  const [industryList, setIndustryList] = useState<any[]>([]) // 选中的二级，三级行业结构树
   const { getPath } = Tree.useTree(industryTree, {}) // 获取路径
   useRequest(CommonApi.getIndustryTree, {
     onSuccess: ({ code, data }) => {
@@ -194,17 +203,17 @@ const useIndusTree = () => {
     if (!ids) {
       setLevelTwo(null)
       setTreeData(industryTree)
-      setIndustryIds([])
       setIndustryList([])
       return
     }
-    const indKeys = getIndustryIds(ids, getPath)
-    const newIndustryIds = [...new Set([...industryIds, ...indKeys])]
-    setIndustryIds(newIndustryIds)
+    // 获取到二级行业id，三级行业id
+    const indKeys = getPathIdsFromLevel1(ids, getPath)
+    console.log('indKeys', indKeys)
     const firstId = ids[0]?.value
     const path = getPath(firstId) || []
     const result = path.find((item) => item.level === 1)
-    const tree = buildTreeByIds(industryTree, newIndustryIds)
+    const tree = buildTreeByIds(industryTree, indKeys)
+    console.log('tree', tree)
     setIndustryList(tree)
     if (levelTwo?.key === result?.key) return
     setLevelTwo(result)

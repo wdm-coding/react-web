@@ -7,8 +7,9 @@ import {
   ProFormTextArea,
   ProFormUploadButton
 } from '@ant-design/pro-components'
-import { Button, Checkbox, Col, Flex, Row } from 'antd'
-import { rules, Enum, tooltips, downloadFile } from '../config'
+import { Button, Checkbox, Col, Row } from 'antd'
+import { rules, Enum, tooltips } from '../config'
+import { downloadFile } from '../utils/index'
 import useCustomUpload from '@/hooks/useCustomUpload'
 import styles from '../index.module.scss'
 import { normalizeText } from '../utils/index.ts'

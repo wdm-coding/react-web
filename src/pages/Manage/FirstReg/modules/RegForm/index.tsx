@@ -12,23 +12,39 @@ import { useEffect, useMemo, useRef, useState, createContext } from 'react'
 import FileApi from '@/api/file'
 import regApplyApi from '@/api/regApply'
 import { useRequest } from '@/hooks/useRequest'
-import { Button, Descriptions, Flex, Spin } from 'antd'
-import { templateFileExtract, initialValues } from './config'
-import { submitTransform, getFullFieldParams } from './utils/index'
+import { Button, Flex, Spin } from 'antd'
+import { initialValues } from './config'
+import {
+  getSubmitApi,
+  submitTransform,
+  getFullFieldParams,
+  templateFileExtract
+} from './utils/index'
 import { useNavigate } from 'react-router-dom'
 import useModal from '@/hooks/useModal'
 import { regApproTypeEnum } from '@/pages/Manage/Enum'
 import UpdateReason from './group/UpdateReason'
 import UpdateInfo from './group/UpdateInfo'
+import ConfirmInfo from '../ConfimInfo'
 export const FormContext = createContext(null)
 const RegForm = ({
-  dataRegistId,
-  regApproType
+  dataRegistId, // 登记数据ID
+  orgDataRegistId, // 原始登记数据ID
+  regApproType,
+  openChangeModal
 }: {
-  dataRegistId: string
-  regApproType: string
+  dataRegistId?: string
+  orgDataRegistId?: string
+  regApproType?: string
+  openChangeModal: (open: boolean) => void
 }) => {
   const navigate = useNavigate()
+  // 变更登记弹窗确认按钮状态
+  const [isDraft, setIsDraft] = useState<boolean>(false)
+  // 确认登记弹弹窗状态
+  const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
+  const [submitLoading, setSubmitLoading] = useState<boolean>(false)
+  // 加载详情状态
   const [loading, setLoading] = useState<boolean>(false)
   const { userInfo } = useModal('user')
   const [detail, setDetail] = useState<any>(null)
@@ -38,11 +54,14 @@ const RegForm = ({
   const { data: templateFiles } = useRequest(() =>
     FileApi.getTemplateFiles({ pageSize: 999 })
   )
+  // 监测表单所有文件上传状态
+  const [uploadCount, setUploadCount] = useState<number>(0)
+  // 模板文件记录
   const templateFileRecord = useMemo(
     () => templateFileExtract(templateFiles?.content || []),
     [templateFiles]
   )
-  const [uploadCount, setUploadCount] = useState<number>(0)
+  // 表单分组标题
   const groupTitle = (title: string) => {
     return (
       <div key={title} className={styles.groupTitle}>
@@ -50,15 +69,48 @@ const RegForm = ({
       </div>
     )
   }
+  // 获取dataRegistCode
   const dataRegistCode = useMemo(() => {
     return detail?.dataRegistCode || uploadOnlyId || ''
   }, [detail, uploadOnlyId])
-  // 提交表单
-  const onFinish = async (values: any) => {
-    if (uploadCount !== 0) {
-      window.$message.warning('请等待文件上传完成')
+
+  // 保存草稿前校验
+  const onBeforeSave = () => {
+    const values = formRef.current?.getFieldsValue()
+    if (!values?.coverageArea) {
+      window.$message.error('请选择覆盖区域')
+      return null
+    }
+    if (!values?.industry) {
+      window.$message.error('请选择行业')
+      return null
+    }
+    if (!values?.dataName) {
+      window.$message.error('请输入数据登记名称')
+      return null
+    }
+    return values
+  }
+
+  // 表单校验通过
+  const onFinish = async () => {
+    setIsDraft(false) // 提交时默认不是草稿
+    if (regApproType === '4' || regApproType === '5') {
+      // const values = formRef.current?.getFieldsValue()
+      // onSubmit({
+      //   applyForProof
+      //   dataRegistId
+      //   orgDataRegistName
+      //   personage
+      //   proofMaterials
+      //   supplement
+      // })
       return
     }
+    setConfirmOpen(true) // 打开确认弹窗
+  }
+  // 提交表单
+  const onSubmit = async (values: any) => {
     const baseParams = {
       ...values,
       registerSubjectId: userInfo?.currentIns?.subjectRegistrationId || '',
@@ -68,45 +120,17 @@ const RegForm = ({
     if (dataRegistId) {
       baseParams.dataRegistId = dataRegistId
     }
-    const afterValues = await submitTransform(baseParams, false)
-    console.log('onFinish', afterValues)
-    const { code, data } =
-      await regApplyApi.submitOrSaveRegApplyDraft(afterValues)
+    if (orgDataRegistId) {
+      baseParams.orgDataRegistId = orgDataRegistId
+    }
+    const afterValues = await submitTransform(baseParams, isDraft)
+    const { api, afterPath } = getSubmitApi(regApproType)
+    console.log('onSubmit', api, afterPath, afterValues)
+    const { code, data } = await api(afterValues)
     if (code === 20000 && data) {
-      navigate('/manage/regApply/regApplyList')
-      window.$message.success('登记申请提交成功')
-    }
-  }
-  // 保存草稿
-  const onSaveDraft = async () => {
-    const values = formRef.current?.getFieldsValue()
-    if (!values?.coverageArea) {
-      window.$message.error('请选择覆盖区域')
-      return
-    }
-    if (!values?.industry) {
-      window.$message.error('请选择行业')
-      return
-    }
-    if (!values?.dataRegistName) {
-      window.$message.error('请输入数据登记名称')
-      return
-    }
-    const baseParams = {
-      ...values,
-      ...extraParams,
-      registerSubjectId: userInfo?.currentIns?.subjectRegistrationId || '',
-      dataRegistCode
-    }
-    if (dataRegistId) {
-      baseParams.dataRegistId = dataRegistId
-    }
-    const afterValues = await submitTransform(baseParams, true)
-    const { code, data } =
-      await regApplyApi.submitOrSaveRegApplyDraft(afterValues)
-    if (code === 20000 && data) {
-      navigate('/manage/regApply/regApplyList')
-      window.$message.success('保存草稿成功')
+      setConfirmOpen(false)
+      navigate(afterPath)
+      window.$message.success(isDraft ? '草稿保存成功' : '登记申请提交成功')
     }
   }
   // 表单回填
@@ -117,17 +141,28 @@ const RegForm = ({
     if (code === 20000) {
       setDetail(data)
       setTimeout(() => {
-        formRef.current?.setFieldsValue(getFullFieldParams(data))
+        formRef.current?.setFieldsValue(getFullFieldParams(data, regApproType))
       }, 500)
     }
     setLoading(false)
   }
+  // 确认信息提交
+  const onConfirm = async () => {
+    setSubmitLoading(true)
+    const values = onBeforeSave()
+    if (values) {
+      await onSubmit(values)
+    }
+    setSubmitLoading(false)
+  }
+  // 加载表单时回填数据
   useEffect(() => {
     if (dataRegistId) {
       setLoading(true)
       fillForm()
     }
   }, [dataRegistId])
+  // 获取登记类型标题
   const regApproTypeSubTitle = useMemo(
     () =>
       regApproTypeEnum.find((item) => item.value === regApproType)?.subTitle ||
@@ -155,21 +190,24 @@ const RegForm = ({
               <>
                 <ProForm.Group
                   title={groupTitle(`${regApproTypeSubTitle}数据`)}
+                  extra={
+                    <Button
+                      type='primary'
+                      onClick={() => openChangeModal(true)}
+                    >
+                      选择数据
+                    </Button>
+                  }
                 >
-                  <UpdateInfo />
+                  <UpdateInfo detail={detail} />
                 </ProForm.Group>
                 <ProForm.Group
                   title={groupTitle(`${regApproTypeSubTitle}原因`)}
                 >
                   <UpdateReason
+                    regApproType={regApproType}
                     uploadOnlyId={uploadOnlyId}
                     setUploadCount={setUploadCount}
-                    templateFiles={{
-                      productAndServiceDetails:
-                        templateFileRecord?.productAndServiceDetails,
-                      infoSecurityAssessReport:
-                        templateFileRecord?.infoSecurityAssessReport
-                    }}
                   />
                 </ProForm.Group>
               </>
@@ -256,20 +294,46 @@ const RegForm = ({
               </Button>
               <Button
                 type='primary'
-                loading={loading}
                 onClick={() => {
+                  if (uploadCount !== 0) {
+                    window.$message.warning('请等待文件上传完成')
+                    return
+                  }
                   formRef.current?.submit()
                 }}
               >
                 提交
               </Button>
-              <Button type='default' onClick={onSaveDraft} loading={loading}>
-                保存
-              </Button>
+              {!['4', '5'].includes(regApproType) && (
+                <Button
+                  type='default'
+                  onClick={() => {
+                    if (uploadCount !== 0) {
+                      window.$message.warning('请等待文件上传完成')
+                      return
+                    }
+                    setIsDraft(true) // 保存草稿时设置为草稿
+                    const values = onBeforeSave() // 校验草稿前信息
+                    if (values) {
+                      setConfirmOpen(true)
+                    }
+                  }}
+                >
+                  保存
+                </Button>
+              )}
             </Flex>
           </div>
         </div>
       </Spin>
+      {/* 确认登记信息弹窗 */}
+      <ConfirmInfo
+        values={getFullFieldParams(detail, regApproType)}
+        open={confirmOpen}
+        onClose={() => setConfirmOpen(false)}
+        onConfirm={onConfirm}
+        loading={submitLoading}
+      />
     </FormContext.Provider>
   )
 }

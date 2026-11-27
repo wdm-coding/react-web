@@ -1,0 +1,22 @@
+.confirmFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+}
+.applyChangeModal {
+  .changeAlert {
+    padding: 0;
+    margin: 16px 0;
+    background-color: transparent;
+    border: none;
+    :global(.ant-alert-description) {
+      color: #f7a500;
+    }
+  }
+  .typeCell {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+}

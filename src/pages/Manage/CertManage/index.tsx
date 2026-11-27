@@ -15,12 +15,14 @@ import icon1 from '@/assets/images/manage/icon1.png'
 import icon2 from '@/assets/images/manage/icon2.png'
 import EllipsisText from '@/components/EllipsisText'
 import useTableScroll from '@/hooks/useTableScroll'
+import dayjs from 'dayjs'
+import StatusView from '@/components/StatusView'
+import { useNavigate } from 'react-router-dom'
 
 const CertManage = () => {
+  const navigate = useNavigate()
   const actionRef = useRef<ActionType>(null)
   const { scroll, updateScrollY } = useTableScroll(1400)
-  // TODO: 待查看功能就绪后接入
-  const handleView = () => {}
   // 查询确认单列表
   const fetchProofList = async (params: any) => {
     const {
@@ -57,7 +59,7 @@ const CertManage = () => {
     {
       title: '确认单编号',
       dataIndex: 'certificateCode',
-      width: 220,
+      width: 260,
       fieldProps: { placeholder: '确认单编号' }
     },
     {
@@ -74,7 +76,7 @@ const CertManage = () => {
     {
       title: '登记数据类型',
       dataIndex: 'dataRegistType',
-      width: 140,
+      width: 180,
       search: false,
       render: (_, row) => (
         <span className={styles.typeCell}>
@@ -90,35 +92,59 @@ const CertManage = () => {
     {
       title: '确认单状态',
       dataIndex: 'certificateStatus',
-      width: 120,
+      width: 100,
       valueType: 'select',
       fieldProps: {
         options: certificateStatusEnum
       },
-      render: (_, row) =>
-        getEnumLabel('certificateStatusEnum', row.certificateStatus)
+      render: (_, row) => (
+        <StatusView
+          statusName={getEnumLabel(
+            'certificateStatusEnum',
+            row.certificateStatus
+          )}
+          color={
+            certificateStatusEnum.find(
+              (item) => item.value === row.certificateStatus
+            )?.color || '#000'
+          }
+        />
+      )
     },
     {
       title: '有效期起',
-      dataIndex: 'validStartTime',
+      dataIndex: 'validityPeriodStartTime',
       width: 140,
       search: false,
-      render: (_, row) => row.validStartTime || '-'
+      render: (_, row) =>
+        dayjs(row?.validityPeriodStartTime).format('YYYY-MM-DD') || '-'
     },
     {
       title: '有效期止',
-      dataIndex: 'validEndTime',
+      dataIndex: 'cvalidityDeadline',
       width: 140,
       search: false,
-      render: (_, row) => row.validEndTime || '-'
+      render: (_, row) =>
+        dayjs(row?.cvalidityDeadline).format('YYYY-MM-DD') || '-'
     },
     {
       title: '操作',
       valueType: 'option',
       width: 80,
       fixed: 'right',
-      render: () => (
-        <Button type='link' size='small' onClick={handleView}>
+      render: (_, row: ProofItem) => (
+        <Button
+          type='link'
+          size='small'
+          onClick={() => {
+            navigate(`/manage/regApply/regApplyDetail`, {
+              state: {
+                dataRegistId: row?.dataRegistId || null,
+                certificateId: row?.certificateId || null
+              }
+            })
+          }}
+        >
           查看
         </Button>
       )

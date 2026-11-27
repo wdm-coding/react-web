@@ -1,0 +1,39 @@
+.certView {
+  margin-bottom: 15px;
+  border-radius: 0;
+  .certTitle {
+    margin-bottom: 16px;
+    color: rgba(0, 0, 0, 0.88);
+    font-weight: 600;
+    font-size: 16px;
+  }
+  .certBanner {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    padding: 16px;
+    background-color: #f6ffed;
+    border-radius: 4px;
+    .certThumb {
+      width: 48px;
+      height: 64px;
+      object-fit: contain;
+      border: 1px solid #d9d9d9;
+      background-color: #fff;
+    }
+    .certInfo {
+      flex: 1;
+      .certStatus {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        font-weight: 600;
+        font-size: 16px;
+      }
+      .certValidity {
+        margin-top: 8px;
+        color: rgba(0, 0, 0, 0.65);
+      }
+    }
+  }
+}

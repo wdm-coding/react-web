@@ -8,6 +8,7 @@ const envEmun = {
   production: 'prod',
   test: 'test'
 }
+// 获取环境变量
 export const getEnvConfig = (): EnvConfig => {
   const config = {
     mode: envEmun[import.meta.env.MODE],
@@ -16,7 +17,7 @@ export const getEnvConfig = (): EnvConfig => {
   return config
 }
 
+// 生成唯一id
 export const uuid = () => {
-  // 生成唯一 整数id
   return crypto.randomUUID()
 }

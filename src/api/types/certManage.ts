@@ -18,16 +18,22 @@ export interface ProofListQuery {
 
 /** 确认单查询列表项 */
 export interface ProofItem {
-  /** 确认单编号 */
-  certificateCode: string
-  /** 登记数据名称 */
-  dataRegistName: string
   /** 登记数据类型 */
   dataRegistType: string
-  /** 确认单状态 */
+  dataRegistTypeDesc: string
+  dataRegistCode: string
+  dataRegistId: string
+  dataRegistName: string
+  institutionName: string
   certificateStatus: string
-  /** 有效期起 */
-  validStartTime: string
-  /** 有效期止 */
-  validEndTime: string
+  certificateStatusDesc: string
+  certificateProcessStatus: number
+  certificateProcessStatusDesc: string
+  cvalidityDeadline: string
+  distributionTime: string
+  validityPeriodStartTime: string
+  certificateCode: string
+  certificateId: string
+  certificatePicBase64: string
+  certificateBase64: string
 }

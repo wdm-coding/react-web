@@ -3,7 +3,8 @@ import {
   ProFormRadio,
   ProFormUploadButton
 } from '@ant-design/pro-components'
-import { rules, Enum, downloadFile } from '../config'
+import { rules, Enum } from '../config'
+import { downloadFile } from '../utils/index'
 import useCustomUpload from '@/hooks/useCustomUpload'
 import { Button } from 'antd'
 interface DirecDataProps {

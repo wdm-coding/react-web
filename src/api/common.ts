@@ -1,5 +1,8 @@
 import { Post, Get, type RequestFn } from '@/services/http.decorator'
 
+export const processPublicRegistData = (dataRegistId: string) => {
+  window.location.href = `https://118.183.58.134:16206/register-mng/api/test/publicInfo?dataRegistId=${dataRegistId}`
+}
 class CommonApi {
   // 获取区域树
   @Post('common/area')

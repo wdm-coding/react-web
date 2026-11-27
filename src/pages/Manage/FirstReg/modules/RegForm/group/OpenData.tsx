@@ -36,16 +36,18 @@ const OpenData = () => {
                 }}
               />
             ) : null}
-            <ProFormCheckbox.Group
-              name='sharingMethod'
-              label='共享方式'
-              tooltip={tooltips.sharingMethod}
-              rules={rules.openData.sharingMethod}
-              options={Enum.sharingMethodEnum}
-              fieldProps={{
-                mode: 'multiple'
-              }}
-            />
+            {sharingType === '3' ? null : (
+              <ProFormCheckbox.Group
+                name='sharingMethod'
+                label='共享方式'
+                tooltip={tooltips.sharingMethod}
+                rules={rules.openData.sharingMethod}
+                options={Enum.sharingMethodEnum}
+                fieldProps={{
+                  mode: 'multiple'
+                }}
+              />
+            )}
             {sharingMethod?.includes('5') ? (
               <ProFormText
                 name='sharingOtherMethod'

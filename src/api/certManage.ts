@@ -9,5 +9,8 @@ class CertManageApi {
     ProofListQuery,
     Response<PageListResult<ProofItem>>
   >
+  // 获取确认单详情
+  @Post('proof/detail')
+  static getProofDetail: RequestFn<{ certificateId: string }, Response<any>>
 }
 export default CertManageApi

@@ -1,0 +1,38 @@
+.processRecordWrapper {
+  width: 100%;
+  .processSteps {
+    margin-bottom: 15px;
+    border-radius: 0px;
+  }
+  .processRecordVertical {
+    padding: 15px 0;
+    .processRecordTitleText {
+      margin-bottom: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #000;
+      display: flex;
+      align-items: center;
+      &::before {
+        content: '';
+        display: inline-block;
+        width: 4px;
+        height: 16px;
+        background-color: #0270d7;
+        margin-right: 8px;
+      }
+    }
+    .processTableSteps {
+      margin-top: 50px;
+      :global(.ant-steps-item) {
+        min-height: 42px;
+      }
+    }
+    .processTable {
+      flex: 1;
+      :global(.ant-table-cell) {
+        padding: 10px;
+      }
+    }
+  }
+}

@@ -1,5 +1,6 @@
 import { ProFormUploadButton } from '@ant-design/pro-components'
-import { downloadFile, rules, tooltips } from '../config'
+import { rules, tooltips } from '../config'
+import { downloadFile } from '../utils/index'
 import useCustomUpload from '@/hooks/useCustomUpload'
 import { Button } from 'antd'
 interface DataSourceProps {

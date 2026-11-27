@@ -10,7 +10,8 @@ import {
   regApproTypeEnum,
   dataRegistTypeEnum,
   getEnumLabel,
-  regApplyTypeEnum
+  regApplyTypeEnum,
+  approvalStatusEnum
 } from '@/pages/Manage/Enum/index'
 import RegApplyApi from '@/api/regApply'
 import { RegApplyItem } from '@/api/types/regApply'
@@ -22,6 +23,7 @@ import icon2 from '@/assets/images/manage/icon2.png'
 import EllipsisText from '@/components/EllipsisText'
 import useTableScroll from '@/hooks/useTableScroll'
 import Action from './Action'
+import StatusView from '@/components/StatusView'
 
 const RegApplyList = () => {
   const actionRef = useRef<ActionType>(null)
@@ -63,18 +65,6 @@ const RegApplyList = () => {
       data: list,
       total: Number(data?.totalElements) || 0
     }
-  }
-  // 审核状态
-  const CheckStatus = ({ statusName }: { statusName: string }) => {
-    const color =
-      regApplyTypeEnum?.find((item) => item.label === statusName)?.color ||
-      '#000'
-    return (
-      <span className={styles.statusCell} style={{ color }}>
-        <i className={styles.dot} />
-        {statusName || '-'}
-      </span>
-    )
   }
   const regApplyColumns: ProColumns<RegApplyItem>[] = [
     {
@@ -128,9 +118,17 @@ const RegApplyList = () => {
     {
       title: '审核状态',
       dataIndex: 'status',
-      width: 80,
+      width: 100,
       search: false,
-      render: (_, row) => <CheckStatus statusName={row.status}></CheckStatus>
+      render: (_, row) => (
+        <StatusView
+          statusName={row.status}
+          color={
+            regApplyTypeEnum.find((item) => item.label === row.status)?.color ||
+            '#000'
+          }
+        />
+      )
     },
     {
       title: '更新时间',
@@ -195,7 +193,10 @@ const RegApplyList = () => {
                       type='primary'
                       onClick={() =>
                         navigate('/manage/firstReg/add', {
-                          state: { regApproType: activeKey }
+                          state: {
+                            applyChange: activeKey !== '1',
+                            regApproType: activeKey
+                          }
                         })
                       }
                     >

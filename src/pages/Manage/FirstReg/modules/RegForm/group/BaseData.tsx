@@ -11,7 +11,7 @@ import {
   ProFormTreeSelect,
   ProFormUploadButton
 } from '@ant-design/pro-components'
-import { rules, Enum, tooltips, dateRangeFormat, downloadFile } from '../config'
+import { rules, Enum, tooltips } from '../config'
 import { useContext, useEffect, useState } from 'react'
 import CommonApi from '@/api/common'
 import { Button, Flex, Form } from 'antd'
@@ -20,7 +20,7 @@ import useCustomUpload from '@/hooks/useCustomUpload'
 import { authOperatItem } from '../types'
 import { uuid } from '@/utils/common'
 import { FormContext } from '../index.tsx'
-import { normalizeText } from '../utils/index'
+import { normalizeText, dateRangeFormat, downloadFile } from '../utils/index'
 interface BaseDataProps {
   uploadOnlyId?: string
   setUploadCount?: any
@@ -256,9 +256,9 @@ const BaseData: React.FC<BaseDataProps> = ({
                 />
                 <div style={{ paddingTop: 5 }}>-</div>
                 <ProFormText
-                  name='dataRegistName'
+                  name='dataName'
                   style={{ minWidth: 0, flex: 1, marginBottom: 0 }}
-                  rules={rules.baseData.dataRegistName}
+                  rules={rules?.baseData?.dataRegistName}
                   normalize={normalizeText}
                   fieldProps={{
                     maxLength,

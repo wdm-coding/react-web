@@ -20,9 +20,9 @@ class RegApplyApi {
   @Post('registrationApplyFor/details')
   static getRegApplyDetail: RequestFn<{ dataRegistId: string }, Response<any>>
 
-  // 登记申请提交或保存草稿
+  // 首次登记申请提交或保存草稿
   @Post('registration/firstRegistration')
-  static submitOrSaveRegApplyDraft: RequestFn<any, any>
+  static firstRegApplySubmit: RequestFn<any, any>
 
   // 删除登记申请草稿
   @Post('registration/deleteDraft')
@@ -35,6 +35,36 @@ class RegApplyApi {
   // 获取可操作的登记数据
   @Post('registration/screeningData')
   static getScreeningData: RequestFn<RegScreeningQuery, Response<any>>
+
+  // 变更提交登记申请
+  @Post('changeData/changeDataRegistration')
+  static changeRegApply: RequestFn<any, any>
+
+  // 撤销变更提交登记申请
+  @Post('changeData/cancelChange')
+  static cancelChangeRegApply: RequestFn<
+    { dataRegistId: string },
+    Response<any>
+  >
+
+  // 更正登记申请
+  @Post('correctionData/correctionDataRegistration')
+  static correctRegApply: RequestFn<any, any>
+
+  // 撤销更正登记申请
+  @Post('correctionData/cancelCorrection')
+  static cancelRegApplyCorrect: RequestFn<
+    { dataRegistId: string },
+    Response<any>
+  >
+
+  // 注销登记申请
+  @Post('cancelData/cancelDataRegistration')
+  static logoutRegApply: RequestFn<any, any>
+
+  // 续展登记申请
+  @Post('continue/addContinue')
+  static continueRegApply: RequestFn<any, any>
 
   // 获取登记数据查询列表
   @Post('registration/registrationList')
